@@ -1,0 +1,2 @@
+C:\Users\34011-14-08\Desktop\Plateforme_Jeu\election_municipale\election_municipale\bin\Debug\election_municipale.exe.config
+C:\Users\34011-14-08\Projet_GIT\TP10\election_municipale\election_municipale\bin\Debug\election_municipale.exe.config
