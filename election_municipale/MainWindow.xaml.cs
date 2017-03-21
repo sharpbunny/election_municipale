@@ -45,7 +45,20 @@ namespace election_municipale
 							//titreLabel.Text += bap.value + " /////////// ";
 							foreach (var lollo in bap.Select((value, i) => new { i, value }))
 							{
-								titreLabel.Text += lollo.value + "//////";
+								titreLabel.Text += "@"+lollo.value + "//////";
+								if(lollo.ToString().Substring(2,9) == "prenom_01")
+								{
+									Candidat candidat = new Candidat();
+									string caractere = lollo.ToString().Substring(14,1);
+									int j = 0;
+									while(caractere != "\"")
+									{
+										candidat.nom += caractere;
+										j++;
+										caractere = lollo.ToString().Substring(14 + j, 1);
+									}
+									titreLabel.Text += candidat.nom;
+								}
 							}
 						}
 					}
