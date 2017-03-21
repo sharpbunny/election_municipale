@@ -124,6 +124,16 @@ namespace testJSON
 								csieges.sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
 
+							//sieges_secteur_01
+							case 26:
+								csieges.sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								break;
+
+							//sieges_cc_01
+							case 27:
+								csieges.sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								break;
+
 						}
 					}
 				}
