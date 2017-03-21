@@ -32,9 +32,22 @@ namespace election_municipale
 				JArray array = (JArray)JToken.ReadFrom(new JsonTextReader(reader));
 				foreach (var item in array)
 				{
-					foreach (var bip in item.Select((value, i) => new { i, value }))
+					foreach (var bip in item)
 					{
-						titreLabel.Text += bip.i + "" + bip.value +"a";
+						//titreLabel.Text += bip.value.ToString() + "/////////////";
+
+						//if (bip.value.ToString().Substring(0,8) == "\"fields\"")
+						//{
+						//	titreLabel.Text += bip.value;
+						//}
+						foreach (var bap in bip)
+						{
+							//titreLabel.Text += bap.value + " /////////// ";
+							foreach (var lollo in bap.Select((value, i) => new { i, value }))
+							{
+								titreLabel.Text += lollo.value + "//////";
+							}
+						}
 					}
 					
 				}
