@@ -26,12 +26,17 @@ namespace election_municipale
 
 		private void LireJSon(string lienFichier)
 		{
-			using (StreamReader reader = File.OpenText(@"" + lienFichier))
+			using (StreamReader reader = File.OpenText(lienFichier))
 			{
-				JObject o = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
-				foreach (var item in o)
+				int a = 0;
+				JArray array = (JArray)JToken.ReadFrom(new JsonTextReader(reader));
+				foreach (var item in array)
 				{
-					titreLabel.Content = item.Key;
+					foreach (var bip in item.Select((value, i) => new { i, value }))
+					{
+						titreLabel.Text += bip.i + "" + bip.value +"a";
+					}
+					
 				}
 			}
 		}
@@ -39,7 +44,7 @@ namespace election_municipale
 		public MainWindow()
 		{
 			InitializeComponent();
-			LireJSon("election_municipale.json");
+			LireJSon("../../election.json");
 		}
 	}
 }
