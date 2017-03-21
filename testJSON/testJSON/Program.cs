@@ -337,16 +337,16 @@ namespace testJSON
 				list = insertionCleEtrangereListe(list, parti);
 				insertionDonneesListe(list);
 
-				candidat = insertionCleEtrangerCandidat(candidat, list);
+				candidat = insertionCleEtrangereCandidat(candidat, list);
 				insertionDonneesCandidat(candidat);
 
-				//insérer les clés étrangères d'election ici : année, idCandidat, insee
+				elect = insertionCleEtrangereElection(elect, year, candidat, comm);
 				insertionDonneesElection(elect);
 
-				//insérer les clés étrangères de stat : annee, insee
+				stat = insertionCleEtrangereStatsElection(stat, year, comm);
 				insertionDonneesStatElection(stat);
 
-				//insérer les clés étrangères de csieges ici : insee, annee, idListe
+				csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
 				insertionDonneesCalculSieges(csieges);
 
 
@@ -425,7 +425,7 @@ namespace testJSON
 		/// <param name="candidat">Tableau de candidats</param>
 		/// <param name="list">Tableau de listes électorales</param>
 		/// <returns></returns>
-		public static Candidat[] insertionCleEtrangerCandidat(Candidat [] candidat, Liste[] list)
+		public static Candidat[] insertionCleEtrangereCandidat(Candidat [] candidat, Liste[] list)
 		{
 			for(int i = 0; i < candidat.Length; i++)
 			{
@@ -438,7 +438,68 @@ namespace testJSON
 			return candidat;
 
 		}
+
+		/// <summary>
+		/// insertion des clés étrangères de la table association election
+		/// </summary>
+		/// <param name="elect">La table association election</param>
+		/// <param name="year">Année de l'election municipale</param>
+		/// <param name="candidat">Candidats à l'election municipales</param>
+		/// <param name="comm">La commune où a eu lieu l'election</param>
+		/// <returns></returns>
+		public static election [] insertionCleEtrangereElection(election[] elect, AnneeElection year, Candidat [] candidat, Commune comm)
+		{
+			for(int i=0; i<elect.Length; i++)
+			{
+				if(elect[i] != null)
+				{
+					elect[i].Candidat = candidat[i];
+					elect[i].Commune = comm;
+					elect[i].AnneeElection = year;
+				}
+			}
+
+			return elect;
+		}
 		
+		/// <summary>
+		/// Insertion des clés étrangères relatives à la table association : stats_election
+		/// </summary>
+		/// <param name="stat">La table association : stats_election</param>
+		/// <param name="year">Année de l'élection municipale</param>
+		/// <param name="comm">Nom de la commune de laquelle on va récupérer des statistiques</param>
+		/// <returns></returns>
+		public static stats_election insertionCleEtrangereStatsElection(stats_election stat, AnneeElection year, Commune comm)
+		{
+			if(stats_election != null)
+			{
+				stat.AnneeElection = year;
+				stat.Commune = comm;
+			}
+
+			return stat;
+		}
+
+		/// <summary>
+		/// Insertion des clés étrangères relatives au calcul des sièges alloués selon les résultats des élections
+		/// </summary>
+		/// <param name="csiege">Tableau de table association : calcul_sieges</param>
+		/// <param name="comm">Commune dans laquelle on indique les sièges alloués à certaines listes</param>
+		/// <param name="year">Année de l'election</param>
+		/// <param name="liste">Tableau de listes electorales</param>
+		/// <returns></returns>
+		public static calcul_sieges [] insertionCleEtrangereCalculSieges(calcul_sieges [] csiege, Commune comm, AnneeElection year, Liste[] liste)
+		{
+			for(int i = 0; i < csiege.Length; i++)
+			{
+				if(csiege[i] != null && liste[i] != null)
+				{
+					csiege[i].Commune = comm;
+					csiege[i].AnneeElection = year;
+					csiege[i].Liste = List[i];
+				}
+			}
+		}
 
 
 		// ******************************************************
