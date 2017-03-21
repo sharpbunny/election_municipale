@@ -326,7 +326,20 @@ namespace testJSON
 
 				}//Fin du for des colonnes
 
-				//Insérer les requêtes pour la bdd ici
+				/*
+				--- Liste d'insertion des données ---
+				-AnneeElection
+				-Département
+				-Parti
+				-Commune
+				-Liste
+				-Candidat
+				
+				Association
+				-election
+				-stats-election
+				-calcul_sieges	
+			*/
 
 			} //FIn du for pour les lignes
 
