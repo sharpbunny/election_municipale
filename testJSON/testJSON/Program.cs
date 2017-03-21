@@ -199,6 +199,21 @@ namespace testJSON
 			}
 		}
 
+		/// <summary>
+		/// On va insérer les données relatives aux départements
+		/// </summary>
+		/// <param name="dpt">Le département</param>
+		public static void insertionDonneesDepartement(Departement dpt)
+		{
+			using(var context = new election_municipaleEntities())
+			{
+				context.Departement.Add(dpt);
+				context.SaveChanges();
+			}
+
+			
+		}
+
 	}
 
 
