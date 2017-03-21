@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace election_municipale
 {
@@ -20,9 +23,23 @@ namespace election_municipale
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+
+		private void LireJSon(string lienFichier)
+		{
+			using (StreamReader reader = File.OpenText(@"" + lienFichier))
+			{
+				JObject o = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+				foreach (var item in o)
+				{
+					titreLabel.Content = item.Key;
+				}
+			}
+		}
+
 		public MainWindow()
 		{
 			InitializeComponent();
+			LireJSon("election_municipale.json");
 		}
 	}
 }
