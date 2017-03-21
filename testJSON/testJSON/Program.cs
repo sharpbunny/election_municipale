@@ -250,22 +250,27 @@ namespace testJSON
 								candidat[3].prenom = allData[i][colonne];
 								break;
 
+							//liste_04
 							case 57:
 								list[3].nomListe = allData[i][colonne];
 								break;
 
+							//sieges_elus_04
 							case 58:
 								csieges[3].sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
 
+							//sieges_secteur_04
 							case 59:
 								csieges[3].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
 								break;
 
+							//sieges_cc_04
 							case 60:
 								csieges[3].sieges_cc = Convert.ToSByte(allData[i][colonne]);
 								break;
 
+							//voix_04
 							case 61:
 								elect[3].voix = Convert.ToInt32(allData[i][colonne]);
 								break;
@@ -275,34 +280,42 @@ namespace testJSON
 								parti[4].code_nuance = allData[i][colonne];
 								break;
 
+							//sexe_05
 							case 65:
 								candidat[4].sexe = allData[i][colonne];
 								break;
 
+							//nom_05
 							case 66:
 								candidat[4].nom = allData[i][colonne];
 								break;
 
+							//prenom_05
 							case 67:
 								candidat[4].prenom = allData[i][colonne];
 								break;
 
+							//liste_05
 							case 68:
 								list[4].nomListe = allData[i][colonne];
 								break;
 
+							//sieges_elu_05
 							case 69:
 								csieges[4].sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
 
+							//sieges_secteur_05
 							case 70:
 								csieges[4].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
 								break;
 
+							//sieges_cc_05
 							case 71:
 								csieges[4].sieges_cc = Convert.ToSByte(allData[i][colonne]);
 								break;
 
+							//voix_05
 							case 72:
 								elect[4].voix = Convert.ToInt32(allData[i][colonne]);
 								break;
