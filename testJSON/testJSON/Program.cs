@@ -186,11 +186,23 @@ namespace testJSON
 		{
 			using (var context = new election_municipaleEntities())
 			{
+
 				for(int i =0; i < candidat.Length; i++)
 				{
 					if(candidat[i] != null)
 					{
-						context.Candidat.Add(candidat[i]);
+						//On fait une requête pour voir si l'id du candidat n'existe pas déjà dans la bdd
+						var query = from candid in context.Candidat
+									where candid.idCandidat == candidat[i].idCandidat
+									select candid;
+
+						//Si il n'est pas dans la BDD, on peut l'insérer
+						if(query == null)
+						{
+							context.Candidat.Add(candidat[i]);
+						}
+
+
 					}
 
 				}
