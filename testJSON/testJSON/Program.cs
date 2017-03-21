@@ -150,6 +150,9 @@ namespace testJSON
 						}
 					}
 				}
+
+				//Insérer les requêtes pour la bdd ici
+
 			}
 
 			
@@ -174,6 +177,26 @@ namespace testJSON
 			}
 
 			return allData;
+		}
+
+		/// <summary>
+		/// On va insérer les données relatives aux candidats à l'élection municipale dans la base de données
+		/// </summary>
+		public static void insertionDonneesCandidat(Candidat[] candidat)
+		{
+			using (var context = new election_municipaleEntities())
+			{
+				for(int i =0; i < candidat.Length; i++)
+				{
+					if(candidat[i] != null)
+					{
+						context.Candidat.Add(candidat[i]);
+					}
+
+				}
+
+				context.SaveChanges();
+			}
 		}
 
 	}
