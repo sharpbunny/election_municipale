@@ -20,6 +20,7 @@ namespace testJSON
         public Nullable<int> exprimes { get; set; }
         public int annee { get; set; }
         public string insee { get; set; }
+        public Nullable<int> votants { get; set; }
     
         public virtual AnneeElection AnneeElection { get; set; }
         public virtual Commune Commune { get; set; }

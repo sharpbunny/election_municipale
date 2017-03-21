@@ -14,6 +14,10 @@ namespace testJSON
 		{
 			Candidat[] candidat = new Candidat[5];
 			Departement dept = new Departement();
+			Commune comm = new Commune();
+			stats_election stat = new stats_election();
+			Parti parti = new Parti();
+
 			string[][] allData = lireToutesLesDonnees();
 
 			for(int i=0; i < allData.Length; i++)
@@ -28,15 +32,86 @@ namespace testJSON
 							case 1:
 								dept.code_du_departement = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							//type du scrutin
 							case 2:
 								break;
-
-							
+						
 							//libelle_du_departement
 							case 3:
 								dept.libelle_du_departement = allData[i][colonne];
 								break;
+
+							//code de la commune
+							case 4:
+								comm.code_de_la_commune = allData[i][colonne];
+								break;
+
+							//libelle_de_la_commune
+							case 5:
+								comm.libelle_de_la_commune = allData[i][colonne];
+								break;
+
+							//insee
+							case 6:
+								comm.insee = allData[i][colonne];
+								break;
+
+							//geo_point_2
+							case 7:
+								comm.geo_point_2d = allData[i][colonne];
+								break;
+
+							//geo_shape
+							case 8:
+								comm.geo_shape = allData[i][colonne];
+								break;
+
+							//inscrits
+							case 9:
+								stat.inscrits = Convert.ToInt32(allData[i][colonne]);
+								break;
+
+							//abstentions
+							case 10:
+								stat.abstentions = Convert.ToInt32(allData[i][colonne]);
+								break;
+
+							//votants
+							case 12:
+								stat.votants = Convert.ToInt32(allData[i][colonne]);
+								break;
+
+							//blancs_et_nuls
+							case 14:
+								stat.blancs_et_nuls = Convert.ToInt32(allData[i][colonne]);
+								break;
+
+							//exprimes
+							case 17:
+								stat.exprimes = Convert.ToInt32(allData[i][colonne]);
+								break;
+
+							//code_nuance
+							case 20:
+								parti.code_nuance = allData[i][colonne];
+								break;
+							
+							//sexe_01
+							case 21:
+								candidat[0].sexe = allData[i][colonne];
+								break;
+
+							//nom_01
+							case 22:
+								candidat[0].nom = allData[i][colonne];
+								break;
+
+							//prenom_01
+							case 23:
+								candidat[0].prenom = allData[i][colonne];
+								break;
+
 						}
 					}
 				}
