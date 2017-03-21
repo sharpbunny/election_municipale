@@ -26,10 +26,10 @@ namespace election_municipale
 
 		private void LireJSon(string lienFichier)
 		{
-			using (StreamReader reader = File.OpenText(@"" + lienFichier))
+			using (StreamReader reader = File.OpenText(lienFichier))
 			{
-				JObject o = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
-				foreach (var item in o)
+				JObject array = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+				foreach (var item in array)
 				{
 					titreLabel.Content = item.Key;
 				}
@@ -39,7 +39,7 @@ namespace election_municipale
 		public MainWindow()
 		{
 			InitializeComponent();
-			LireJSon("election_municipale.json");
+			LireJSon("../../election.json");
 		}
 	}
 }
