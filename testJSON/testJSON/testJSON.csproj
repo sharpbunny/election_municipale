@@ -58,35 +58,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="electionEDM.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>electionEDM.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="electionEDM.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>electionEDM.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="AnneeElection.cs" />
+    <Compile Include="BDDModel.cs" />
+    <Compile Include="calcul_sieges.cs" />
+    <Compile Include="Candidat.cs" />
+    <Compile Include="Commune.cs" />
+    <Compile Include="Departement.cs" />
+    <Compile Include="election.cs" />
+    <Compile Include="Liste.cs" />
+    <Compile Include="Parti.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="stats_election.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="electionEDM.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>electionEDM.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="electionEDM.edmx.diagram">
-      <DependentUpon>electionEDM.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="electionEDM.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>electionEDM.Context.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

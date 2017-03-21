@@ -25,7 +25,12 @@ namespace testJSON
         [Column(Order = 1)]
         [StringLength(5)]
         public string insee { get; set; }
+<<<<<<< HEAD
 
+=======
+        public Nullable<int> votants { get; set; }
+    
+>>>>>>> develop
         public virtual AnneeElection AnneeElection { get; set; }
 
         public virtual Commune Commune { get; set; }
