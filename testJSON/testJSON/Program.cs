@@ -334,10 +334,10 @@ namespace testJSON
 				comm = insertionCleEtrangereCommune(comm, dept);
 				insertionDonneesCommune(comm);
 
-				//insérer la clé étrangère du parti dans la liste : code_nuance
+				list = insertionCleEtrangereListe(list, parti);
 				insertionDonneesListe(list);
 
-				//insérer la clé étrangère de la liste ici : idListe
+				candidat = insertionCleEtrangerCandidat(candidat, list);
 				insertionDonneesCandidat(candidat);
 
 				//insérer les clés étrangères d'election ici : année, idCandidat, insee
@@ -398,6 +398,45 @@ namespace testJSON
 		{
 			com.Departement = dept;
 			return com;
+		}
+
+		/// <summary>
+		/// Insertion de la clé étrangère Parti dans les listes éléctorales
+		/// </summary>
+		/// <param name="liste">Tableau de listes électorales</param>
+		/// <param name="parti">Tableau de partis politiques</param>
+		/// <returns></returns>
+		public static Liste [] insertionCleEtrangereListe(Liste[] liste, Parti [] parti)
+		{
+			for(int i = 0; i<liste.Length; i++)
+			{
+				if(liste[i] != null && parti[i] != null)
+				{
+					liste[i].Parti = parti[i];
+				}
+			}
+
+			return liste;
+		}
+
+		/// <summary>
+		/// Insertion de la clé étrangère Liste dans la classe Candidat
+		/// </summary>
+		/// <param name="candidat">Tableau de candidats</param>
+		/// <param name="list">Tableau de listes électorales</param>
+		/// <returns></returns>
+		public static Candidat[] insertionCleEtrangerCandidat(Candidat [] candidat, Liste[] list)
+		{
+			for(int i = 0; i < candidat.Length; i++)
+			{
+				if(candidat[i] != null && list[i] != null)
+				{
+					candidat[i].Liste = list[i];
+				}
+			}
+
+			return candidat;
+
 		}
 		
 
