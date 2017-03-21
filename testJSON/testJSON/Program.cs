@@ -23,11 +23,11 @@ namespace testJSON
 
 			string[][] allData = lireToutesLesDonnees();
 
-			for(int i=0; i < allData.Length; i++)
+			for (int i = 0; i < allData.Length; i++)
 			{
-				for(int colonne=0; colonne < 75; colonne++)
+				for (int colonne = 0; colonne < 75; colonne++)
 				{
-					if(i > 0)
+					if (i > 0)
 					{
 						switch (colonne)
 						{
@@ -39,7 +39,7 @@ namespace testJSON
 							//type du scrutin
 							case 2:
 								break;
-						
+
 							//libelle_du_departement
 							case 3:
 								dept.libelle_du_departement = allData[i][colonne];
@@ -99,7 +99,7 @@ namespace testJSON
 							case 20:
 								parti[0].code_nuance = allData[i][colonne];
 								break;
-							
+
 							//sexe_01
 							case 21:
 								candidat[0].sexe = allData[i][colonne];
@@ -117,35 +117,144 @@ namespace testJSON
 
 							//liste_01
 							case 24:
-								list.nomListe = allData[i][colonne];
+								list[0].nomListe = allData[i][colonne];
 								break;
 
 							//sieges_elu_01
 							case 25:
-								csieges.sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								csieges[0].sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//sieges_secteur_01
 							case 26:
-								csieges.sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								csieges[0].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//sieges_cc_01
 							case 27:
-								csieges.sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								csieges[0].sieges_cc = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//voix_01
 							case 28:
-								elect.voix = Convert.ToSByte(allData[i][colonne]);
+								elect[0].voix = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//code_nuance_02
-							case 29:
+							case 31:
 								parti[1].code_nuance = allData[i][colonne];
 								break;
+							//sexe_02
+							case 32:
+								candidat[1].sexe = allData[i][colonne];
+								break;
+							//nom_02
+							case 33:
+								candidat[1].nom = allData[i][colonne];
+								break;
 
-								
+							case 34:
+								candidat[1].prenom = allData[i][colonne];
+								break;
+							case 35:
+								list[1].nomListe = allData[i][colonne];
+								break;
+							case 36:
+								csieges[1].sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 37:
+								csieges[1].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 38:
+								csieges[1].sieges_cc = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 39:
+								elect[1].voix = Convert.ToInt32(allData[i][colonne]);
+								break;
+							// code nuance_03
+							case 42:
+								parti[2].code_nuance = allData[i][colonne];
+								break;
+							case 43:
+								candidat[2].sexe = allData[i][colonne];
+								break;
+							case 44:
+								candidat[2].nom = allData[i][colonne];
+								break;
+							case 45:
+								candidat[2].prenom = allData[i][colonne];
+								break;
+							case 46:
+								list[2].nomListe = allData[i][colonne];
+								break;
+							case 47:
+								csieges[2].sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 48:
+								csieges[2].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 49:
+								csieges[2].sieges_cc = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 50:
+								elect[2].voix = Convert.ToInt32(allData[i][colonne]);
+								break;
+							// code nuance_04
+							case 53:
+								parti[3].code_nuance = allData[i][colonne];
+								break;
+							case 54:
+								candidat[3].sexe = allData[i][colonne];
+								break;
+							case 55:
+								candidat[3].nom = allData[i][colonne];
+								break;
+							case 56:
+								candidat[3].prenom = allData[i][colonne];
+								break;
+							case 57:
+								list[3].nomListe = allData[i][colonne];
+								break;
+							case 58:
+								csieges[3].sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 59:
+								csieges[3].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 60:
+								csieges[3].sieges_cc = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 61:
+								elect[3].voix = Convert.ToInt32(allData[i][colonne]);
+								break;
+							// code_nuance_05
+							case 64:
+								parti[4].code_nuance = allData[i][colonne];
+								break;
+							case 65:
+								candidat[4].sexe = allData[i][colonne];
+								break;
+							case 66:
+								candidat[4].nom = allData[i][colonne];
+								break;
+							case 67:
+								candidat[4].prenom = allData[i][colonne];
+								break;
+							case 68:
+								list[4].nomListe = allData[i][colonne];
+								break;
+							case 69:
+								csieges[4].sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 70:
+								csieges[4].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 71:
+								csieges[4].sieges_cc = Convert.ToSByte(allData[i][colonne]);
+								break;
+							case 72:
+								elect[4].voix = Convert.ToInt32(allData[i][colonne]);
+								break;
 
 						}
 					}
@@ -155,10 +264,15 @@ namespace testJSON
 
 			}
 
-			
+
 
 
 		}
+
+
+
+
+	}
 
 		/// <summary>
 		/// A un moment, tu peux lire le JSON, mais sa mère le csv c'est mieux
