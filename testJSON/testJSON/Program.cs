@@ -17,9 +17,9 @@ namespace testJSON
 			Commune comm = new Commune();
 			stats_election stat = new stats_election();
 			Parti[] parti = new Parti[5];
-			Liste list = new Liste();
-			calcul_sieges csieges = new calcul_sieges();
-			election elect = new election();
+			Liste [] list = new Liste[5];
+			calcul_sieges [] csieges = new calcul_sieges[5];
+			election [] elect = new election[5];
 
 			string[][] allData = lireToutesLesDonnees();
 
@@ -256,23 +256,17 @@ namespace testJSON
 								elect[4].voix = Convert.ToInt32(allData[i][colonne]);
 								break;
 
-						}
-					}
-				}
+						} //Fin du switch
+
+					} //Fin du if
+
+				}//Fin du for des colonnes
 
 				//Insérer les requêtes pour la bdd ici
 
-			}
+			} //FIn du for pour les lignes
 
-
-
-
-		}
-
-
-
-
-	}
+		} //Fin du main
 
 		/// <summary>
 		/// A un moment, tu peux lire le JSON, mais sa mère le csv c'est mieux
@@ -301,9 +295,9 @@ namespace testJSON
 			using (var context = new election_municipaleEntities())
 			{
 
-				for(int i =0; i < candidat.Length; i++)
+				for (int i = 0; i < candidat.Length; i++)
 				{
-					if(candidat[i] != null)
+					if (candidat[i] != null)
 					{
 						//On fait une requête pour voir si l'id du candidat n'existe pas déjà dans la bdd
 						var query = from candid in context.Candidat
@@ -311,7 +305,7 @@ namespace testJSON
 									select candid;
 
 						//Si il n'est pas dans la BDD, on peut l'insérer
-						if(query == null)
+						if (query == null)
 						{
 							context.Candidat.Add(candidat[i]);
 						}
@@ -331,13 +325,13 @@ namespace testJSON
 		/// <param name="dpt">Le département</param>
 		public static void insertionDonneesDepartement(Departement dpt)
 		{
-			using(var context = new election_municipaleEntities())
+			using (var context = new election_municipaleEntities())
 			{
 				context.Departement.Add(dpt);
 				context.SaveChanges();
 			}
 
-			
+
 		}
 
 		/// <summary>
@@ -346,7 +340,7 @@ namespace testJSON
 		/// <param name="com"></param>
 		public static void insertionCommune(Commune com)
 		{
-			using(var context = new election_municipaleEntities())
+			using (var context = new election_municipaleEntities())
 			{
 				context.Commune.Add(com);
 				context.SaveChanges();
@@ -359,7 +353,7 @@ namespace testJSON
 		/// <param name="stat"></param>
 		public static void insertionStatElection(stats_election stat)
 		{
-			using(var context = new election_municipaleEntities())
+			using (var context = new election_municipaleEntities())
 			{
 				context.stats_election.Add(stat);
 				context.SaveChanges();
@@ -367,6 +361,13 @@ namespace testJSON
 		}
 
 	}
-
-
 }
+
+
+
+
+
+
+
+
+

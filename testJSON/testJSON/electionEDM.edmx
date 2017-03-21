@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="election_municipaleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="election_municipaleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnneeElection">
           <Key>
             <PropertyRef Name="annee" />
@@ -277,7 +277,8 @@
             <End Role="stats_election" EntitySet="stats_election" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="election_municipaleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -384,9 +385,9 @@
           <Property Name="exprimes" Type="Int32" />
           <Property Name="annee" Type="Int32" Nullable="false" />
           <Property Name="insee" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="votants" Type="Int32" />
           <NavigationProperty Name="AnneeElection" Relationship="Self.FK_stats_election_annee" FromRole="stats_election" ToRole="AnneeElection" />
           <NavigationProperty Name="Commune" Relationship="Self.FK_stats_election_insee" FromRole="stats_election" ToRole="Commune" />
-          <Property Name="votants" Type="Int32" />
         </EntityType>
         <Association Name="FK_calcul_sieges_annee">
           <End Role="AnneeElection" Type="Self.AnneeElection" Multiplicity="1" />
@@ -660,13 +661,13 @@
           <EntitySetMapping Name="stats_election">
             <EntityTypeMapping TypeName="election_municipaleModel.stats_election">
               <MappingFragment StoreEntitySet="stats_election">
-                <ScalarProperty Name="votants" ColumnName="votants" />
                 <ScalarProperty Name="inscrits" ColumnName="inscrits" />
                 <ScalarProperty Name="abstentions" ColumnName="abstentions" />
                 <ScalarProperty Name="blancs_et_nuls" ColumnName="blancs_et_nuls" />
                 <ScalarProperty Name="exprimes" ColumnName="exprimes" />
                 <ScalarProperty Name="annee" ColumnName="annee" />
                 <ScalarProperty Name="insee" ColumnName="insee" />
+                <ScalarProperty Name="votants" ColumnName="votants" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
