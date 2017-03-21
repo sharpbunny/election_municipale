@@ -28,10 +28,15 @@ namespace election_municipale
 		{
 			using (StreamReader reader = File.OpenText(lienFichier))
 			{
-				JObject array = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+				int a = 0;
+				JArray array = (JArray)JToken.ReadFrom(new JsonTextReader(reader));
 				foreach (var item in array)
 				{
-					titreLabel.Content = item.Key;
+					foreach (var bip in item.Select((value, i) => new { i, value }))
+					{
+						titreLabel.Text += bip.i + "" + bip.value +"a";
+					}
+					
 				}
 			}
 		}
