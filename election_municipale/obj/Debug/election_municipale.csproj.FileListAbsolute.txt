@@ -16,3 +16,4 @@ C:\Users\34011-14-07\Desktop\github\election_municipale\election_municipale\obj\
 C:\Users\34011-14-07\Desktop\github\election_municipale\election_municipale\obj\Debug\election_municipale.csproj.GenerateResource.Cache
 C:\Users\34011-14-07\Desktop\github\election_municipale\election_municipale\obj\Debug\election_municipale.exe
 C:\Users\34011-14-07\Desktop\github\election_municipale\election_municipale\obj\Debug\election_municipale.pdb
+C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\bin\Debug\election_municipale.exe.config
