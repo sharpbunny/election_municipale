@@ -23,12 +23,17 @@ namespace testJSON
 			AnneeElection year = new AnneeElection();
 			year.annee = 2014;
 
-			string[][] allData = lireToutesLesDonnees();
+			string[][] allData = lireToutesLesDonnees(); //Lire toutes les données depuis le fichier csv et les stocker dans allData
 
 			for (int i = 0; i < allData.Length; i++)
 			{
 				for (int colonne = 0; colonne < 75; colonne++)
 				{
+					reinitialisationTableauDeDonnees(candidat, parti, list, csieges, elect);
+					comm = reinitialisationCommune(comm);
+					dept = reinitialisationDepartement(dept);
+					stat = reinitialisationStatsElection(stat);
+					
 					if (i > 0)
 					{
 						switch (colonne)
@@ -349,21 +354,70 @@ namespace testJSON
 				csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
 				insertionDonneesCalculSieges(csieges);
 
-
-
-
-
-				/*
-				--- Liste d'insertion des données ---
-				-AnneeElection
-
-				-calcul_sieges	
-
-			*/
-
-			} //FIn du for pour les lignes
+			} //Fin du for pour les lignes
 
 		} //Fin du main
+
+		// ******************************************************
+		//				METHODES UTILES
+		// ******************************************************
+
+		/// <summary>
+		/// Permet de réinitialiser tous les tableaux utilisés dans le programme à null
+		/// </summary>
+		/// <param name="candidat">Tableau de candidats</param>
+		/// <param name="parti">Tableau contenant les partis politiques</param>
+		/// <param name="list">Tableau contenant les listes electorales</param>
+		/// <param name="csiege">Tableau contenant les tables associations : calcul_sieges</param>
+		/// <param name="elec">Tableau contenant les tables association : elec</param>
+		public static void reinitialisationTableauDeDonnees(Candidat[] candidat, Parti [] parti, Liste [] list, calcul_sieges [] csiege, election [] elec)
+		{
+			for(int i=0; i < candidat.Length; i++)
+			{
+				candidat[i] = null;
+				parti[i] = null;
+				list[i] = null;
+				csiege[i] = null;
+				elec[i] = null;
+			}
+		}
+
+		/// <summary>
+		/// Permet de réinitialiser un objet Département à null
+		/// </summary>
+		/// <param name="dept">Département</param>
+		/// <returns></returns>
+		public static Departement reinitialisationDepartement(Departement dept)
+		{
+			dept = null;
+			return dept;
+		}
+
+		/// <summary>
+		/// Permet de réinitialiser un objet Commune à null
+		/// </summary>
+		/// <param name="comm">Commune</param>
+		/// <returns></returns>
+		public static Commune reinitialisationCommune(Commune comm)
+		{
+			comm = null;
+			return comm;
+		}
+
+		/// <summary>
+		/// Permet de réinitialiser la table association : stats_election à null
+		/// </summary>
+		/// <param name="stat">Table association : stats_election</param>
+		/// <returns></returns>
+		public static stats_election reinitialisationStatsElection(stats_election stat)
+		{
+			stat = null;
+			return stat;
+		}
+
+		// *****************************************************************
+		//			FONCTIONS DE LECTURE DE DONNEES DEPUIS LE CSV
+		// *****************************************************************
 
 		/// <summary>
 		/// A un moment, tu peux lire le JSON, mais sa mère le csv c'est mieux
