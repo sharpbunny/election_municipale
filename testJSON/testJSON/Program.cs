@@ -227,6 +227,19 @@ namespace testJSON
 			}
 		}
 
+		/// <summary>
+		/// Insertion des données dans la BDD des stats relatives aux élections pour une commune
+		/// </summary>
+		/// <param name="stat"></param>
+		public static void insertionStatElection(stats_election stat)
+		{
+			using(var context = new election_municipaleEntities())
+			{
+				context.stats_election.Add(stat);
+				context.SaveChanges();
+			}
+		}
+
 	}
 
 
