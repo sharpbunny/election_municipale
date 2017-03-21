@@ -16,9 +16,10 @@ namespace testJSON
 			Departement dept = new Departement();
 			Commune comm = new Commune();
 			stats_election stat = new stats_election();
-			Parti parti = new Parti();
+			Parti[] parti = new Parti[5];
 			Liste list = new Liste();
 			calcul_sieges csieges = new calcul_sieges();
+			election elect = new election();
 
 			string[][] allData = lireToutesLesDonnees();
 
@@ -96,7 +97,7 @@ namespace testJSON
 
 							//code_nuance
 							case 20:
-								parti.code_nuance = allData[i][colonne];
+								parti[0].code_nuance = allData[i][colonne];
 								break;
 							
 							//sexe_01
@@ -133,6 +134,18 @@ namespace testJSON
 							case 27:
 								csieges.sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
+
+							//voix_01
+							case 28:
+								elect.voix = Convert.ToSByte(allData[i][colonne]);
+								break;
+
+							//code_nuance_02
+							case 29:
+								parti[1].code_nuance = allData[i][colonne];
+								break;
+
+								
 
 						}
 					}
