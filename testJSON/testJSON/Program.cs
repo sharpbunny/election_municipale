@@ -214,6 +214,19 @@ namespace testJSON
 			
 		}
 
+		/// <summary>
+		/// Insertion Données de la commune
+		/// </summary>
+		/// <param name="com"></param>
+		public static void insertionCommune(Commune com)
+		{
+			using(var context = new election_municipaleEntities())
+			{
+				context.Commune.Add(com);
+				context.SaveChanges();
+			}
+		}
+
 	}
 
 
