@@ -12,19 +12,32 @@ namespace testJSON
 	{
 		static void Main(string[] args)
 		{
-
+			Candidat[] candidat = new Candidat[5];
+			Departement dept = new Departement();
 			string[][] allData = lireToutesLesDonnees();
 
 			for(int i=0; i < allData.Length; i++)
 			{
-				for(int j=0; j < 75; j++)
+				for(int colonne=0; colonne < 75; colonne++)
 				{
-					
-					if(j == 22)
+					if(i > 0)
 					{
-						Candidat johnny = new Candidat();
-						johnny.nom = allData[i][j];
-						Console.WriteLine(johnny.nom);
+						switch (colonne)
+						{
+							//code du département
+							case 1:
+								dept.code_du_departement = Convert.ToSByte(allData[i][colonne]);
+								break;
+							//type du scrutin
+							case 2:
+								break;
+
+							
+							//libelle_du_departement
+							case 3:
+								dept.libelle_du_departement = allData[i][colonne];
+								break;
+						}
 					}
 				}
 			}

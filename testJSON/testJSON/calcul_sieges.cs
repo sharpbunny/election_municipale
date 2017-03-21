@@ -12,22 +12,17 @@ namespace testJSON
     using System;
     using System.Collections.Generic;
     
-    public partial class Candidat
+    public partial class calcul_sieges
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Candidat()
-        {
-            this.election = new HashSet<election>();
-        }
-    
-        public int idCandidat { get; set; }
-        public string nom { get; set; }
-        public string prenom { get; set; }
-        public string sexe { get; set; }
+        public Nullable<short> sieges_elus { get; set; }
+        public Nullable<short> sieges_cc { get; set; }
+        public Nullable<short> sieges_secteurs { get; set; }
+        public string insee { get; set; }
+        public int annee { get; set; }
         public int idListe { get; set; }
     
+        public virtual AnneeElection AnneeElection { get; set; }
         public virtual Liste Liste { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<election> election { get; set; }
+        public virtual Commune Commune { get; set; }
     }
 }
