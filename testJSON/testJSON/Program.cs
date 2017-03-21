@@ -17,6 +17,8 @@ namespace testJSON
 			Commune comm = new Commune();
 			stats_election stat = new stats_election();
 			Parti parti = new Parti();
+			Liste list = new Liste();
+			calcul_sieges csieges = new calcul_sieges();
 
 			string[][] allData = lireToutesLesDonnees();
 
@@ -110,6 +112,16 @@ namespace testJSON
 							//prenom_01
 							case 23:
 								candidat[0].prenom = allData[i][colonne];
+								break;
+
+							//liste_01
+							case 24:
+								list.nomListe = allData[i][colonne];
+								break;
+
+							//sieges_elu_01
+							case 25:
+								csieges.sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 						}
