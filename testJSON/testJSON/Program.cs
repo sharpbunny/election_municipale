@@ -144,10 +144,12 @@ namespace testJSON
 							case 31:
 								parti[1].code_nuance = allData[i][colonne];
 								break;
+
 							//sexe_02
 							case 32:
 								candidat[1].sexe = allData[i][colonne];
 								break;
+
 							//nom_02
 							case 33:
 								candidat[1].nom = allData[i][colonne];
@@ -156,102 +158,134 @@ namespace testJSON
 							case 34:
 								candidat[1].prenom = allData[i][colonne];
 								break;
+
 							case 35:
 								list[1].nomListe = allData[i][colonne];
 								break;
+
 							case 36:
 								csieges[1].sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 37:
 								csieges[1].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 38:
 								csieges[1].sieges_cc = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 39:
 								elect[1].voix = Convert.ToInt32(allData[i][colonne]);
 								break;
+
 							// code nuance_03
 							case 42:
 								parti[2].code_nuance = allData[i][colonne];
 								break;
+
 							case 43:
 								candidat[2].sexe = allData[i][colonne];
 								break;
+
 							case 44:
 								candidat[2].nom = allData[i][colonne];
 								break;
+
 							case 45:
 								candidat[2].prenom = allData[i][colonne];
 								break;
+
 							case 46:
 								list[2].nomListe = allData[i][colonne];
 								break;
+
 							case 47:
 								csieges[2].sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 48:
 								csieges[2].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 49:
 								csieges[2].sieges_cc = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 50:
 								elect[2].voix = Convert.ToInt32(allData[i][colonne]);
 								break;
+
 							// code nuance_04
 							case 53:
 								parti[3].code_nuance = allData[i][colonne];
 								break;
+
 							case 54:
 								candidat[3].sexe = allData[i][colonne];
 								break;
+
 							case 55:
 								candidat[3].nom = allData[i][colonne];
 								break;
+
 							case 56:
 								candidat[3].prenom = allData[i][colonne];
 								break;
+
 							case 57:
 								list[3].nomListe = allData[i][colonne];
 								break;
+
 							case 58:
 								csieges[3].sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 59:
 								csieges[3].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 60:
 								csieges[3].sieges_cc = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 61:
 								elect[3].voix = Convert.ToInt32(allData[i][colonne]);
 								break;
+
 							// code_nuance_05
 							case 64:
 								parti[4].code_nuance = allData[i][colonne];
 								break;
+
 							case 65:
 								candidat[4].sexe = allData[i][colonne];
 								break;
+
 							case 66:
 								candidat[4].nom = allData[i][colonne];
 								break;
+
 							case 67:
 								candidat[4].prenom = allData[i][colonne];
 								break;
+
 							case 68:
 								list[4].nomListe = allData[i][colonne];
 								break;
+
 							case 69:
 								csieges[4].sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 70:
 								csieges[4].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 71:
 								csieges[4].sieges_cc = Convert.ToSByte(allData[i][colonne]);
 								break;
+
 							case 72:
 								elect[4].voix = Convert.ToInt32(allData[i][colonne]);
 								break;
@@ -327,8 +361,19 @@ namespace testJSON
 		{
 			using (var context = new election_municipaleEntities())
 			{
-				context.Departement.Add(dpt);
-				context.SaveChanges();
+
+				var query = from dept in context.Departement
+							where dept.code_du_departement == dpt.code_du_departement
+							select dept;
+
+				//Si il n'a rien trouvé dans la bdd, on peut ajouter le département
+				if(query == null)
+				{
+					context.Departement.Add(dpt);
+					context.SaveChanges();
+				}
+
+
 			}
 
 
@@ -342,8 +387,18 @@ namespace testJSON
 		{
 			using (var context = new election_municipaleEntities())
 			{
-				context.Commune.Add(com);
-				context.SaveChanges();
+
+				var query = from comm in context.Commune
+							where comm.insee == com.insee
+							select comm;
+
+				if(query == null)
+				{
+					context.Commune.Add(com);
+					context.SaveChanges();
+				}
+
+
 			}
 		}
 
