@@ -20,6 +20,8 @@ namespace testJSON
 			Liste [] list = new Liste[5];
 			calcul_sieges [] csieges = new calcul_sieges[5];
 			election [] elect = new election[5];
+			AnneeElection year = new AnneeElection();
+			year.annee = 2014;
 
 			string[][] allData = lireToutesLesDonnees();
 
@@ -326,19 +328,37 @@ namespace testJSON
 
 				}//Fin du for des colonnes
 
+				insertionDonneesDepartement(dept);
+				insertionDonneesParti(parti);
+
+				comm = insertionCleEtrangereCommune(comm, dept);
+				insertionDonneesCommune(comm);
+
+				//insérer la clé étrangère du parti dans la liste : code_nuance
+				insertionDonneesListe(list);
+
+				//insérer la clé étrangère de la liste ici : idListe
+				insertionDonneesCandidat(candidat);
+
+				//insérer les clés étrangères d'election ici : année, idCandidat, insee
+				insertionDonneesElection(elect);
+
+				//insérer les clés étrangères de stat : annee, insee
+				insertionDonneesStatElection(stat);
+
+				//insérer les clés étrangères de csieges ici : insee, annee, idListe
+				insertionDonneesCalculSieges(csieges);
+
+
+
+
+
 				/*
 				--- Liste d'insertion des données ---
 				-AnneeElection
-				-Département
-				-Parti
-				-Commune
-				-Liste
-				-Candidat
-				
-				Association
-				-election
-				-stats-election
+
 				-calcul_sieges	
+
 			*/
 
 			} //FIn du for pour les lignes
@@ -363,6 +383,28 @@ namespace testJSON
 
 			return allData;
 		}
+
+		// ******************************************************
+		//				AFFECTATION DES CLES ETRANGERES
+		// ******************************************************
+
+		/// <summary>
+		/// Insère la clé étrangère dans la classe Commune
+		/// </summary>
+		/// <param name="com">La commune</param>
+		/// <param name="dept">Le département auquel appartient la commune</param>
+		/// <returns></returns>
+		public static Commune insertionCleEtrangereCommune(Commune com, Departement dept)
+		{
+			com.Departement = dept;
+			return com;
+		}
+		
+
+
+		// ******************************************************
+		//				INSERTION DONNEES BDD
+		// ******************************************************
 
 		/// <summary>
 		/// On va insérer les données relatives aux candidats à l'élection municipale dans la base de données
@@ -426,7 +468,7 @@ namespace testJSON
 		/// Insertion Données de la commune
 		/// </summary>
 		/// <param name="com"></param>
-		public static void insertionCommune(Commune com)
+		public static void insertionDonneesCommune(Commune com)
 		{
 			using (var context = new election_municipaleEntities())
 			{
@@ -449,13 +491,97 @@ namespace testJSON
 		/// Insertion des données dans la BDD des stats relatives aux élections pour une commune
 		/// </summary>
 		/// <param name="stat"></param>
-		public static void insertionStatElection(stats_election stat)
+		public static void insertionDonneesStatElection(stats_election stat)
 		{
 			using (var context = new election_municipaleEntities())
 			{
 				context.stats_election.Add(stat);
 				context.SaveChanges();
 			}
+		}
+		
+		/// <summary>
+		/// insertion des listes éléctorales dans la base de données
+		/// </summary>
+		/// <param name="list">Tableau de listes électorales</param>
+		public static void insertionDonneesListe(Liste [] list)
+		{
+			using(var context = new election_municipaleEntities())
+			{
+				if(list[i] != null)
+				{
+					var query = from liste in context.Liste
+								where liste.nomListe == list[i].nomListe
+								select liste;
+
+					//Si la requête n'est pas nulle, c'est que la liste n'existe pas dans la BDD donc on l'ajoute
+					if(query == null)
+					{
+						context.Liste.Add(list[i]);
+						context.SaveChanges();
+					}
+
+				}
+			}
+		}
+
+		/// <summary>
+		/// Insertion des données dans la BDD des partis politiques
+		/// </summary>
+		/// <param name="parti">Parti politique</param>
+		public static void insertionDonneesParti(Parti [] parti)
+		{
+
+			using(var context = new election_municipaleEntities())
+			{
+				//On va parcourir le tableau de partis
+				for(int i = 0; i < parti.Length; i++)
+				{
+					if(parti[i] != null)
+					{
+						var query = from part in context.Parti
+									where part.nomParti = parti[i].nomParti
+									select part;
+
+						//Si la requête est nulle, c'est que le parti n'est pas encore dans la BDD, donc on l'ajoute.
+						if (query == null)
+						{
+							context.Parti.Add(parti[i]);
+							context.SaveChanges();
+						}
+					}
+
+
+
+				}
+			}
+		}
+
+		/// <summary>
+		/// Insertion des données concernant la table association "election"
+		/// </summary>
+		/// <param name="elect">Table association : election</param>
+		public static void insertionDonneesElection(election [] elect)
+		{
+			using(var context = new election_municipaleEntities())
+			{
+				for(int i =0; i < elect.Length; i++)
+				{
+					if(elect[i] != null)
+					{
+						
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// insertion de la table stockant le nombre de sièges affectés à une commune
+		/// </summary>
+		/// <param name="csiege"></param>
+		public static void insertionDonneesCalculSieges(calcul_sieges [] csiege)
+		{
+
 		}
 
 	}
