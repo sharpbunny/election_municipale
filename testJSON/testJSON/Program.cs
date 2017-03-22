@@ -12,27 +12,29 @@ namespace testJSON
 	{
 		static void Main(string[] args)
 		{
-			Candidat[] candidat = new Candidat[5];
-			Departement dept = new Departement();
-			Commune comm = new Commune();
-			stats_election stat = new stats_election();
-			Parti[] parti = new Parti[5];
-			Liste [] list = new Liste[5];
-			calcul_sieges [] csieges = new calcul_sieges[5];
-			election [] elect = new election[5];
-			AnneeElection year = new AnneeElection();
-			year.annee = 2014;
+
 
 			string[][] allData = lireToutesLesDonnees(); //Lire toutes les données depuis le fichier csv et les stocker dans allData
 
 			for (int i = 0; i < allData.Length; i++)
 			{
+				Candidat[] candidat = new Candidat[5];
+				Departement dept = new Departement();
+				Commune comm = new Commune();
+				stats_election stat = new stats_election();
+				Parti[] parti = new Parti[5];
+				Liste[] list = new Liste[5];
+				calcul_sieges[] csieges = new calcul_sieges[5];
+				election[] elect = new election[5];
+				AnneeElection year = new AnneeElection();
+				year.annee = 2014;
+
 				for (int colonne = 0; colonne < 75; colonne++)
 				{
 					reinitialisationTableauDeDonnees(candidat, parti, list, csieges, elect);
-					comm = reinitialisationCommune(comm);
-					dept = reinitialisationDepartement(dept);
-					stat = reinitialisationStatsElection(stat);
+					//comm = reinitialisationCommune(comm);
+					//dept = reinitialisationDepartement(dept);
+					//stat = reinitialisationStatsElection(stat);
 					
 					if (i > 0)
 					{
@@ -50,8 +52,6 @@ namespace testJSON
 							//libelle_du_departement
 							case 3:
 								dept.libelle_du_departement = allData[i][colonne];
-								Console.WriteLine(dept.libelle_du_departement);
-								Console.ReadLine();
 								break;
 
 							//code de la commune
@@ -146,7 +146,7 @@ namespace testJSON
 
 							//voix_01
 							case 28:
-								elect[0].voix = Convert.ToSByte(allData[i][colonne]);
+								elect[0].voix = Convert.ToInt32(allData[i][colonne]);
 								break;
 
 							//code_nuance_02
@@ -331,28 +331,34 @@ namespace testJSON
 
 						} //Fin du switch
 
+						if(colonne > 72)
+						{
+							insertionDonneesDepartement(dept);
+							insertionDonneesParti(parti);
+
+							comm = insertionCleEtrangereCommune(comm, dept);
+							insertionDonneesCommune(comm);
+
+							list = insertionCleEtrangereListe(list, parti);
+							insertionDonneesListe(list);
+
+							candidat = insertionCleEtrangereCandidat(candidat, list);
+							insertionDonneesCandidat(candidat);
+
+							elect = insertionCleEtrangereElection(elect, year, candidat, comm);
+							insertionDonneesElection(elect);
+
+							stat = insertionCleEtrangereStatsElection(stat, year, comm);
+							insertionDonneesStatElection(stat);
+
+							csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
+							insertionDonneesCalculSieges(csieges, comm, year, list);
+						}
+
+
 					} //Fin du if
 
-					insertionDonneesDepartement(dept);
-					insertionDonneesParti(parti);
 
-					comm = insertionCleEtrangereCommune(comm, dept);
-					insertionDonneesCommune(comm);
-
-					list = insertionCleEtrangereListe(list, parti);
-					insertionDonneesListe(list);
-
-					candidat = insertionCleEtrangereCandidat(candidat, list);
-					insertionDonneesCandidat(candidat);
-
-					elect = insertionCleEtrangereElection(elect, year, candidat, comm);
-					insertionDonneesElection(elect);
-
-					stat = insertionCleEtrangereStatsElection(stat, year, comm);
-					insertionDonneesStatElection(stat);
-
-					csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
-					insertionDonneesCalculSieges(csieges, comm, year, list);
 
 				}//Fin du for des colonnes
 
@@ -377,11 +383,11 @@ namespace testJSON
 		{
 			for(int i=0; i < candidat.Length; i++)
 			{
-				candidat[i] = null;
-				parti[i] = null;
-				list[i] = null;
-				csiege[i] = null;
-				elec[i] = null;
+				candidat[i] = new Candidat(); ;
+				parti[i] = new Parti();
+				list[i] = new Liste();
+				csiege[i] = new calcul_sieges(); ;
+				elec[i] = new election();
 			}
 		}
 
