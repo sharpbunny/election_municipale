@@ -13,7 +13,7 @@ namespace testJSON
 		static void Main(string[] args)
 		{
 
-
+			year.annee = 2014;
 			string[][] allData = lireToutesLesDonnees(); //Lire toutes les données depuis le fichier csv et les stocker dans allData
 
 			for (int i = 0; i < allData.Length; i++)
@@ -27,7 +27,6 @@ namespace testJSON
 				calcul_sieges[] csieges = new calcul_sieges[5];
 				election[] elect = new election[5];
 				AnneeElection year = new AnneeElection();
-				year.annee = 2014;
 
 				for (int colonne = 0; colonne < 75; colonne++)
 				{
@@ -311,22 +310,22 @@ namespace testJSON
 
 							//sieges_elu_05
 							case 69:
-								csieges[4].sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								if(allData[i][colonne] != "") csieges[4].sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//sieges_secteur_05
 							case 70:
-								csieges[4].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
+								if (allData[i][colonne] != "") csieges[4].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//sieges_cc_05
 							case 71:
-								csieges[4].sieges_cc = Convert.ToSByte(allData[i][colonne]);
+								if (allData[i][colonne] != "")  csieges[4].sieges_cc = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//voix_05
 							case 72:
-								elect[4].voix = Convert.ToInt32(allData[i][colonne]);
+								if (allData[i][colonne] != "") elect[4].voix = Convert.ToInt32(allData[i][colonne]);
 								break;
 
 						} //Fin du switch
