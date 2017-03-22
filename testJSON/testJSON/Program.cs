@@ -20,13 +20,20 @@ namespace testJSON
 			Liste [] list = new Liste[5];
 			calcul_sieges [] csieges = new calcul_sieges[5];
 			election [] elect = new election[5];
+			AnneeElection year = new AnneeElection();
+			year.annee = 2014;
 
-			string[][] allData = lireToutesLesDonnees();
+			string[][] allData = lireToutesLesDonnees(); //Lire toutes les données depuis le fichier csv et les stocker dans allData
 
 			for (int i = 0; i < allData.Length; i++)
 			{
 				for (int colonne = 0; colonne < 75; colonne++)
 				{
+					reinitialisationTableauDeDonnees(candidat, parti, list, csieges, elect);
+					comm = reinitialisationCommune(comm);
+					dept = reinitialisationDepartement(dept);
+					stat = reinitialisationStatsElection(stat);
+					
 					if (i > 0)
 					{
 						switch (colonne)
@@ -326,24 +333,92 @@ namespace testJSON
 
 				}//Fin du for des colonnes
 
-				/*
-				--- Liste d'insertion des données ---
-				-AnneeElection
-				-Département
-				-Parti
-				-Commune
-				-Liste
-				-Candidat
-				
-				Association
-				-election
-				-stats-election
-				-calcul_sieges	
-			*/
+				insertionDonneesDepartement(dept);
+				insertionDonneesParti(parti);
+
+				comm = insertionCleEtrangereCommune(comm, dept);
+				insertionDonneesCommune(comm);
+
+				list = insertionCleEtrangereListe(list, parti);
+				insertionDonneesListe(list);
+
+				candidat = insertionCleEtrangereCandidat(candidat, list);
+				insertionDonneesCandidat(candidat);
+
+				elect = insertionCleEtrangereElection(elect, year, candidat, comm);
+				insertionDonneesElection(elect);
+
+				stat = insertionCleEtrangereStatsElection(stat, year, comm);
+				insertionDonneesStatElection(stat);
+
+				csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
+				insertionDonneesCalculSieges(csieges);
+
 
 			} //Fin du for pour les lignes
 
 		} //Fin du main
+
+		// ******************************************************
+		//				METHODES UTILES
+		// ******************************************************
+
+		/// <summary>
+		/// Permet de réinitialiser tous les tableaux utilisés dans le programme à null
+		/// </summary>
+		/// <param name="candidat">Tableau de candidats</param>
+		/// <param name="parti">Tableau contenant les partis politiques</param>
+		/// <param name="list">Tableau contenant les listes electorales</param>
+		/// <param name="csiege">Tableau contenant les tables associations : calcul_sieges</param>
+		/// <param name="elec">Tableau contenant les tables association : elec</param>
+		public static void reinitialisationTableauDeDonnees(Candidat[] candidat, Parti [] parti, Liste [] list, calcul_sieges [] csiege, election [] elec)
+		{
+			for(int i=0; i < candidat.Length; i++)
+			{
+				candidat[i] = null;
+				parti[i] = null;
+				list[i] = null;
+				csiege[i] = null;
+				elec[i] = null;
+			}
+		}
+
+		/// <summary>
+		/// Permet de réinitialiser un objet Département à null
+		/// </summary>
+		/// <param name="dept">Département</param>
+		/// <returns></returns>
+		public static Departement reinitialisationDepartement(Departement dept)
+		{
+			dept = null;
+			return dept;
+		}
+
+		/// <summary>
+		/// Permet de réinitialiser un objet Commune à null
+		/// </summary>
+		/// <param name="comm">Commune</param>
+		/// <returns></returns>
+		public static Commune reinitialisationCommune(Commune comm)
+		{
+			comm = null;
+			return comm;
+		}
+
+		/// <summary>
+		/// Permet de réinitialiser la table association : stats_election à null
+		/// </summary>
+		/// <param name="stat">Table association : stats_election</param>
+		/// <returns></returns>
+		public static stats_election reinitialisationStatsElection(stats_election stat)
+		{
+			stat = null;
+			return stat;
+		}
+
+		// *****************************************************************
+		//			FONCTIONS DE LECTURE DE DONNEES DEPUIS LE CSV
+		// *****************************************************************
 
 		/// <summary>
 		/// A un moment, tu peux lire le JSON, mais sa mère le csv c'est mieux
@@ -363,6 +438,130 @@ namespace testJSON
 
 			return allData;
 		}
+
+		// ******************************************************
+		//				AFFECTATION DES CLES ETRANGERES
+		// ******************************************************
+
+		/// <summary>
+		/// Insère la clé étrangère dans la classe Commune
+		/// </summary>
+		/// <param name="com">La commune</param>
+		/// <param name="dept">Le département auquel appartient la commune</param>
+		/// <returns></returns>
+		public static Commune insertionCleEtrangereCommune(Commune com, Departement dept)
+		{
+			com.Departement = dept;
+			return com;
+		}
+
+		/// <summary>
+		/// Insertion de la clé étrangère Parti dans les listes éléctorales
+		/// </summary>
+		/// <param name="liste">Tableau de listes électorales</param>
+		/// <param name="parti">Tableau de partis politiques</param>
+		/// <returns></returns>
+		public static Liste [] insertionCleEtrangereListe(Liste[] liste, Parti [] parti)
+		{
+			for(int i = 0; i<liste.Length; i++)
+			{
+				if(liste[i] != null && parti[i] != null)
+				{
+					liste[i].Parti = parti[i];
+				}
+			}
+
+			return liste;
+		}
+
+		/// <summary>
+		/// Insertion de la clé étrangère Liste dans la classe Candidat
+		/// </summary>
+		/// <param name="candidat">Tableau de candidats</param>
+		/// <param name="list">Tableau de listes électorales</param>
+		/// <returns></returns>
+		public static Candidat[] insertionCleEtrangereCandidat(Candidat [] candidat, Liste[] list)
+		{
+			for(int i = 0; i < candidat.Length; i++)
+			{
+				if(candidat[i] != null && list[i] != null)
+				{
+					candidat[i].Liste = list[i];
+				}
+			}
+
+			return candidat;
+
+		}
+
+		/// <summary>
+		/// insertion des clés étrangères de la table association election
+		/// </summary>
+		/// <param name="elect">La table association election</param>
+		/// <param name="year">Année de l'election municipale</param>
+		/// <param name="candidat">Candidats à l'election municipales</param>
+		/// <param name="comm">La commune où a eu lieu l'election</param>
+		/// <returns></returns>
+		public static election [] insertionCleEtrangereElection(election[] elect, AnneeElection year, Candidat [] candidat, Commune comm)
+		{
+			for(int i=0; i<elect.Length; i++)
+			{
+				if(elect[i] != null)
+				{
+					elect[i].Candidat = candidat[i];
+					elect[i].Commune = comm;
+					elect[i].AnneeElection = year;
+				}
+			}
+
+			return elect;
+		}
+		
+		/// <summary>
+		/// Insertion des clés étrangères relatives à la table association : stats_election
+		/// </summary>
+		/// <param name="stat">La table association : stats_election</param>
+		/// <param name="year">Année de l'élection municipale</param>
+		/// <param name="comm">Nom de la commune de laquelle on va récupérer des statistiques</param>
+		/// <returns></returns>
+		public static stats_election insertionCleEtrangereStatsElection(stats_election stat, AnneeElection year, Commune comm)
+		{
+			if(stat != null)
+			{
+				stat.AnneeElection = year;
+				stat.Commune = comm;
+			}
+
+			return stat;
+		}
+
+		/// <summary>
+		/// Insertion des clés étrangères relatives au calcul des sièges alloués selon les résultats des élections
+		/// </summary>
+		/// <param name="csiege">Tableau de table association : calcul_sieges</param>
+		/// <param name="comm">Commune dans laquelle on indique les sièges alloués à certaines listes</param>
+		/// <param name="year">Année de l'election</param>
+		/// <param name="liste">Tableau de listes electorales</param>
+		/// <returns></returns>
+		public static calcul_sieges [] insertionCleEtrangereCalculSieges(calcul_sieges [] csiege, Commune comm, AnneeElection year, Liste[] liste)
+		{
+			for(int i = 0; i < csiege.Length; i++)
+			{
+				if(csiege[i] != null && liste[i] != null)
+				{
+					csiege[i].Commune = comm;
+					csiege[i].AnneeElection = year;
+					csiege[i].Liste = liste[i];
+				}
+			}
+
+			return csiege;
+		}
+
+
+		// ******************************************************
+		//				INSERTION DONNEES BDD
+		// ******************************************************
 
 		/// <summary>
 		/// On va insérer les données relatives aux candidats à l'élection municipale dans la base de données
@@ -426,7 +625,7 @@ namespace testJSON
 		/// Insertion Données de la commune
 		/// </summary>
 		/// <param name="com"></param>
-		public static void insertionCommune(Commune com)
+		public static void insertionDonneesCommune(Commune com)
 		{
 			using (var context = new election_municipaleEntities())
 			{
@@ -449,13 +648,102 @@ namespace testJSON
 		/// Insertion des données dans la BDD des stats relatives aux élections pour une commune
 		/// </summary>
 		/// <param name="stat"></param>
-		public static void insertionStatElection(stats_election stat)
+		public static void insertionDonneesStatElection(stats_election stat)
 		{
 			using (var context = new election_municipaleEntities())
 			{
 				context.stats_election.Add(stat);
 				context.SaveChanges();
 			}
+		}
+		
+		/// <summary>
+		/// insertion des listes éléctorales dans la base de données
+		/// </summary>
+		/// <param name="list">Tableau de listes électorales</param>
+		public static void insertionDonneesListe(Liste [] list)
+		{
+			using(var context = new election_municipaleEntities())
+			{
+				//On parcourt le tableau de listes electorales
+				for(int i=0; i< list.Length; i++)
+				{
+					if (list[i] != null)
+					{
+						var query = from liste in context.Liste
+									where liste.nomListe == list[i].nomListe
+									select liste;
+
+						//Si la requête n'est pas nulle, c'est que la liste n'existe pas dans la BDD donc on l'ajoute
+						if (query == null)
+						{
+							context.Liste.Add(list[i]);
+							context.SaveChanges();
+						}
+
+					}
+				}
+
+			}
+		}
+
+		/// <summary>
+		/// Insertion des données dans la BDD des partis politiques
+		/// </summary>
+		/// <param name="parti">Parti politique</param>
+		public static void insertionDonneesParti(Parti [] parti)
+		{
+
+			using(var context = new election_municipaleEntities())
+			{
+				//On va parcourir le tableau de partis
+				for(int i = 0; i < parti.Length; i++)
+				{
+					if(parti[i] != null)
+					{
+						var query = from part in context.Parti
+									where part.code_nuance == parti[i].code_nuance
+									select part;
+
+						//Si la requête est nulle, c'est que le parti n'est pas encore dans la BDD, donc on l'ajoute.
+						if (query == null)
+						{
+							context.Parti.Add(parti[i]);
+							context.SaveChanges();
+						}
+					}
+
+
+
+				}
+			}
+		}
+
+		/// <summary>
+		/// Insertion des données concernant la table association "election"
+		/// </summary>
+		/// <param name="elect">Table association : election</param>
+		public static void insertionDonneesElection(election [] elect)
+		{
+			using(var context = new election_municipaleEntities())
+			{
+				for(int i =0; i < elect.Length; i++)
+				{
+					if(elect[i] != null)
+					{
+						
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// insertion de la table stockant le nombre de sièges affectés à une commune
+		/// </summary>
+		/// <param name="csiege"></param>
+		public static void insertionDonneesCalculSieges(calcul_sieges [] csiege)
+		{
+
 		}
 
 	}
