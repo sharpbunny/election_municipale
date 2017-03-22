@@ -50,6 +50,8 @@ namespace testJSON
 							//libelle_du_departement
 							case 3:
 								dept.libelle_du_departement = allData[i][colonne];
+								Console.WriteLine(dept.libelle_du_departement);
+								Console.ReadLine();
 								break;
 
 							//code de la commune
@@ -331,28 +333,28 @@ namespace testJSON
 
 					} //Fin du if
 
+					insertionDonneesDepartement(dept);
+					insertionDonneesParti(parti);
+
+					comm = insertionCleEtrangereCommune(comm, dept);
+					insertionDonneesCommune(comm);
+
+					list = insertionCleEtrangereListe(list, parti);
+					insertionDonneesListe(list);
+
+					candidat = insertionCleEtrangereCandidat(candidat, list);
+					insertionDonneesCandidat(candidat);
+
+					elect = insertionCleEtrangereElection(elect, year, candidat, comm);
+					insertionDonneesElection(elect);
+
+					stat = insertionCleEtrangereStatsElection(stat, year, comm);
+					insertionDonneesStatElection(stat);
+
+					csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
+					insertionDonneesCalculSieges(csieges);
+
 				}//Fin du for des colonnes
-
-				insertionDonneesDepartement(dept);
-				insertionDonneesParti(parti);
-
-				comm = insertionCleEtrangereCommune(comm, dept);
-				insertionDonneesCommune(comm);
-
-				list = insertionCleEtrangereListe(list, parti);
-				insertionDonneesListe(list);
-
-				candidat = insertionCleEtrangereCandidat(candidat, list);
-				insertionDonneesCandidat(candidat);
-
-				elect = insertionCleEtrangereElection(elect, year, candidat, comm);
-				insertionDonneesElection(elect);
-
-				stat = insertionCleEtrangereStatsElection(stat, year, comm);
-				insertionDonneesStatElection(stat);
-
-				csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
-				insertionDonneesCalculSieges(csieges);
 
 
 			} //Fin du for pour les lignes
@@ -451,7 +453,15 @@ namespace testJSON
 		/// <returns></returns>
 		public static Commune insertionCleEtrangereCommune(Commune com, Departement dept)
 		{
-			com.Departement = dept;
+			if(dept == null)
+			{
+				Console.WriteLine("La variable département est nulle.");
+			}
+			else
+			{
+				com.Departement = dept;
+			}
+
 			return com;
 		}
 
@@ -741,9 +751,17 @@ namespace testJSON
 		/// insertion de la table stockant le nombre de sièges affectés à une commune
 		/// </summary>
 		/// <param name="csiege"></param>
-		public static void insertionDonneesCalculSieges(calcul_sieges [] csiege)
+		public static void insertionDonneesCalculSieges(calcul_sieges [] csiege, Commune com, AnneeElection year, Liste [] list)
 		{
-
+			for(int i=0; i < csiege.Length; i++)
+			{
+				if(csiege != null)
+				{
+					csiege[i].Commune = com;
+					csiege[i].AnneeElection = year;
+					csiege[i].Liste = list[i];
+				}
+			}
 		}
 
 	}

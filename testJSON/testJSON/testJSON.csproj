@@ -58,18 +58,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnneeElection.cs">
+      <DependentUpon>electionEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="calcul_sieges.cs">
+      <DependentUpon>electionEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Candidat.cs">
+      <DependentUpon>electionEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Commune.cs">
+      <DependentUpon>electionEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Departement.cs">
+      <DependentUpon>electionEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="election.cs">
+      <DependentUpon>electionEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="electionEDM.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>electionEDM.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="electionEDM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>electionEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="electionEDM.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>electionEDM.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Liste.cs">
+      <DependentUpon>electionEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Parti.cs">
+      <DependentUpon>electionEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="stats_election.cs">
+      <DependentUpon>electionEDM.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -83,13 +115,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="electionEDM.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>electionEDM.Context.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="electionEDM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>electionEDM.edmx</DependentUpon>
+      <LastGenOutput>electionEDM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="electionEDM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>electionEDM.edmx</DependentUpon>
+      <LastGenOutput>electionEDM.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
