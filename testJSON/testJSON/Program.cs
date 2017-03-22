@@ -352,7 +352,7 @@ namespace testJSON
 					insertionDonneesStatElection(stat);
 
 					csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
-					insertionDonneesCalculSieges(csieges);
+					insertionDonneesCalculSieges(csieges, comm, year, list);
 
 				}//Fin du for des colonnes
 
