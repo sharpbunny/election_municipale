@@ -12,7 +12,7 @@ namespace testJSON
 	{
 		static void Main(string[] args)
 		{
-
+			AnneeElection year = new AnneeElection();
 			year.annee = 2014;
 			string[][] allData = lireToutesLesDonnees(); //Lire toutes les données depuis le fichier csv et les stocker dans allData
 
@@ -26,7 +26,6 @@ namespace testJSON
 				Liste[] list = new Liste[5];
 				calcul_sieges[] csieges = new calcul_sieges[5];
 				election[] elect = new election[5];
-				AnneeElection year = new AnneeElection();
 
 				for (int colonne = 0; colonne < 75; colonne++)
 				{
@@ -330,7 +329,7 @@ namespace testJSON
 
 						} //Fin du switch
 
-						if(colonne > 72)
+						if(colonne == 74)
 						{
 							insertionDonneesDepartement(dept);
 							insertionDonneesParti(parti);
@@ -352,6 +351,7 @@ namespace testJSON
 
 							csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
 							insertionDonneesCalculSieges(csieges, comm, year, list);
+
 						}
 
 
