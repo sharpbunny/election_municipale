@@ -194,117 +194,117 @@ namespace testJSON
 
 							// code nuance_03
 							case 42:
-								parti[2].code_nuance = allData[i][colonne];
+								if (allData[i][colonne] != "") parti[2].code_nuance = allData[i][colonne];
 								break;
 
 							//sexe_03
 							case 43:
-								candidat[2].sexe = allData[i][colonne];
+								if (allData[i][colonne] != "") candidat[2].sexe = allData[i][colonne];
 								break;
 
 							//nom_03
 							case 44:
-								candidat[2].nom = allData[i][colonne];
+								if (allData[i][colonne] != "") candidat[2].nom = allData[i][colonne];
 								break;
 
 							//prenom_03
 							case 45:
-								candidat[2].prenom = allData[i][colonne];
+								if (allData[i][colonne] != "") candidat[2].prenom = allData[i][colonne];
 								break;
 
 							//liste_03
 							case 46:
-								list[2].nomListe = allData[i][colonne];
+								if (allData[i][colonne] != "") list[2].nomListe = allData[i][colonne];
 								break;
 
 							//sieges_elu_03
 							case 47:
-								csieges[2].sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								if (allData[i][colonne] != "") csieges[2].sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//sieges_secteur_03
 							case 48:
-								csieges[2].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
+								if (allData[i][colonne] != "") csieges[2].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//sieges_cc_03
 							case 49:
-								csieges[2].sieges_cc = Convert.ToSByte(allData[i][colonne]);
+								if (allData[i][colonne] != "") csieges[2].sieges_cc = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//voix_03
 							case 50:
-								elect[2].voix = Convert.ToInt32(allData[i][colonne]);
+								if (allData[i][colonne] != "") elect[2].voix = Convert.ToInt32(allData[i][colonne]);
 								break;
 
 							// code nuance_04
 							case 53:
-								parti[3].code_nuance = allData[i][colonne];
+								if (allData[i][colonne] != "") parti[3].code_nuance = allData[i][colonne];
 								break;
 
 							//sexe_04
 							case 54:
-								candidat[3].sexe = allData[i][colonne];
+								if (allData[i][colonne] != "") candidat[3].sexe = allData[i][colonne];
 								break;
 
 							//nom_04
 							case 55:
-								candidat[3].nom = allData[i][colonne];
+								if (allData[i][colonne] != "") candidat[3].nom = allData[i][colonne];
 								break;
 
 							//prenom_04
 							case 56:
-								candidat[3].prenom = allData[i][colonne];
+								if (allData[i][colonne] != "") candidat[3].prenom = allData[i][colonne];
 								break;
 
 							//liste_04
 							case 57:
-								list[3].nomListe = allData[i][colonne];
+								if (allData[i][colonne] != "") list[3].nomListe = allData[i][colonne];
 								break;
 
 							//sieges_elus_04
 							case 58:
-								csieges[3].sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								if (allData[i][colonne] != "") csieges[3].sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//sieges_secteur_04
 							case 59:
-								csieges[3].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
+								if (allData[i][colonne] != "") csieges[3].sieges_secteurs = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//sieges_cc_04
 							case 60:
-								csieges[3].sieges_cc = Convert.ToSByte(allData[i][colonne]);
+								if (allData[i][colonne] != "") csieges[3].sieges_cc = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//voix_04
 							case 61:
-								elect[3].voix = Convert.ToInt32(allData[i][colonne]);
+								if (allData[i][colonne] != "") elect[3].voix = Convert.ToInt32(allData[i][colonne]);
 								break;
 
 							// code_nuance_05
 							case 64:
-								parti[4].code_nuance = allData[i][colonne];
+								if (allData[i][colonne] != "") parti[4].code_nuance = allData[i][colonne];
 								break;
 
 							//sexe_05
 							case 65:
-								candidat[4].sexe = allData[i][colonne];
+								if (allData[i][colonne] != "") candidat[4].sexe = allData[i][colonne];
 								break;
 
 							//nom_05
 							case 66:
-								candidat[4].nom = allData[i][colonne];
+								if (allData[i][colonne] != "") candidat[4].nom = allData[i][colonne];
 								break;
 
 							//prenom_05
 							case 67:
-								candidat[4].prenom = allData[i][colonne];
+								if (allData[i][colonne] != "") candidat[4].prenom = allData[i][colonne];
 								break;
 
 							//liste_05
 							case 68:
-								list[4].nomListe = allData[i][colonne];
+								if (allData[i][colonne] != "") list[4].nomListe = allData[i][colonne];
 								break;
 
 							//sieges_elu_05
@@ -331,27 +331,33 @@ namespace testJSON
 
 						if(colonne == 74)
 						{
-							insertionDonneesDepartement(dept);
-							insertionDonneesParti(parti);
+							using (var context = new election_municipaleEntities())
+							{
+								insertionDonneesDepartement(dept);
+								insertionDonneesParti(parti);
 
-							comm = insertionCleEtrangereCommune(comm, dept);
-							insertionDonneesCommune(comm);
+								comm = insertionCleEtrangereCommune(comm, dept);
+								insertionDonneesCommune(comm);
 
-							list = insertionCleEtrangereListe(list, parti);
-							insertionDonneesListe(list);
+								list = insertionCleEtrangereListe(list, parti);
+								insertionDonneesListe(list);
 
-							candidat = insertionCleEtrangereCandidat(candidat, list);
-							insertionDonneesCandidat(candidat);
+								candidat = insertionCleEtrangereCandidat(candidat, list);
+								insertionDonneesCandidat(candidat);
 
-							elect = insertionCleEtrangereElection(elect, year, candidat, comm);
-							insertionDonneesElection(elect);
+								elect = insertionCleEtrangereElection(elect, year, candidat, comm);
+								insertionDonneesElection(elect);
 
-							stat = insertionCleEtrangereStatsElection(stat, year, comm);
-							insertionDonneesStatElection(stat);
+								stat = insertionCleEtrangereStatsElection(stat, year, comm);
+								insertionDonneesStatElection(stat);
 
-							csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
-							insertionDonneesCalculSieges(csieges, comm, year, list);
+								csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
+								insertionDonneesCalculSieges(csieges, comm, year, list);
 
+								context.SaveChanges();
+
+								Console.WriteLine(i+ " insertion");
+							}
 						}
 
 
@@ -600,13 +606,10 @@ namespace testJSON
 						{
 							context.Candidat.Add(candidat[i]);
 						}
-
-
 					}
 
 				}
 
-				context.SaveChanges();
 			}
 		}
 
@@ -627,7 +630,6 @@ namespace testJSON
 				if(query == null)
 				{
 					context.Departement.Add(dpt);
-					context.SaveChanges();
 				}
 
 
@@ -652,7 +654,6 @@ namespace testJSON
 				if(query == null)
 				{
 					context.Commune.Add(com);
-					context.SaveChanges();
 				}
 
 
@@ -667,8 +668,11 @@ namespace testJSON
 		{
 			using (var context = new election_municipaleEntities())
 			{
-				context.stats_election.Add(stat);
-				context.SaveChanges();
+				if(stat != null)
+				{
+					context.stats_election.Add(stat);
+				}
+
 			}
 		}
 		
@@ -693,7 +697,6 @@ namespace testJSON
 						if (query == null)
 						{
 							context.Liste.Add(list[i]);
-							context.SaveChanges();
 						}
 
 					}
@@ -724,7 +727,7 @@ namespace testJSON
 						if (query == null)
 						{
 							context.Parti.Add(parti[i]);
-							context.SaveChanges();
+
 						}
 					}
 
@@ -746,7 +749,7 @@ namespace testJSON
 				{
 					if(elect[i] != null)
 					{
-						
+						context.election.Add(elect[i]);
 					}
 				}
 			}
