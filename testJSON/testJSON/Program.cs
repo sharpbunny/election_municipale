@@ -341,7 +341,7 @@ namespace testJSON
 				-calcul_sieges	
 			*/
 
-			} //FIn du for pour les lignes
+			} //Fin du for pour les lignes
 
 		} //Fin du main
 
