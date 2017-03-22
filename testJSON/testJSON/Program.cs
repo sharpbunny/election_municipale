@@ -5,11 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
+using System.Data.Entity;
 
 namespace testJSON
 {
 	class Program
 	{
+		static Candidat[] candidat = new Candidat[5];
+		static Departement dept = new Departement();
+		static Commune comm = new Commune();
+		static stats_election stat = new stats_election();
+		static Parti[] parti = new Parti[5];
+		static Liste[] list = new Liste[5];
+		static calcul_sieges[] csieges = new calcul_sieges[5];
+		static election[] elect = new election[5];
+		static bool leDepartementExiste;
+
 		static void Main(string[] args)
 		{
 			AnneeElection year = new AnneeElection();
@@ -18,18 +29,10 @@ namespace testJSON
 
 			for (int i = 0; i < allData.Length; i++)
 			{
-				Candidat[] candidat = new Candidat[5];
-				Departement dept = new Departement();
-				Commune comm = new Commune();
-				stats_election stat = new stats_election();
-				Parti[] parti = new Parti[5];
-				Liste[] list = new Liste[5];
-				calcul_sieges[] csieges = new calcul_sieges[5];
-				election[] elect = new election[5];
-
+				reinitialisationTableauDeDonnees(candidat, parti, list, csieges, elect);
 				for (int colonne = 0; colonne < 75; colonne++)
 				{
-					reinitialisationTableauDeDonnees(candidat, parti, list, csieges, elect);
+
 					//comm = reinitialisationCommune(comm);
 					//dept = reinitialisationDepartement(dept);
 					//stat = reinitialisationStatsElection(stat);
@@ -40,7 +43,12 @@ namespace testJSON
 						{
 							//code du département
 							case 1:
-								dept.code_du_departement = Convert.ToSByte(allData[i][colonne]);
+								//Si le département n'existe pas, on modifie la classe Departement
+								leDepartementExiste = leDepartementExisteDeja(Convert.ToSByte(allData[i][colonne]));
+								if (!leDepartementExiste) dept.code_du_departement = Convert.ToSByte(allData[i][colonne]);
+								//comm.Departement = new Departement();
+								//comm.Departement.code_du_departement = Convert.ToSByte(allData[i][colonne]);
+;
 								break;
 
 							//type du scrutin
@@ -49,7 +57,9 @@ namespace testJSON
 
 							//libelle_du_departement
 							case 3:
-								dept.libelle_du_departement = allData[i][colonne];
+
+								//if (!leDepartementExiste) dept.libelle_du_departement = allData[i][colonne];
+								//comm.Departement.libelle_du_departement = allData[i][colonne];
 								break;
 
 							//code de la commune
@@ -331,13 +341,16 @@ namespace testJSON
 
 						if(colonne == 74)
 						{
+
+
 							using (var context = new election_municipaleEntities())
 							{
+
 								insertionDonneesDepartement(dept);
 								insertionDonneesParti(parti);
 
-								comm = insertionCleEtrangereCommune(comm, dept);
-								insertionDonneesCommune(comm);
+								comm = insertionCleEtrangereCommune(comm, Convert.ToSByte(allData[i][1]));
+								insertionDonneesCommune(comm, dept);
 
 								list = insertionCleEtrangereListe(list, parti);
 								insertionDonneesListe(list);
@@ -353,8 +366,6 @@ namespace testJSON
 
 								csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
 								insertionDonneesCalculSieges(csieges, comm, year, list);
-
-								context.SaveChanges();
 
 								Console.WriteLine(i+ " insertion");
 							}
@@ -462,15 +473,37 @@ namespace testJSON
 		/// <param name="com">La commune</param>
 		/// <param name="dept">Le département auquel appartient la commune</param>
 		/// <returns></returns>
-		public static Commune insertionCleEtrangereCommune(Commune com, Departement dept)
+		public static Commune insertionCleEtrangereCommune(Commune com, short numDept)
 		{
+
+			Departement queryDepartement;
+
 			if(dept == null)
 			{
 				Console.WriteLine("La variable département est nulle.");
 			}
 			else
 			{
-				com.Departement = dept;
+				using(var context = new election_municipaleEntities())
+				{
+					try
+					{
+						queryDepartement = (from dpt in context.Departement
+											where dpt.code_du_departement == numDept
+											select dpt).Single();
+
+						com.Departement = queryDepartement;
+
+					}
+
+					catch
+					{
+						com.Departement = dept;
+					}
+				}
+
+
+
 			}
 
 			return com;
@@ -505,10 +538,12 @@ namespace testJSON
 		{
 			for(int i = 0; i < candidat.Length; i++)
 			{
-				if(candidat[i] != null && list[i] != null)
-				{
-					candidat[i].Liste = list[i];
-				}
+
+					if (candidat[i] != null && list[i] != null)
+					{
+						candidat[i].Liste = list[i];
+					}
+
 			}
 
 			return candidat;
@@ -594,18 +629,34 @@ namespace testJSON
 
 				for (int i = 0; i < candidat.Length; i++)
 				{
+
+					int query;
+
 					if (candidat[i] != null)
 					{
 						//On fait une requête pour voir si l'id du candidat n'existe pas déjà dans la bdd
-						var query = from candid in context.Candidat
-									where candid.idCandidat == candidat[i].idCandidat
-									select candid;
+						try
+						{
+							query = (from candid in context.Candidat
+										 where candid.idCandidat == candidat[i].idCandidat
+										 select candid.idCandidat).Single();
+						}
 
-						//Si il n'est pas dans la BDD, on peut l'insérer
-						if (query == null)
+						catch
 						{
 							context.Candidat.Add(candidat[i]);
+							try
+							{
+								context.SaveChanges();
+							}
+
+							catch
+							{
+
+							}
+
 						}
+
 					}
 
 				}
@@ -619,19 +670,55 @@ namespace testJSON
 		/// <param name="dpt">Le département</param>
 		public static void insertionDonneesDepartement(Departement dpt)
 		{
+
+
+
 			using (var context = new election_municipaleEntities())
 			{
-
-				var query = from dept in context.Departement
-							where dept.code_du_departement == dpt.code_du_departement
-							select dept;
-
-				//Si il n'a rien trouvé dans la bdd, on peut ajouter le département
-				if(query == null)
+				context.Configuration.LazyLoadingEnabled = false;
+				short query;
+				try
 				{
-					context.Departement.Add(dpt);
+					query = (from dept in context.Departement
+							 where dept.code_du_departement == dpt.code_du_departement
+							 select dept.code_du_departement).Single();
+
 				}
 
+
+				catch (InvalidOperationException e)
+				{
+					Console.WriteLine("query catch exception");
+					if(dpt.code_du_departement != 0)
+					{
+						context.Departement.Add(dpt);
+						try
+						{
+							Console.WriteLine(dpt.code_du_departement);
+							context.SaveChanges();
+						}
+						catch (System.Data.Entity.Validation.DbEntityValidationException a)
+						{
+							foreach (var eve in a.EntityValidationErrors)
+							{
+								Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+									eve.Entry.Entity.GetType().Name, eve.Entry.State);
+								foreach (var ve in eve.ValidationErrors)
+								{
+									Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+										ve.PropertyName, ve.ErrorMessage);
+								}
+							}
+							throw;
+						}
+					}
+
+
+					//foreach (var departement in context.Departement)
+					//{
+					//	Console.WriteLine(departement.code_du_departement);
+					//}
+				}
 
 			}
 
@@ -642,19 +729,48 @@ namespace testJSON
 		/// Insertion Données de la commune
 		/// </summary>
 		/// <param name="com"></param>
-		public static void insertionDonneesCommune(Commune com)
+		public static void insertionDonneesCommune(Commune com, Departement dept)
 		{
+
+
+
 			using (var context = new election_municipaleEntities())
 			{
+				context.Configuration.LazyLoadingEnabled = false;
+				string query;
 
-				var query = from comm in context.Commune
-							where comm.insee == com.insee
-							select comm;
-
-				if(query == null)
+				try
+				{
+					query = (from comm in context.Commune
+								where comm.insee == com.insee
+								select com.insee).Single();
+				}
+				catch(InvalidOperationException e)
 				{
 					context.Commune.Add(com);
+
+					try
+					{
+						context.SaveChanges();
+					}
+
+					catch (System.Data.Entity.Validation.DbEntityValidationException a)
+					{
+						foreach (var eve in a.EntityValidationErrors)
+						{
+							Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+								eve.Entry.Entity.GetType().Name, eve.Entry.State);
+							foreach (var ve in eve.ValidationErrors)
+							{
+								Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+									ve.PropertyName, ve.ErrorMessage);
+							}
+						}
+						throw;
+					}
+
 				}
+
 
 
 			}
@@ -687,17 +803,33 @@ namespace testJSON
 				//On parcourt le tableau de listes electorales
 				for(int i=0; i< list.Length; i++)
 				{
-					if (list[i] != null)
-					{
-						var query = from liste in context.Liste
-									where liste.nomListe == list[i].nomListe
-									select liste;
+					Liste listTemp = list[i];
+					string query;
 
-						//Si la requête n'est pas nulle, c'est que la liste n'existe pas dans la BDD donc on l'ajoute
-						if (query == null)
+					if (list[i].nomListe == "")
+					{
+						try
+						{
+							query = (from liste in context.Liste
+									 where liste.nomListe == listTemp.nomListe
+									 select liste.nomListe).Single();
+						}
+
+						catch(InvalidOperationException e)
 						{
 							context.Liste.Add(list[i]);
+							try
+							{
+								context.SaveChanges();
+							}
+
+							catch (System.Data.Entity.Validation.DbEntityValidationException a)
+							{
+								Console.WriteLine("list "+i+" : a échoué");
+							}
+
 						}
+
 
 					}
 				}
@@ -714,21 +846,38 @@ namespace testJSON
 
 			using(var context = new election_municipaleEntities())
 			{
+
+				string query;
+
 				//On va parcourir le tableau de partis
 				for(int i = 0; i < parti.Length; i++)
 				{
-					if(parti[i] != null)
-					{
-						var query = from part in context.Parti
-									where part.code_nuance == parti[i].code_nuance
-									select part;
+					Parti partiTemp = parti[i];
 
-						//Si la requête est nulle, c'est que le parti n'est pas encore dans la BDD, donc on l'ajoute.
-						if (query == null)
+					if(parti[i].code_nuance == "")
+					{
+						try
+						{
+							query = (from part in context.Parti
+									 where part.code_nuance == partiTemp.code_nuance
+									 select part.code_nuance).Single();
+						}
+
+						catch(InvalidOperationException e)
 						{
 							context.Parti.Add(parti[i]);
+							try
+							{
+								context.SaveChanges();
+							}
+
+							catch (System.Data.Entity.Validation.DbEntityValidationException a)
+							{
+								Console.WriteLine("parti "+i+" : a échoué lors du savechanges");
+							}
 
 						}
+
 					}
 
 
@@ -750,6 +899,16 @@ namespace testJSON
 					if(elect[i] != null)
 					{
 						context.election.Add(elect[i]);
+						try
+						{
+
+						}
+
+						catch
+						{
+							context.SaveChanges();
+						}
+
 					}
 				}
 			}
@@ -772,6 +931,29 @@ namespace testJSON
 			}
 		}
 
+		public static bool leDepartementExisteDeja(short code_du_departement)
+		{
+			bool leDepartementExiste = false;
+
+			using(var context = new election_municipaleEntities())
+			{
+				try
+				{
+					var query = (from dept in context.Departement
+								 where code_du_departement == dept.code_du_departement
+								 select dept).Single();
+					leDepartementExiste = true;
+				}
+
+				catch
+				{
+					leDepartementExiste = false;
+				}
+
+			}
+
+			return leDepartementExiste;
+		}
 	}
 }
 
