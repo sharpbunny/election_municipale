@@ -186,7 +186,7 @@ namespace election_municipale
 			for (int i = 0; i < allData.Length; i++)
 			{
 				reinitialisationTableauDeDonnees(candidat, parti, list, csieges, elect);
-				comm = reinitialisationCommune(comm);
+				comm.reinitialisationCommune();
 				dept = reinitialisationDepartement(dept);
 				stat = reinitialisationStatsElection(stat);
 
@@ -540,6 +540,26 @@ namespace election_municipale
 
 
 			} //Fin du for pour les lignes
+		}
+
+		/// <summary>
+		/// Permet de réinitialiser tous les tableaux utilisés dans le programme à null
+		/// </summary>
+		/// <param name="candidat">Tableau de candidats</param>
+		/// <param name="parti">Tableau contenant les partis politiques</param>
+		/// <param name="list">Tableau contenant les listes electorales</param>
+		/// <param name="csiege">Tableau contenant les tables associations : calcul_sieges</param>
+		/// <param name="elec">Tableau contenant les tables association : elec</param>
+		public static void reinitialisationTableauDeDonnees(Candidat[] candidat, Parti[] parti, Liste[] list, calcul_sieges[] csiege, election[] elec)
+		{
+			for (int i = 0; i < candidat.Length; i++)
+			{
+				candidat[i] = new Candidat(); ;
+				parti[i] = new Parti();
+				list[i] = new Liste();
+				csiege[i] = new calcul_sieges(); ;
+				elec[i] = new election();
+			}
 		}
 
 	}

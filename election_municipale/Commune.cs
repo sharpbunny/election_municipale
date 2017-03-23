@@ -169,5 +169,23 @@ namespace election_municipale
 			}
 		}
 
+		/// <summary>
+		/// Permet de réinitialiser un objet Commune à null
+		/// </summary>
+		/// <param name="comm">Commune</param>
+		/// <returns></returns>
+		public void reinitialisationCommune()
+		{
+			this.insee = "";
+			this.libelle_de_la_commune = "";
+			this.geo_shape = "";
+			this.geo_point_2d = "";
+			this.Departement = null;
+			this.stats_election = null;
+			this.calcul_sieges = null;
+			this.election = null;
+			this.code_du_departement = 0;
+		}
+
 	}
 }
