@@ -195,7 +195,7 @@ namespace election_municipale
 				{
 
 
-
+					//La première ligne i = 0 n'est pas insérée car c'est le titre des colonnes
 					if (i > 0)
 					{
 						switch (colonne)
@@ -524,15 +524,14 @@ namespace election_municipale
 								stat.insertionCleEtrangereStatsElection(year, comm);
 								stat.insertionDonneesStatElection(year, comm);
 
-								csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
-								insertionDonneesCalculSieges(csieges, comm, year, list);
+								csieges[0].insertionCleEtrangereCalculSieges(csieges, comm, year, list);
+								csieges[0].insertionDonneesCalculSieges(csieges, comm, year, list);
 
-								Console.WriteLine(" --- Fin de l'insertion de la ligne " + i);
 							}
 						}
 
 
-					} //Fin du if
+					} //Fin du if(i>0)
 
 
 

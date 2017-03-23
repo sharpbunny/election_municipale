@@ -36,7 +36,8 @@ namespace election_municipale
 		/// <param name="e">Evenement survenant après un click sur le bouton d'insertion de données issues d'un fichier csv</param>
 		private void buttonInsertionDonneesCsv_Click(object sender, RoutedEventArgs e)
 		{
-
+			electionEDM.lireToutesLesDonnees();
+			electionEDM.recuperationDesDonnees();
 		}
 	}
 }

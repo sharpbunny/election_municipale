@@ -53,7 +53,7 @@ namespace election_municipale
 		/// <param name="year">Année de l'election</param>
 		/// <param name="liste">Tableau de listes electorales</param>
 		/// <returns></returns>
-		public static calcul_sieges[] insertionCleEtrangereCalculSieges(calcul_sieges[] csiege, Commune comm, AnneeElection year, Liste[] liste)
+		public calcul_sieges[] insertionCleEtrangereCalculSieges(calcul_sieges[] csiege, Commune comm, AnneeElection year, Liste[] liste)
 		{
 			using (var context = new electionEDM())
 			{
@@ -92,7 +92,7 @@ namespace election_municipale
 		/// insertion de la table stockant le nombre de sièges affectés à une commune
 		/// </summary>
 		/// <param name="csiege"></param>
-		public static void insertionDonneesCalculSieges(calcul_sieges[] csiege, Commune com, AnneeElection year, Liste[] list)
+		public void insertionDonneesCalculSieges(calcul_sieges[] csiege, Commune com, AnneeElection year, Liste[] list)
 		{
 			using (var context = new electionEDM())
 			{
