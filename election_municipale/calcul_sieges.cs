@@ -81,7 +81,7 @@ namespace election_municipale
 					//Si la liste n'existe pas dans la BDD
 					catch
 					{
-						MessageBox.Show("La requête d'insertion de clé étrangère dans calcul_sieges a échoué");
+
 					}
 
 				} //fin de la boucle for
@@ -122,7 +122,7 @@ namespace election_municipale
 						//Si l'insertion dans la base de données échoue
 						catch
 						{
-							MessageBox.Show("Erreur lors de l'insertion de calcul_sieges dans la BDD");
+
 						}
 					}
 

@@ -90,7 +90,7 @@ namespace election_municipale
 						//Si l'insertion échoue
 						catch
 						{
-							MessageBox.Show("L'insertion de l'entité election "+i+" a échoué");
+
 						}
 
 					}
