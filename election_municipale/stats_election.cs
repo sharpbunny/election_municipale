@@ -45,22 +45,21 @@ namespace election_municipale
 		/// <param name="year">Année de l'élection municipale</param>
 		/// <param name="comm">Nom de la commune de laquelle on va récupérer des statistiques</param>
 		/// <returns></returns>
-		public static stats_election insertionCleEtrangereStatsElection(stats_election stat, AnneeElection year, Commune comm)
+		public void insertionCleEtrangereStatsElection(AnneeElection year, Commune comm)
 		{
 
-			stat.AnneeElection = null;
-			stat.Commune = null;
-			stat.annee = year.annee;
-			stat.insee = comm.insee;
+			this.AnneeElection = null;
+			this.Commune = null;
+			this.annee = year.annee;
+			this.insee = comm.insee;
 
-			return stat;
 		}
 
 		/// <summary>
 		/// Insertion des données dans la BDD des stats relatives aux élections pour une commune
 		/// </summary>
 		/// <param name="stat"></param>
-		public static void insertionDonneesStatElection(stats_election stat, AnneeElection year, Commune comm)
+		public void insertionDonneesStatElection(AnneeElection year, Commune comm)
 		{
 			using (var context = new electionEDM())
 			{
@@ -69,7 +68,7 @@ namespace election_municipale
 				try
 				{
 					var query = (from stats in context.stats_election
-								 where (stats.annee == year.annee && comm.insee == stats.insee)
+								 where (this.annee == year.annee && comm.insee == this.insee)
 								 select stats).Single();
 
 					Console.WriteLine("Cet objet stats_election est déjà dans la BDD");
@@ -78,7 +77,7 @@ namespace election_municipale
 				//Si stats_election n'est pas dans la BDD, on l'insère
 				catch
 				{
-					context.stats_election.Add(stat);
+					context.stats_election.Add(this);
 					try
 					{
 						context.SaveChanges();

@@ -518,11 +518,11 @@ namespace election_municipale
 								candidat[0].insertionCleEtrangereCandidat(candidat, list);
 								candidat[0].insertionDonneesCandidat(candidat);
 
-								elect = insertionCleEtrangereElection(elect, year, candidat, comm);
-								insertionDonneesElection(elect);
+								elect[0].insertionCleEtrangereElection(elect, year, candidat, comm);
+								elect[0].insertionDonneesElection(elect);
 
-								stat = insertionCleEtrangereStatsElection(stat, year, comm);
-								insertionDonneesStatElection(stat, year, comm);
+								stat.insertionCleEtrangereStatsElection(year, comm);
+								stat.insertionDonneesStatElection(year, comm);
 
 								csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
 								insertionDonneesCalculSieges(csieges, comm, year, list);

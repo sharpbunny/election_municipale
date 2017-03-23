@@ -49,7 +49,7 @@ namespace election_municipale
 		/// <param name="candidat">Candidats à l'election municipales</param>
 		/// <param name="comm">La commune où a eu lieu l'election</param>
 		/// <returns></returns>
-		public static election[] insertionCleEtrangereElection(election[] elect, AnneeElection year, Candidat[] candidat, Commune comm)
+		public void insertionCleEtrangereElection(election[] elect, AnneeElection year, Candidat[] candidat, Commune comm)
 		{
 			for (int i = 0; i < elect.Length; i++)
 			{
@@ -63,15 +63,13 @@ namespace election_municipale
 					elect[i].annee = year.annee;
 				}
 			}
-
-			return elect;
 		}
 
 		/// <summary>
 		/// Insertion des données concernant la table association "election"
 		/// </summary>
 		/// <param name="elect">Table association : election</param>
-		public static void insertionDonneesElection(election[] elect)
+		public void insertionDonneesElection(election[] elect)
 		{
 			using (var context = new electionEDM())
 			{
