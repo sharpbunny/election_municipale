@@ -83,15 +83,19 @@ namespace election_municipale
 					break;
 
 				case 4:
+					communeAyantLePlusFortTauxDeVotants();
 					break;
 
 				case 5:
+					communeAyantLePlusFortTauxAbstentions();
 					break;
 
 				case 6:
+					pourcentageFemmesElues();
 					break;
 
 				case 7:
+					AfficherLePrenomFemininEtMasculinLePlusFrequentParmiLesElus();
 					break;
 
 				case 8:
@@ -1263,9 +1267,123 @@ namespace election_municipale
 		/// </summary>
 		public static void communeAyantLePlusFortTauxDeVotants()
 		{
+			using(var context = new electionEDM())
+			{
+				var query = from statistiques in context.stats_election
+							select statistiques;
 
+				float taux_votants, bestTauxVotants = 0;
+				string inseeBestCommune = "";
+				int i = 0;
+
+				foreach(var statoche in query)
+				{
+					taux_votants = (float) ((float)statoche.votants / (float)statoche.inscrits) * 100;
+					if (i == 0 || taux_votants > bestTauxVotants)
+					{
+						bestTauxVotants = taux_votants;
+						inseeBestCommune = statoche.insee;
+					}
+
+					i++;
+				}
+
+				try
+				{
+					var queryCommune = (from communiste in context.Commune
+										where communiste.insee == inseeBestCommune
+										select communiste.libelle_de_la_commune).Single();
+
+					Console.WriteLine(queryCommune);
+				}
+
+				catch
+				{
+					Console.WriteLine("Il y'a eu un problème dans la récupération de la commune avec \n le plus fort taux de votants.");
+				}
+ 							
+
+			}
 		}
 
+		/// <summary>
+		/// Affiche la commune ayant le plus fort taux d'absentions
+		/// </summary>
+		public static void communeAyantLePlusFortTauxAbstentions()
+		{
+			using (var context = new electionEDM())
+			{
+				var query = from statistiques in context.stats_election
+							select statistiques;
+
+				float taux_abstentions, bestTauxVotants = 0;
+				string inseeBestCommune = "";
+				int i = 0;
+
+				foreach (var statoche in query)
+				{
+					taux_abstentions = (float)((float)statoche.abstentions / (float)statoche.inscrits) * 100;
+					if (i == 0 || taux_abstentions > bestTauxVotants)
+					{
+						bestTauxVotants = taux_abstentions;
+						inseeBestCommune = statoche.insee;
+					}
+
+					i++;
+				}
+
+				try
+				{
+					var queryCommune = (from communiste in context.Commune
+										where communiste.insee == inseeBestCommune
+										select communiste.libelle_de_la_commune).Single();
+
+					Console.WriteLine(queryCommune);
+				}
+
+				catch
+				{
+					Console.WriteLine("Il y'a eu un problème dans la récupération de la commune avec \n le plus fort taux de votants.");
+				}
+
+
+			}
+		}
+
+		/// <summary>
+		/// Affiche le pourcentage de femmes élues
+		/// </summary>
+		public static void pourcentageFemmesElues()
+		{
+			using (var context = new electionEDM())
+			{
+				
+
+				var queryWomanNpCry = from listeDeFemme in context.Candidat
+									  where listeDeFemme.sexe == "F"
+									  select listeDeFemme;
+
+				float pctageDeFemmes = (float)((float)queryWomanNpCry.Count() / (float)context.Candidat.Count());
+				Console.WriteLine(pctageDeFemmes*100+" %");
+
+
+			}	
+		}
+		public static void AfficherLePrenomFemininEtMasculinLePlusFrequentParmiLesElus()
+		{
+			using(var context = new electionEDM())
+			{
+				var queryPrenomFeminin = from listedesprenomsF in context.Candidat
+										 where listedesprenomsF.sexe == "F"
+										 select listedesprenomsF;
+
+				var prenomFemininTrouve = from prenomfeminintrouve in queryPrenomFeminin
+										  orderby prenomfeminintrouve.prenom
+										  group prenomfeminintrouve by new { prenomfeminintrouve.prenom } into nombredeprenomfeminintrouve
+										  select nombredeprenomfeminintrouve;
+										  
+			}
+		}
 	}
 }
 
