@@ -48,7 +48,7 @@ namespace election_municipale
 		/// <param name="candidat">Tableau de candidats</param>
 		/// <param name="list">Tableau de listes électorales</param>
 		/// <returns></returns>
-		public static Candidat[] insertionCleEtrangereCandidat(Candidat[] candidat, Liste[] list)
+		public Candidat[] insertionCleEtrangereCandidat(Candidat[] candidat, Liste[] list)
 		{
 			for (int i = 0; i < candidat.Length; i++)
 			{
@@ -68,7 +68,7 @@ namespace election_municipale
 		/// <summary>
 		/// On va insérer les données relatives aux candidats à l'élection municipale dans la base de données
 		/// </summary>
-		public static void insertionDonneesCandidat(Candidat[] candidat)
+		public void insertionDonneesCandidat(Candidat[] candidat)
 		{
 			using (var context = new electionEDM())
 			{

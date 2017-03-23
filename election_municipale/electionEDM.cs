@@ -515,8 +515,8 @@ namespace election_municipale
 								list[0].insertionCleEtrangereListe(list, parti);
 								list[0].insertionDonneesListe(list);
 
-								candidat = insertionCleEtrangereCandidat(candidat, list);
-								insertionDonneesCandidat(candidat);
+								candidat[0].insertionCleEtrangereCandidat(candidat, list);
+								candidat[0].insertionDonneesCandidat(candidat);
 
 								elect = insertionCleEtrangereElection(elect, year, candidat, comm);
 								insertionDonneesElection(elect);
