@@ -35,20 +35,20 @@ namespace election_municipale
 		/// Insertion dans la base de données de l'entité AnneeElection
 		/// </summary>
 		/// <param name="year">Entité : AnneeElection</param>
-		public static void insertionAnnee(AnneeElection year)
+		public void insertionAnnee()
 		{
 			using (var context = new electionEDM())
 			{
 				try
 				{
 					AnneeElection query = (from annee in context.AnneeElection
-										   where annee.annee == year.annee
+										   where annee.annee == this.annee
 										   select annee).Single();
 				}
 
 				catch
 				{
-					context.AnneeElection.Add(year);
+					context.AnneeElection.Add(this);
 					context.SaveChanges();
 				}
 
