@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:election_municipale"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="700" WindowStartupLocation="CenterScreen">
+        Title="Elections Municipales" Height="450" Width="700" WindowStartupLocation="CenterScreen">
     
 
     <DockPanel>
@@ -21,12 +21,18 @@
         </StackPanel>
 
         <!-- StackPanel permettant d'afficher les tables qui ont été insérées dans la BDD -->
-        <StackPanel DockPanel.Dock="Left" Width="75" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Beige">
-            
+        <StackPanel DockPanel.Dock="Left" Width="100" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Beige">
+            <Label x:Name="listeTablesLabel" Content="Tables" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" FontWeight="Bold"/>
+            <ListBox x:Name="entitesListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,5,0,0">
+                <ListBoxItem x:Name="candidatItems" Content="Candidats" HorizontalAlignment="Left"/>
+                <ListBoxItem x:Name="communeItems" Content="Communes" HorizontalAlignment="Left"/>
+                <ListBoxItem x:Name="departementItems" Content="Département" HorizontalAlignment="Left"/>
+                <ListBoxItem x:Name="partiItems" Content="Partis" HorizontalAlignment="Left"/>
+            </ListBox>
         </StackPanel>
         
         <!--StackPanel contenant les requêtes de l'énoncé -->
-        <StackPanel DockPanel.Dock="Right" Width="75" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Beige">
+        <StackPanel DockPanel.Dock="Right" Width="100" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Beige">
             
         </StackPanel>
         

@@ -48,5 +48,13 @@ namespace election_municipale
 			lignesInsereesLabel.Content = "Ligne(s) lue(s) : ";
 			lignesInsereesLabel.Content += Convert.ToString(lignes);
 		}
+
+		/// <summary>
+		/// On insère dans la listBox le nom de toutes les tables
+		/// </summary>
+		private void insertionTablesListBox()
+		{
+			entitesListBox.Items.Add("");
+		}
 	}
 }
