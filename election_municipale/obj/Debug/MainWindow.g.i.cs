@@ -91,6 +91,12 @@ namespace election_municipale {
             return;
             case 2:
             this.buttonInsertionDonneesCsv = ((System.Windows.Controls.Button)(target));
+            
+            #line 19 "..\..\MainWindow.xaml"
+            this.buttonInsertionDonneesCsv.Click += new System.Windows.RoutedEventHandler(this.buttonInsertionDonneesCsv_Click);
+            
+            #line default
+            #line hidden
             return;
             }
             this._contentLoaded = true;

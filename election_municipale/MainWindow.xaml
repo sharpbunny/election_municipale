@@ -16,7 +16,7 @@
         
         <!--StackPanel contenant les fonctions d'insertion -->
         <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="50" Background="Beige">
-            <Button x:Name="buttonInsertionDonneesCsv" Content="Insérer des données depuis un fichier csv" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,15,0,0"/>
+            <Button x:Name="buttonInsertionDonneesCsv" Content="Insérer des données depuis un fichier csv" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,15,0,0" Click="buttonInsertionDonneesCsv_Click"/>
         </StackPanel>
 
         <!-- StackPanel permettant d'afficher les tables qui ont été insérées dans la BDD -->
