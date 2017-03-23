@@ -1,6 +1,7 @@
 namespace election_municipale
 {
 	using System;
+	using System.Windows;
 	using System.Linq;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
@@ -42,6 +43,8 @@ namespace election_municipale
 
 					if (partiTemp.code_nuance != null)
 					{
+
+						//On regarde si le parti n'existe pas déjà dans la base de données
 						try
 						{
 							query = (from part in context.Parti
@@ -49,17 +52,21 @@ namespace election_municipale
 									 select part.code_nuance).Single();
 						}
 
+						//Si le parti n'existe pas
 						catch (InvalidOperationException e)
 						{
 							context.Parti.Add(parti[i]);
+
+							//On insère le Parti dans la base de données
 							try
 							{
 								context.SaveChanges();
 							}
 
+							//Si l'insertion du parti dans la base de données échoue
 							catch (System.Data.Entity.Validation.DbEntityValidationException a)
 							{
-								Console.WriteLine("parti " + i + " : a échoué lors du savechanges");
+								MessageBox.Show("L'insertion du parti " + i + " : a échoué lors du savechanges");
 							}
 
 						}

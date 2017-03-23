@@ -1,6 +1,7 @@
 namespace election_municipale
 {
 	using System;
+	using System.Windows;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
@@ -48,6 +49,7 @@ namespace election_municipale
 		/// <returns></returns>
 		public Liste[] insertionCleEtrangereListe(Liste[] liste, Parti[] parti)
 		{
+			//Pour chaque liste on insère sa clé étrangère : code_nuance (PRIMARY KEY de la table Parti)
 			for (int i = 0; i < liste.Length; i++)
 			{
 				if (liste[i].code_nuance != "" && parti[i].code_nuance != "")
@@ -76,6 +78,7 @@ namespace election_municipale
 
 					if (list[i].nomListe != null)
 					{
+						//On regarde si la liste n'existe pas déjà dans la table
 						try
 						{
 							query = (from liste in context.Liste
@@ -83,17 +86,21 @@ namespace election_municipale
 									 select liste.nomListe).Single();
 						}
 
+						//Si la liste n'existe pas dans la table
 						catch (InvalidOperationException e)
 						{
 							context.Liste.Add(list[i]);
+
+							//On insère la liste dans la base de données
 							try
 							{
 								context.SaveChanges();
 							}
 
+							//Si l'insertion de la liste a échoué
 							catch (System.Data.Entity.Validation.DbEntityValidationException a)
 							{
-								Console.WriteLine("list " + i + " : a échoué");
+								MessageBox.Show("L'insertion de la liste " + i + " : a échoué");
 							}
 
 						}

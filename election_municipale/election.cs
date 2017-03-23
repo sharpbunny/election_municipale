@@ -1,6 +1,7 @@
 namespace election_municipale
 {
 	using System;
+	using System.Windows;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
@@ -53,6 +54,7 @@ namespace election_municipale
 		{
 			for (int i = 0; i < elect.Length; i++)
 			{
+				//Pour chaque entité election on insère ses clés étrangères : idCandidat, insee(Commune), annee(AnneeElection)
 				if (elect[i].voix != 0)
 				{
 					elect[i].Candidat = null;
@@ -78,14 +80,17 @@ namespace election_municipale
 					if (elect[i].voix != 0)
 					{
 						context.election.Add(elect[i]);
+
+						//On insère les entités election dans la base de données
 						try
 						{
 							context.SaveChanges();
 						}
 
+						//Si l'insertion échoue
 						catch
 						{
-
+							MessageBox.Show("L'insertion de l'entité election "+i+" a échoué");
 						}
 
 					}

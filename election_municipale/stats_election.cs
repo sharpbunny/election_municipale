@@ -1,6 +1,7 @@
 namespace election_municipale
 {
 	using System;
+	using System.Windows;
 	using System.Linq;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
@@ -47,7 +48,7 @@ namespace election_municipale
 		/// <returns></returns>
 		public void insertionCleEtrangereStatsElection(AnneeElection year, Commune comm)
 		{
-
+			//Insertion des clés étrangères dans stats_election : annee(AnneeElection), insee(Commune)
 			this.AnneeElection = null;
 			this.Commune = null;
 			this.annee = year.annee;
@@ -78,14 +79,17 @@ namespace election_municipale
 				catch
 				{
 					context.stats_election.Add(this);
+
+					//On l'insère dans la base de données
 					try
 					{
 						context.SaveChanges();
 					}
 
+					//Si l'insertion échoue
 					catch
 					{
-
+						MessageBox.Show("Echec lors de l'insertion de stats_election dans la base de données");
 					}
 				}
 
