@@ -1,6 +1,7 @@
 namespace election_municipale
 {
 	using System;
+	using System.Windows;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
@@ -52,7 +53,7 @@ namespace election_municipale
 		{
 			for (int i = 0; i < candidat.Length; i++)
 			{
-
+				//On insère la clé étrangère idListe pour chaque candidat
 				if (candidat[i].nom != null && list[i].nomListe != null)
 				{
 					candidat[i].Liste = null;
@@ -88,17 +89,20 @@ namespace election_municipale
 									 select candid.idCandidat).Single();
 						}
 
+						//Si son identifiant n'existe pas
 						catch
 						{
 							context.Candidat.Add(candidat[i]);
+							//On fait un try sur l'insertion dans la BDD
 							try
 							{
 								context.SaveChanges();
 							}
 
+							//Si l'insertion du candicat échoue
 							catch
 							{
-
+								MessageBox.Show("Echec dans l'insertion du candidat " + i + " dans la base de données");
 							}
 
 						}

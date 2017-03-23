@@ -1,6 +1,7 @@
 namespace election_municipale
 {
 	using System;
+	using System.Windows;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
@@ -62,6 +63,7 @@ namespace election_municipale
 				for (int i = 0; i < csiege.Length; i++)
 				{
 					listeTemp = liste[i];
+					//On effectue une requête pour savoir si la liste à laquelle est liée calcul_sieges existe bien dans la BDD
 					try
 					{
 						var query = (from list in context.Liste
@@ -76,9 +78,10 @@ namespace election_municipale
 						csiege[i].idListe = query;
 					}
 
+					//Si la liste n'existe pas dans la BDD
 					catch
 					{
-						Console.WriteLine("La requête d'insertion de clé étrangère dans calcul_sieges a échoué");
+						MessageBox.Show("La requête d'insertion de clé étrangère dans calcul_sieges a échoué");
 					}
 
 				} //fin de la boucle for
@@ -116,9 +119,10 @@ namespace election_municipale
 							context.SaveChanges();
 						}
 
+						//Si l'insertion dans la base de données échoue
 						catch
 						{
-							Console.WriteLine("Erreur lors de l'insertion de calcul_sieges dans la BDD");
+							MessageBox.Show("Erreur lors de l'insertion de calcul_sieges dans la BDD");
 						}
 					}
 

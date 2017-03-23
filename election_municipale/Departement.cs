@@ -1,6 +1,7 @@
 namespace election_municipale
 {
 	using System;
+	using System.Windows;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
@@ -40,6 +41,8 @@ namespace election_municipale
 			{
 				context.Configuration.LazyLoadingEnabled = false;
 				short query;
+
+				//On fait une requête pour voir si le département n'existe pas déjà dans la base de données
 				try
 				{
 					query = (from dept in context.Departement
@@ -48,31 +51,24 @@ namespace election_municipale
 
 				}
 
-
+				//Si le département n'existe pas dans la base de données
 				catch (InvalidOperationException e)
 				{
-					Console.WriteLine("query catch exception");
 					if (this.code_du_departement != 0)
 					{
 						context.Departement.Add(this);
+
+						//On insère le département dans la base de données
 						try
 						{
-							Console.WriteLine(this.code_du_departement);
 							context.SaveChanges();
 						}
+
+						//Si l'insertion du département échoue
 						catch (System.Data.Entity.Validation.DbEntityValidationException a)
 						{
-							foreach (var eve in a.EntityValidationErrors)
-							{
-								Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-									eve.Entry.Entity.GetType().Name, eve.Entry.State);
-								foreach (var ve in eve.ValidationErrors)
-								{
-									Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-										ve.PropertyName, ve.ErrorMessage);
-								}
-							}
-							throw;
+
+							MessageBox.Show("L'insertion du département dans la base de données a échoué");
 						} //Fin du catch
 					}
 

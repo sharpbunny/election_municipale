@@ -1,6 +1,7 @@
 namespace election_municipale
 {
 	using System;
+	using System.Windows;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
@@ -53,6 +54,10 @@ namespace election_municipale
 
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 		public virtual ICollection<stats_election> stats_election { get; set; }
+
+		// ************************************************************
+		//							METHODES
+		// ************************************************************
 
 		/// <summary>
 		/// Insère la clé étrangère dans la classe Commune
@@ -150,6 +155,7 @@ namespace election_municipale
 				{
 					context.Commune.Add(this);
 
+					//On insère la commune dans la base de données
 					try
 					{
 						context.SaveChanges();
@@ -159,13 +165,8 @@ namespace election_municipale
 					{
 						foreach (var eve in a.EntityValidationErrors)
 						{
-							Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-								eve.Entry.Entity.GetType().Name, eve.Entry.State);
-							foreach (var ve in eve.ValidationErrors)
-							{
-								Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-									ve.PropertyName, ve.ErrorMessage);
-							}
+							MessageBox.Show("L'insertion de la commune dans la base de données a rencontré une erreur");
+
 						}
 						throw;
 					}

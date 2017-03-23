@@ -5,6 +5,7 @@ namespace election_municipale
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 	using System.Linq;
+	using System.Windows;
 	using System.Data.Entity.Spatial;
 
 	[Table("AnneeElection")]
@@ -49,7 +50,16 @@ namespace election_municipale
 				catch
 				{
 					context.AnneeElection.Add(this);
-					context.SaveChanges();
+					try
+					{
+						context.SaveChanges();
+					}
+
+					//Si l'insertion dans la base de données échoue
+					catch
+					{
+						MessageBox.Show("L'insertion de l'année dans la base de données a échoué");
+					}
 				}
 
 
