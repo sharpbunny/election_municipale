@@ -60,62 +60,69 @@ namespace election_municipale
 		/// <param name="com">La commune</param>
 		/// <param name="dept">Le département auquel appartient la commune</param>
 		/// <returns></returns>
-		public static Commune insertionCleEtrangereCommune(Commune com, Departement dept, short numDept, string libelleDepartement)
+		public void insertionCleEtrangereCommune(Departement dept, short numDept, string libelleDepartement)
 		{
-			if (com.code_de_la_commune == "") com.code_de_la_commune = "vide";
+			if (this.code_de_la_commune == "") this.code_de_la_commune = "vide";
 			Departement queryDepartement;
 
+			//Si le département existait déjà, alors il a été mis à 0
 			if (dept.code_du_departement == 0)
 			{
-				Console.WriteLine("La variable département est nulle.");
+
 				using (var context = new electionEDM())
 				{
+					//On va donc aller chercher dans la BDD le numdept gardé en mémoire depuis le fichier csv. Si il existe dans la bdd
+					//on attribut la valeur du code departement en clé étrangère de la commune
 					try
 					{
 						queryDepartement = (from dpt in context.Departement
 											where dpt.code_du_departement == numDept
 											select dpt).Single();
 
-						com.Departement = null;
-						com.code_du_departement = queryDepartement.code_du_departement;
+						this.Departement = null; //On annule l'objet Département afin qu'entity n'essaie pas de l'insérer une nouvelle fois
+												//dans la BDD
+						this.code_du_departement = queryDepartement.code_du_departement;
 
 					}
 
 					catch
 					{
-						com.Departement = null;
-						com.code_du_departement = numDept;
+						this.Departement = null;
+						this.code_du_departement = numDept;
 					}
 				}
 
 			}
+
+			//Si le code_du_département n'est pas égal à 0, c'est qu'il n'était pas entré dans la bdd
 			else
 			{
 				using (var context = new electionEDM())
 				{
 					try
 					{
+						//par sécurité, on s'assure qu'il n'existait pas déjà quand même
 						queryDepartement = (from dpt in context.Departement
 											where dpt.code_du_departement == numDept
 											select dpt).Single();
 
-						com.Departement = null;
-						com.code_du_departement = queryDepartement.code_du_departement;
+						this.Departement = null;
+						this.code_du_departement = queryDepartement.code_du_departement;
 
 					}
 
+					//Si il n'existait pas, on assigne en clé étrangère de la commune, le numéro de département gardé en mémoire
+					//lors de la récupération des données dans le fichier csv
 					catch
 					{
-						com.Departement = null;
-						com.code_du_departement = numDept;
+						this.Departement = null;
+						this.code_du_departement = numDept;
 					}
 				}
 
 
 
 			}
-
-			return com;
 		}
 
 		/// <summary>

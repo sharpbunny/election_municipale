@@ -507,9 +507,9 @@ namespace election_municipale
 							{
 
 								dept.insertionDonneesDepartement();
-								insertionDonneesParti(parti);
+								parti[1].insertionDonneesParti(parti);
 
-								comm = insertionCleEtrangereCommune(comm, dept, Convert.ToSByte(allData[i][1]), allData[i][3]);
+								comm.insertionCleEtrangereCommune(dept, Convert.ToSByte(allData[i][1]), allData[i][3]);
 								insertionDonneesCommune(comm, dept);
 
 								list = insertionCleEtrangereListe(list, parti);

@@ -27,7 +27,7 @@ namespace election_municipale
 		/// Insertion des données dans la BDD des partis politiques
 		/// </summary>
 		/// <param name="parti">Parti politique</param>
-		public static void insertionDonneesParti(Parti[] parti)
+		public void insertionDonneesParti(Parti[] parti)
 		{
 
 			using (var context = new electionEDM())
