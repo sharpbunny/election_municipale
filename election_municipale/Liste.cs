@@ -46,7 +46,7 @@ namespace election_municipale
 		/// <param name="liste">Tableau de listes électorales</param>
 		/// <param name="parti">Tableau de partis politiques</param>
 		/// <returns></returns>
-		public static Liste[] insertionCleEtrangereListe(Liste[] liste, Parti[] parti)
+		public Liste[] insertionCleEtrangereListe(Liste[] liste, Parti[] parti)
 		{
 			for (int i = 0; i < liste.Length; i++)
 			{
@@ -64,7 +64,7 @@ namespace election_municipale
 		/// insertion des listes éléctorales dans la base de données
 		/// </summary>
 		/// <param name="list">Tableau de listes électorales</param>
-		public static void insertionDonneesListe(Liste[] list)
+		public void insertionDonneesListe(Liste[] list)
 		{
 			using (var context = new electionEDM())
 			{

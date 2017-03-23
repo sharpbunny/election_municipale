@@ -507,13 +507,13 @@ namespace election_municipale
 							{
 
 								dept.insertionDonneesDepartement();
-								parti[1].insertionDonneesParti(parti);
+								parti[0].insertionDonneesParti(parti);
 
 								comm.insertionCleEtrangereCommune(dept, Convert.ToSByte(allData[i][1]), allData[i][3]);
-								insertionDonneesCommune(comm, dept);
+								comm.insertionDonneesCommune(dept);
 
-								list = insertionCleEtrangereListe(list, parti);
-								insertionDonneesListe(list);
+								list[0].insertionCleEtrangereListe(list, parti);
+								list[0].insertionDonneesListe(list);
 
 								candidat = insertionCleEtrangereCandidat(candidat, list);
 								insertionDonneesCandidat(candidat);

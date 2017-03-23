@@ -129,25 +129,26 @@ namespace election_municipale
 		/// Insertion Données de la commune
 		/// </summary>
 		/// <param name="com"></param>
-		public static void insertionDonneesCommune(Commune com, Departement dept)
+		public void insertionDonneesCommune(Departement dept)
 		{
-
-
 
 			using (var context = new electionEDM())
 			{
 				context.Configuration.LazyLoadingEnabled = false;
 				string query;
 
+				//On effectue une requête pour voir si la commune n'existe pas déjà dans la bdd
 				try
 				{
 					query = (from comm in context.Commune
-							 where comm.insee == com.insee
-							 select com.insee).Single();
+							 where comm.insee == this.insee
+							 select this.insee).Single();
 				}
+
+				//Si elle n'était pas présente dans la bdd, on l'insère
 				catch (InvalidOperationException e)
 				{
-					context.Commune.Add(com);
+					context.Commune.Add(this);
 
 					try
 					{
