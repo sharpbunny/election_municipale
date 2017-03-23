@@ -16,46 +16,18 @@ namespace election_municipale
 		static void Main(string[] args)
 		{
 			int choixMenu = 0;
-			choixMenu = affichageDuMenu();
 
-			switch (choixMenu)
+			do
 			{
-				case 1:
-					recuperationDesDonnees();
-					break;
+				choixMenu = affichageDuMenu();
+				Console.Clear();
+				fonctionAppeleeEnFonctionDuChoixDuMenu(choixMenu);
 
-				case 2:
-					listeCommunesOrdreAlphabetique();
-					break;
 
-				case 3:
-					break;
+			} while (true);
 
-				case 4:
-					break;
 
-				case 5:
-					break;
 
-				case 6:
-					break;
-
-				case 7:
-					break;
-
-				case 8:
-					break;
-
-				case 9:
-					break;
-
-				case 10:
-					break;
-
-				default:
-					break;
-
-			}
 
 
 		} //Fin du main
@@ -88,6 +60,53 @@ namespace election_municipale
 			} while (!int.TryParse(Console.ReadLine(), out choixMenu) && choixMenu<1 && choixMenu>10);
 
 			return choixMenu;
+		}
+
+		/// <summary>
+		/// On appelle la fonction correspondant au choix de l'utilisateur dans le menu
+		/// </summary>
+		/// <param name="choixMenu"></param>
+		public static void fonctionAppeleeEnFonctionDuChoixDuMenu(int choixMenu)
+		{
+			switch (choixMenu)
+			{
+				case 1:
+					recuperationDesDonnees();
+					break;
+
+				case 2:
+					listeCommunesOrdreAlphabetique();
+					break;
+
+				case 3:
+					listeCommunesGroupesParDepartement();
+					break;
+
+				case 4:
+					break;
+
+				case 5:
+					break;
+
+				case 6:
+					break;
+
+				case 7:
+					break;
+
+				case 8:
+					break;
+
+				case 9:
+					break;
+
+				case 10:
+					break;
+
+				default:
+					break;
+
+			}
 		}
 
 		// ******************************************************
@@ -256,7 +275,7 @@ namespace election_municipale
 
 							//libelle_du_departement
 							case 3:
-								leDepartementExiste = leDepartementExisteDeja(Convert.ToSByte(allData[i][colonne]));
+								leDepartementExiste = leDepartementExisteDeja(Convert.ToSByte(allData[i][1]));
 								if (!leDepartementExiste) dept.libelle_du_departement = allData[i][colonne];
 								//comm.Departement.libelle_du_departement = allData[i][colonne];
 								break;
@@ -562,7 +581,7 @@ namespace election_municipale
 								insertionDonneesElection(elect);
 
 								stat = insertionCleEtrangereStatsElection(stat, year, comm);
-								insertionDonneesStatElection(stat);
+								insertionDonneesStatElection(stat, year, comm);
 
 								csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
 								insertionDonneesCalculSieges(csieges, comm, year, list);
@@ -729,13 +748,11 @@ namespace election_municipale
 		/// <returns></returns>
 		public static stats_election insertionCleEtrangereStatsElection(stats_election stat, AnneeElection year, Commune comm)
 		{
-			if (stat.annee != 0 && stat.AnneeElection != null)
-			{
+
 				stat.AnneeElection = null;
 				stat.Commune = null;
 				stat.annee = year.annee;
-				stat.insee= comm.insee;
-			}
+				stat.insee = comm.insee;
 
 			return stat;
 		}
@@ -750,18 +767,37 @@ namespace election_municipale
 		/// <returns></returns>
 		public static calcul_sieges[] insertionCleEtrangereCalculSieges(calcul_sieges[] csiege, Commune comm, AnneeElection year, Liste[] liste)
 		{
-			for (int i = 0; i < csiege.Length; i++)
+			int attentes = 4;
+			using(var context = new electionEDM())
 			{
-				if (csiege[i].sieges_cc != null && csiege[i].sieges_elus != null && csiege[i].sieges_secteurs != null && liste[i].nomListe != null)
+				context.Liste.Load();
+				Liste listeTemp;
+				for (int i = 0; i < csiege.Length; i++)
 				{
-					csiege[i].Commune = null;
-					csiege[i].AnneeElection = null;
-					csiege[i].Liste = null;
-					csiege[i].insee = comm.insee;
-					csiege[i].annee = year.annee;
-					csiege[i].idListe = liste[i].idListe;
-				}
-			}
+					listeTemp = liste[i];
+					try
+					{
+						var query = (from list in context.Liste
+									 where list.nomListe == listeTemp.nomListe
+									 select list.idListe).Single();
+
+						csiege[i].Commune = null;
+						csiege[i].AnneeElection = null;
+						csiege[i].Liste = null;
+						csiege[i].insee = comm.insee;
+						csiege[i].annee = year.annee;
+						csiege[i].idListe = query;
+						int attente = 2;
+					}
+
+					catch
+					{
+						Console.WriteLine("La requête d'insertion de clé étrangère dans calcul_sieges a échoué");
+					}
+
+				} //fin de la boucle for
+
+			} //fin du using
 
 			return csiege;
 		}
@@ -958,23 +994,34 @@ namespace election_municipale
 		/// Insertion des données dans la BDD des stats relatives aux élections pour une commune
 		/// </summary>
 		/// <param name="stat"></param>
-		public static void insertionDonneesStatElection(stats_election stat)
+		public static void insertionDonneesStatElection(stats_election stat, AnneeElection year, Commune comm)
 		{
 			using (var context = new electionEDM())
 			{
-				if (stat != null)
-				{
-					context.stats_election.Add(stat);
-				}
 
+				//On regarde si stats_election est déjà dans la BDD
 				try
 				{
-					context.SaveChanges();
+					var query = (from stats in context.stats_election
+								 where (stats.annee == year.annee && comm.insee == stats.insee)
+								 select stats).Single();
+
+					Console.WriteLine("Cet objet stats_election est déjà dans la BDD");
 				}
 
+				//Si stats_election n'est pas dans la BDD, on l'insère
 				catch
 				{
+					context.stats_election.Add(stat);
+					try
+					{
+						context.SaveChanges();
+					}
 
+					catch
+					{
+
+					}
 				}
 
 			}
@@ -1112,11 +1159,17 @@ namespace election_municipale
 			{
 				for (int i = 0; i < csiege.Length; i++)
 				{
-					if (csiege[i].sieges_cc != null && csiege[i].sieges_elus != null && csiege[i].sieges_secteurs != null)
+					//On recherche dans la BDD si l'objet calcul_sieges existe déjà
+					try
 					{
-						csiege[i].Commune = com;
-						csiege[i].AnneeElection = year;
-						csiege[i].Liste = list[i];
+						var query = (from csieges in context.calcul_sieges
+									 where csieges.insee == com.insee && csieges.annee == year.annee && csieges.idListe == list[i].idListe
+									 select csieges).Single();
+					}
+
+					//Si il n'existe pas, on l'insère dans la BDD
+					catch
+					{
 						context.calcul_sieges.Add(csiege[i]);
 
 						try
@@ -1126,14 +1179,25 @@ namespace election_municipale
 
 						catch
 						{
-
+							Console.WriteLine("Erreur lors de l'insertion de calcul_sieges dans la BDD");
 						}
 					}
+
 				}
 			}
 
 		}
 
+
+		// ******************************************************
+		//				REQUETES SUR LA BASE DE DONNEES
+		// ******************************************************
+
+		/// <summary>
+		/// Permet de tester si le département existe déjà dans la base de données
+		/// </summary>
+		/// <param name="code_du_departement">Numéro du département</param>
+		/// <returns></returns>
 		public static bool leDepartementExisteDeja(short code_du_departement)
 		{
 			bool leDepartementExiste = false;
@@ -1158,10 +1222,6 @@ namespace election_municipale
 			return leDepartementExiste;
 		}
 
-		// ******************************************************
-		//				REQUETES SUR LA BASE DE DONNEES
-		// ******************************************************
-
 		/// <summary>
 		/// Affiche la liste des communes classées par ordre alphabétique
 		/// </summary>
@@ -1178,6 +1238,32 @@ namespace election_municipale
 					Console.WriteLine(comm.libelle_de_la_commune);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Avoir la liste des communes groupées par département et classées par ordre alphabétique en fonction du nom de la ville 
+		/// </summary>
+		public static void listeCommunesGroupesParDepartement()
+		{
+			using(var context = new electionEDM())
+			{
+				var query = from com in context.Commune
+							orderby com.code_du_departement, com.libelle_de_la_commune
+							select com;
+
+				foreach(var commune in query)
+				{
+					Console.WriteLine("Département "+commune.code_du_departement+" : "+commune.libelle_de_la_commune);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Affiche la commune ayant le plus fort taux de votants
+		/// </summary>
+		public static void communeAyantLePlusFortTauxDeVotants()
+		{
+
 		}
 
 	}
