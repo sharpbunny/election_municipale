@@ -187,8 +187,8 @@ namespace election_municipale
 			{
 				reinitialisationTableauDeDonnees(candidat, parti, list, csieges, elect);
 				comm.reinitialisationCommune();
-				dept = reinitialisationDepartement(dept);
-				stat = reinitialisationStatsElection(stat);
+				dept.reinitialisationDepartement();
+				stat.reinitialisationStatsElection();
 
 
 				for (int colonne = 0; colonne < 75; colonne++)
@@ -506,7 +506,7 @@ namespace election_municipale
 							using (var context = new electionEDM())
 							{
 
-								insertionDonneesDepartement(dept);
+								dept.insertionDonneesDepartement();
 								insertionDonneesParti(parti);
 
 								comm = insertionCleEtrangereCommune(comm, dept, Convert.ToSByte(allData[i][1]), allData[i][3]);
@@ -560,6 +560,35 @@ namespace election_municipale
 				csiege[i] = new calcul_sieges(); ;
 				elec[i] = new election();
 			}
+		}
+
+		/// <summary>
+		/// Permet de tester si le département existe déjà dans la base de données
+		/// </summary>
+		/// <param name="code_du_departement">Numéro du département</param>
+		/// <returns></returns>
+		public static bool leDepartementExisteDeja(short code_du_departement)
+		{
+			bool leDepartementExiste = false;
+
+			using (var context = new electionEDM())
+			{
+				try
+				{
+					var query = (from dept in context.Departement
+								 where code_du_departement == dept.code_du_departement
+								 select dept).Single();
+					leDepartementExiste = true;
+				}
+
+				catch
+				{
+					leDepartementExiste = false;
+				}
+
+			}
+
+			return leDepartementExiste;
 		}
 
 	}

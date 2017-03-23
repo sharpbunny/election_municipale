@@ -31,7 +31,7 @@ namespace election_municipale
 		/// On va insérer les données relatives aux départements
 		/// </summary>
 		/// <param name="dpt">Le département</param>
-		public static void insertionDonneesDepartement(Departement dpt)
+		public void insertionDonneesDepartement()
 		{
 
 
@@ -43,7 +43,7 @@ namespace election_municipale
 				try
 				{
 					query = (from dept in context.Departement
-							 where dept.code_du_departement == dpt.code_du_departement
+							 where dept.code_du_departement == this.code_du_departement
 							 select dept.code_du_departement).Single();
 
 				}
@@ -52,12 +52,12 @@ namespace election_municipale
 				catch (InvalidOperationException e)
 				{
 					Console.WriteLine("query catch exception");
-					if (dpt.code_du_departement != 0)
+					if (this.code_du_departement != 0)
 					{
-						context.Departement.Add(dpt);
+						context.Departement.Add(this);
 						try
 						{
-							Console.WriteLine(dpt.code_du_departement);
+							Console.WriteLine(this.code_du_departement);
 							context.SaveChanges();
 						}
 						catch (System.Data.Entity.Validation.DbEntityValidationException a)
@@ -73,19 +73,28 @@ namespace election_municipale
 								}
 							}
 							throw;
-						}
+						} //Fin du catch
 					}
 
+				}//Fin du catch sur le try de la requête
 
-					//foreach (var departement in context.Departement)
-					//{
-					//	Console.WriteLine(departement.code_du_departement);
-					//}
-				}
-
-			}
+			} //Fin du using
 
 
 		}
+
+		/// <summary>
+		/// Permet de réinitialiser les attributs d'un objet de type Département à null
+		/// </summary>
+		/// <param name="dept">Département</param>
+		/// <returns></returns>
+		public void reinitialisationDepartement()
+		{
+			this.code_du_departement = 0;
+			this.libelle_du_departement = "";
+			this.Commune = null;
+		}
+
+
 	}
 }

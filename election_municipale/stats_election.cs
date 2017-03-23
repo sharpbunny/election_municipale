@@ -92,5 +92,22 @@ namespace election_municipale
 
 			}
 		}
+
+		/// <summary>
+		/// Permet de réinitialiser les attributs de la table-association stats_election à null
+		/// </summary>
+		/// <param name="stat">Table association : stats_election</param>
+		/// <returns></returns>
+		public void reinitialisationStatsElection()
+		{
+			this.inscrits = 0;
+			this.votants = 0;
+			this.exprimes = 0;
+			this.blancs_et_nuls = 0;
+			this.AnneeElection = null;
+			this.Commune = null;
+			this.abstentions = 0;
+
+		}
 	}
 }
