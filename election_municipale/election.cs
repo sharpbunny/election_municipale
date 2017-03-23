@@ -5,6 +5,7 @@ namespace election_municipale
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 	using System.Data.Entity.Spatial;
+	using System.Linq;
 	using System.Runtime.Serialization;
 	using System.Xml.Serialization;
 
@@ -39,5 +40,59 @@ namespace election_municipale
 		[DataMember]
 		[ForeignKey("insee")]
 		public virtual Commune Commune { get; set; }
+
+		/// <summary>
+		/// insertion des clés étrangères de la table association election
+		/// </summary>
+		/// <param name="elect">La table association election</param>
+		/// <param name="year">Année de l'election municipale</param>
+		/// <param name="candidat">Candidats à l'election municipales</param>
+		/// <param name="comm">La commune où a eu lieu l'election</param>
+		/// <returns></returns>
+		public static election[] insertionCleEtrangereElection(election[] elect, AnneeElection year, Candidat[] candidat, Commune comm)
+		{
+			for (int i = 0; i < elect.Length; i++)
+			{
+				if (elect[i].voix != 0)
+				{
+					elect[i].Candidat = null;
+					elect[i].Commune = null;
+					elect[i].AnneeElection = null;
+					elect[i].idCandidat = candidat[i].idCandidat;
+					elect[i].insee = comm.insee;
+					elect[i].annee = year.annee;
+				}
+			}
+
+			return elect;
+		}
+
+		/// <summary>
+		/// Insertion des données concernant la table association "election"
+		/// </summary>
+		/// <param name="elect">Table association : election</param>
+		public static void insertionDonneesElection(election[] elect)
+		{
+			using (var context = new electionEDM())
+			{
+				for (int i = 0; i < elect.Length; i++)
+				{
+					if (elect[i].voix != 0)
+					{
+						context.election.Add(elect[i]);
+						try
+						{
+							context.SaveChanges();
+						}
+
+						catch
+						{
+
+						}
+
+					}
+				}
+			}
+		}
 	}
 }

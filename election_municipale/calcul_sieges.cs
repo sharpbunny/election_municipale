@@ -4,8 +4,10 @@ namespace election_municipale
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
+	using System.Data.Entity;
 	using System.Data.Entity.Spatial;
 	using System.Runtime.Serialization;
+	using System.Linq;
 	using System.Xml.Serialization;
 
 	public partial class calcul_sieges
@@ -42,5 +44,87 @@ namespace election_municipale
 		[DataMember]
 		[ForeignKey("insee")]
 		public virtual Commune Commune { get; set; }
+
+		/// <summary>
+		/// Insertion des clés étrangères relatives au calcul des sièges alloués selon les résultats des élections
+		/// </summary>
+		/// <param name="csiege">Tableau de table association : calcul_sieges</param>
+		/// <param name="comm">Commune dans laquelle on indique les sièges alloués à certaines listes</param>
+		/// <param name="year">Année de l'election</param>
+		/// <param name="liste">Tableau de listes electorales</param>
+		/// <returns></returns>
+		public static calcul_sieges[] insertionCleEtrangereCalculSieges(calcul_sieges[] csiege, Commune comm, AnneeElection year, Liste[] liste)
+		{
+			using (var context = new electionEDM())
+			{
+				context.Liste.Load();
+				Liste listeTemp;
+				for (int i = 0; i < csiege.Length; i++)
+				{
+					listeTemp = liste[i];
+					try
+					{
+						var query = (from list in context.Liste
+									 where list.nomListe == listeTemp.nomListe
+									 select list.idListe).Single();
+
+						csiege[i].Commune = null;
+						csiege[i].AnneeElection = null;
+						csiege[i].Liste = null;
+						csiege[i].insee = comm.insee;
+						csiege[i].annee = year.annee;
+						csiege[i].idListe = query;
+					}
+
+					catch
+					{
+						Console.WriteLine("La requête d'insertion de clé étrangère dans calcul_sieges a échoué");
+					}
+
+				} //fin de la boucle for
+
+			} //fin du using
+
+			return csiege;
+		}
+
+		/// <summary>
+		/// insertion de la table stockant le nombre de sièges affectés à une commune
+		/// </summary>
+		/// <param name="csiege"></param>
+		public static void insertionDonneesCalculSieges(calcul_sieges[] csiege, Commune com, AnneeElection year, Liste[] list)
+		{
+			using (var context = new electionEDM())
+			{
+				for (int i = 0; i < csiege.Length; i++)
+				{
+					//On recherche dans la BDD si l'objet calcul_sieges existe déjà
+					try
+					{
+						var query = (from csieges in context.calcul_sieges
+									 where csieges.insee == com.insee && csieges.annee == year.annee && csieges.idListe == list[i].idListe
+									 select csieges).Single();
+					}
+
+					//Si il n'existe pas, on l'insère dans la BDD
+					catch
+					{
+						context.calcul_sieges.Add(csiege[i]);
+
+						try
+						{
+							context.SaveChanges();
+						}
+
+						catch
+						{
+							Console.WriteLine("Erreur lors de l'insertion de calcul_sieges dans la BDD");
+						}
+					}
+
+				}
+			}
+
+		}
 	}
 }
