@@ -7,36 +7,235 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Data.Entity;
 
-namespace testJSON
+namespace election_municipale
 {
 	class Program
 	{
-		static Candidat[] candidat = new Candidat[5];
-		static Departement dept = new Departement();
-		static Commune comm = new Commune();
-		static stats_election stat = new stats_election();
-		static Parti[] parti = new Parti[5];
-		static Liste[] list = new Liste[5];
-		static calcul_sieges[] csieges = new calcul_sieges[5];
-		static election[] elect = new election[5];
-		static bool leDepartementExiste;
+		
 
 		static void Main(string[] args)
 		{
+			int choixMenu = 0;
+			choixMenu = affichageDuMenu();
+
+			switch (choixMenu)
+			{
+				case 1:
+					recuperationDesDonnees();
+					break;
+
+				case 2:
+					listeCommunesOrdreAlphabetique();
+					break;
+
+				case 3:
+					break;
+
+				case 4:
+					break;
+
+				case 5:
+					break;
+
+				case 6:
+					break;
+
+				case 7:
+					break;
+
+				case 8:
+					break;
+
+				case 9:
+					break;
+
+				case 10:
+					break;
+
+				default:
+					break;
+
+			}
+
+
+		} //Fin du main
+
+		// ******************************************************
+		//				MENU DU PROGRAMME
+		// ******************************************************
+
+		/// <summary>
+		/// Permet d'afficher le menu du programme
+		/// </summary>
+		public static int affichageDuMenu()
+		{
+			int choixMenu;
+			do
+			{
+				Console.WriteLine("---- Menu des elections municipales ----");
+				Console.WriteLine("1. Insérer les données depuis un fichier csv");
+				Console.WriteLine("2. Avoir la liste de toutes les communes par ordre alphabétique");
+				Console.WriteLine("3. Liste des communes groupés par département et classées par ordre alphabétique");
+				Console.WriteLine("4. Afficher la commune ayant le plus fort taux de votants");
+				Console.WriteLine("5. Afficher la commune ayant le plus fort taux d'abstentions");
+				Console.WriteLine("6. Connaitre le pourcentage de femmes elues");
+				Console.WriteLine("7. Connaître le prénom masculin et féminin le plus fréquent parmi les sièges élues");
+				Console.WriteLine("8. Connaître la commune ayant le plus d'élues femme en nombre");
+				Console.WriteLine("9. Connaître la commune ayant le plus d'élues femme en pourcentage");
+				Console.WriteLine("10. Connaître le département ayant le plus d'élues femme en pourcentage");
+				Console.Write("Votre choix : ");
+				
+			} while (!int.TryParse(Console.ReadLine(), out choixMenu) && choixMenu<1 && choixMenu>10);
+
+			return choixMenu;
+		}
+
+		// ******************************************************
+		//				METHODES UTILES
+		// ******************************************************
+
+		/// <summary>
+		/// Fonction permettant de réinitialiser le double tableau qui récupère les données dans le fichier csv
+		/// </summary>
+		/// <param name="allData">Tableau de données qui récupère les données dans le fichier csv</param>
+		public static void reinitialisationAllData(String [][] allData)
+		{
+			for(int i=0; i < allData.Length; i++)
+			{
+				for(int j = 0; j < 75; j++)
+				{
+					allData[i][j] = null;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Permet de réinitialiser tous les tableaux utilisés dans le programme à null
+		/// </summary>
+		/// <param name="candidat">Tableau de candidats</param>
+		/// <param name="parti">Tableau contenant les partis politiques</param>
+		/// <param name="list">Tableau contenant les listes electorales</param>
+		/// <param name="csiege">Tableau contenant les tables associations : calcul_sieges</param>
+		/// <param name="elec">Tableau contenant les tables association : elec</param>
+		public static void reinitialisationTableauDeDonnees(Candidat[] candidat, Parti[] parti, Liste[] list, calcul_sieges[] csiege, election[] elec)
+		{
+			for (int i = 0; i < candidat.Length; i++)
+			{
+				candidat[i] = new Candidat(); ;
+				parti[i] = new Parti();
+				list[i] = new Liste();
+				csiege[i] = new calcul_sieges(); ;
+				elec[i] = new election();
+			}
+		}
+
+		/// <summary>
+		/// Permet de réinitialiser un objet Département à null
+		/// </summary>
+		/// <param name="dept">Département</param>
+		/// <returns></returns>
+		public static Departement reinitialisationDepartement(Departement dept)
+		{
+			dept.code_du_departement = 0;
+			dept.libelle_du_departement = "";
+			dept.Commune = null;
+			return dept;
+		}
+
+		/// <summary>
+		/// Permet de réinitialiser un objet Commune à null
+		/// </summary>
+		/// <param name="comm">Commune</param>
+		/// <returns></returns>
+		public static Commune reinitialisationCommune(Commune comm)
+		{
+			comm.insee = "";
+			comm.libelle_de_la_commune = "";
+			comm.geo_shape = "";
+			comm.geo_point_2d = "";
+			comm.Departement = null;
+			comm.stats_election = null;
+			comm.calcul_sieges = null;
+			comm.election = null;
+			comm.code_du_departement = 0;
+			return comm;
+		}
+
+		/// <summary>
+		/// Permet de réinitialiser la table association : stats_election à null
+		/// </summary>
+		/// <param name="stat">Table association : stats_election</param>
+		/// <returns></returns>
+		public static stats_election reinitialisationStatsElection(stats_election stat)
+		{
+			stat.inscrits = 0;
+			stat.votants = 0;
+			stat.exprimes = 0;
+			stat.blancs_et_nuls = 0;
+			stat.AnneeElection = null;
+			stat.Commune = null;
+			stat.abstentions = 0;
+			return stat;
+		}
+
+		// *****************************************************************
+		//			FONCTIONS DE LECTURE DE DONNEES DEPUIS LE CSV
+		// *****************************************************************
+
+		/// <summary>
+		/// A un moment, tu peux lire le JSON, mais sa mère le csv c'est mieux
+		/// </summary>
+		/// <returns></returns>
+		public static string[][] lireToutesLesDonnees()
+		{
+			string[] line;
+			string[][] allData = new String[232][];
+
+			line = File.ReadAllLines(@"election.csv");
+
+			for (int i = 0; i < line.Length; i++)
+			{
+				allData[i] = line[i].Split(';');
+			}
+
+			return allData;
+		}
+
+		/// <summary>
+		/// Permet de récupérer toutes les données issues du fichier csv election_municipale_2014
+		/// </summary>
+		public static void recuperationDesDonnees()
+		{
+			Candidat[] candidat = new Candidat[5];
+			Departement dept = new Departement();
+			Commune comm = new Commune();
+			stats_election stat = new stats_election();
+			Parti[] parti = new Parti[5];
+			Liste[] list = new Liste[5];
+			calcul_sieges[] csieges = new calcul_sieges[5];
+			election[] elect = new election[5];
+			bool leDepartementExiste;
+
+
 			AnneeElection year = new AnneeElection();
 			year.annee = 2014;
+			insertionAnnee(year);
+
 			string[][] allData = lireToutesLesDonnees(); //Lire toutes les données depuis le fichier csv et les stocker dans allData
 
 			for (int i = 0; i < allData.Length; i++)
 			{
 				reinitialisationTableauDeDonnees(candidat, parti, list, csieges, elect);
+				comm = reinitialisationCommune(comm);
+				dept = reinitialisationDepartement(dept);
+				stat = reinitialisationStatsElection(stat);
+
+
 				for (int colonne = 0; colonne < 75; colonne++)
 				{
 
-					//comm = reinitialisationCommune(comm);
-					//dept = reinitialisationDepartement(dept);
-					//stat = reinitialisationStatsElection(stat);
-					
+
+
 					if (i > 0)
 					{
 						switch (colonne)
@@ -48,7 +247,7 @@ namespace testJSON
 								if (!leDepartementExiste) dept.code_du_departement = Convert.ToSByte(allData[i][colonne]);
 								//comm.Departement = new Departement();
 								//comm.Departement.code_du_departement = Convert.ToSByte(allData[i][colonne]);
-;
+								;
 								break;
 
 							//type du scrutin
@@ -57,13 +256,14 @@ namespace testJSON
 
 							//libelle_du_departement
 							case 3:
-
+								leDepartementExiste = leDepartementExisteDeja(Convert.ToSByte(allData[i][colonne]));
 								if (!leDepartementExiste) dept.libelle_du_departement = allData[i][colonne];
 								//comm.Departement.libelle_du_departement = allData[i][colonne];
 								break;
 
 							//code de la commune
 							case 4:
+								if (allData[i][colonne] == "") comm.code_de_la_commune = "vide";
 								comm.code_de_la_commune = allData[i][colonne];
 								break;
 
@@ -176,7 +376,7 @@ namespace testJSON
 							case 34:
 								candidat[1].prenom = allData[i][colonne];
 								break;
-							
+
 							//liste_02
 							case 35:
 								list[1].nomListe = allData[i][colonne];
@@ -319,7 +519,7 @@ namespace testJSON
 
 							//sieges_elu_05
 							case 69:
-								if(allData[i][colonne] != "") csieges[4].sieges_elus = Convert.ToSByte(allData[i][colonne]);
+								if (allData[i][colonne] != "") csieges[4].sieges_elus = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//sieges_secteur_05
@@ -329,7 +529,7 @@ namespace testJSON
 
 							//sieges_cc_05
 							case 71:
-								if (allData[i][colonne] != "")  csieges[4].sieges_cc = Convert.ToSByte(allData[i][colonne]);
+								if (allData[i][colonne] != "") csieges[4].sieges_cc = Convert.ToSByte(allData[i][colonne]);
 								break;
 
 							//voix_05
@@ -339,17 +539,17 @@ namespace testJSON
 
 						} //Fin du switch
 
-						if(colonne == 74)
+						if (colonne == 74)
 						{
 
 
-							using (var context = new election_municipaleEntities())
+							using (var context = new electionEDM())
 							{
 
 								insertionDonneesDepartement(dept);
 								insertionDonneesParti(parti);
 
-								comm = insertionCleEtrangereCommune(comm, Convert.ToSByte(allData[i][1]), allData[i][3]);
+								comm = insertionCleEtrangereCommune(comm, dept, Convert.ToSByte(allData[i][1]), allData[i][3]);
 								insertionDonneesCommune(comm, dept);
 
 								list = insertionCleEtrangereListe(list, parti);
@@ -367,7 +567,7 @@ namespace testJSON
 								csieges = insertionCleEtrangereCalculSieges(csieges, comm, year, list);
 								insertionDonneesCalculSieges(csieges, comm, year, list);
 
-								Console.WriteLine(i+ " insertion");
+								Console.WriteLine(" --- Fin de l'insertion de la ligne " + i);
 							}
 						}
 
@@ -380,92 +580,12 @@ namespace testJSON
 
 
 			} //Fin du for pour les lignes
-
-		} //Fin du main
-
-		// ******************************************************
-		//				METHODES UTILES
-		// ******************************************************
-
-		/// <summary>
-		/// Permet de réinitialiser tous les tableaux utilisés dans le programme à null
-		/// </summary>
-		/// <param name="candidat">Tableau de candidats</param>
-		/// <param name="parti">Tableau contenant les partis politiques</param>
-		/// <param name="list">Tableau contenant les listes electorales</param>
-		/// <param name="csiege">Tableau contenant les tables associations : calcul_sieges</param>
-		/// <param name="elec">Tableau contenant les tables association : elec</param>
-		public static void reinitialisationTableauDeDonnees(Candidat[] candidat, Parti [] parti, Liste [] list, calcul_sieges [] csiege, election [] elec)
-		{
-			for(int i=0; i < candidat.Length; i++)
-			{
-				candidat[i] = new Candidat(); ;
-				parti[i] = new Parti();
-				list[i] = new Liste();
-				csiege[i] = new calcul_sieges(); ;
-				elec[i] = new election();
-			}
-		}
-
-		/// <summary>
-		/// Permet de réinitialiser un objet Département à null
-		/// </summary>
-		/// <param name="dept">Département</param>
-		/// <returns></returns>
-		public static Departement reinitialisationDepartement(Departement dept)
-		{
-			dept = null;
-			return dept;
-		}
-
-		/// <summary>
-		/// Permet de réinitialiser un objet Commune à null
-		/// </summary>
-		/// <param name="comm">Commune</param>
-		/// <returns></returns>
-		public static Commune reinitialisationCommune(Commune comm)
-		{
-			comm = null;
-			return comm;
-		}
-
-		/// <summary>
-		/// Permet de réinitialiser la table association : stats_election à null
-		/// </summary>
-		/// <param name="stat">Table association : stats_election</param>
-		/// <returns></returns>
-		public static stats_election reinitialisationStatsElection(stats_election stat)
-		{
-			stat = null;
-			return stat;
-		}
-
-		// *****************************************************************
-		//			FONCTIONS DE LECTURE DE DONNEES DEPUIS LE CSV
-		// *****************************************************************
-
-		/// <summary>
-		/// A un moment, tu peux lire le JSON, mais sa mère le csv c'est mieux
-		/// </summary>
-		/// <returns></returns>
-		public static string[][] lireToutesLesDonnees()
-		{
-			string[] line;
-			string[][] allData = new String[232][];
-
-			line = File.ReadAllLines(@"election.csv");
-
-			for (int i = 0; i < line.Length; i++)
-			{
-				allData[i] = line[i].Split(';');
-			}
-
-			return allData;
 		}
 
 		// ******************************************************
 		//				AFFECTATION DES CLES ETRANGERES
 		// ******************************************************
+
 
 		/// <summary>
 		/// Insère la clé étrangère dans la classe Commune
@@ -473,15 +593,15 @@ namespace testJSON
 		/// <param name="com">La commune</param>
 		/// <param name="dept">Le département auquel appartient la commune</param>
 		/// <returns></returns>
-		public static Commune insertionCleEtrangereCommune(Commune com, short numDept, string libelleDepartement)
+		public static Commune insertionCleEtrangereCommune(Commune com, Departement dept, short numDept, string libelleDepartement)
 		{
-
+			if (com.code_de_la_commune == "") com.code_de_la_commune = "vide";
 			Departement queryDepartement;
 
-			if(dept.code_du_departement == 0)
+			if (dept.code_du_departement == 0)
 			{
 				Console.WriteLine("La variable département est nulle.");
-				using(var context = new election_municipaleEntities())
+				using (var context = new electionEDM())
 				{
 					try
 					{
@@ -489,20 +609,22 @@ namespace testJSON
 											where dpt.code_du_departement == numDept
 											select dpt).Single();
 
-						com.Departement = queryDepartement;
+						com.Departement = null;
+						com.code_du_departement = queryDepartement.code_du_departement;
 
 					}
 
 					catch
 					{
-						com.Departement.code_du_departement = numDept;
+						com.Departement = null;
+						com.code_du_departement = numDept;
 					}
 				}
 
 			}
 			else
 			{
-				using(var context = new election_municipaleEntities())
+				using (var context = new electionEDM())
 				{
 					try
 					{
@@ -510,13 +632,15 @@ namespace testJSON
 											where dpt.code_du_departement == numDept
 											select dpt).Single();
 
-						com.Departement = queryDepartement;
+						com.Departement = null;
+						com.code_du_departement = queryDepartement.code_du_departement;
 
 					}
 
 					catch
 					{
-						com.Departement.code_du_departement = numDept;
+						com.Departement = null;
+						com.code_du_departement = numDept;
 					}
 				}
 
@@ -533,13 +657,14 @@ namespace testJSON
 		/// <param name="liste">Tableau de listes électorales</param>
 		/// <param name="parti">Tableau de partis politiques</param>
 		/// <returns></returns>
-		public static Liste [] insertionCleEtrangereListe(Liste[] liste, Parti [] parti)
+		public static Liste[] insertionCleEtrangereListe(Liste[] liste, Parti[] parti)
 		{
-			for(int i = 0; i<liste.Length; i++)
+			for (int i = 0; i < liste.Length; i++)
 			{
-				if(liste[i] != null && parti[i] != null)
+				if (liste[i].code_nuance != "" && parti[i].code_nuance != "")
 				{
-					liste[i].Parti = parti[i];
+					liste[i].Parti = null;
+					liste[i].code_nuance = parti[i].code_nuance;
 				}
 			}
 
@@ -552,15 +677,16 @@ namespace testJSON
 		/// <param name="candidat">Tableau de candidats</param>
 		/// <param name="list">Tableau de listes électorales</param>
 		/// <returns></returns>
-		public static Candidat[] insertionCleEtrangereCandidat(Candidat [] candidat, Liste[] list)
+		public static Candidat[] insertionCleEtrangereCandidat(Candidat[] candidat, Liste[] list)
 		{
-			for(int i = 0; i < candidat.Length; i++)
+			for (int i = 0; i < candidat.Length; i++)
 			{
 
-					if (candidat[i] != null && list[i] != null)
-					{
-						candidat[i].Liste = list[i];
-					}
+				if (candidat[i].nom != null && list[i].nomListe != null)
+				{
+					candidat[i].Liste = null;
+					candidat[i].idListe = list[i].idListe;
+				}
 
 			}
 
@@ -576,21 +702,24 @@ namespace testJSON
 		/// <param name="candidat">Candidats à l'election municipales</param>
 		/// <param name="comm">La commune où a eu lieu l'election</param>
 		/// <returns></returns>
-		public static election [] insertionCleEtrangereElection(election[] elect, AnneeElection year, Candidat [] candidat, Commune comm)
+		public static election[] insertionCleEtrangereElection(election[] elect, AnneeElection year, Candidat[] candidat, Commune comm)
 		{
-			for(int i=0; i<elect.Length; i++)
+			for (int i = 0; i < elect.Length; i++)
 			{
-				if(elect[i] != null)
+				if (elect[i].voix != 0)
 				{
-					elect[i].Candidat = candidat[i];
-					elect[i].Commune = comm;
-					elect[i].AnneeElection = year;
+					elect[i].Candidat = null;
+					elect[i].Commune = null;
+					elect[i].AnneeElection = null;
+					elect[i].idCandidat = candidat[i].idCandidat;
+					elect[i].insee = comm.insee;
+					elect[i].annee = year.annee;
 				}
 			}
 
 			return elect;
 		}
-		
+
 		/// <summary>
 		/// Insertion des clés étrangères relatives à la table association : stats_election
 		/// </summary>
@@ -600,10 +729,12 @@ namespace testJSON
 		/// <returns></returns>
 		public static stats_election insertionCleEtrangereStatsElection(stats_election stat, AnneeElection year, Commune comm)
 		{
-			if(stat != null)
+			if (stat.annee != 0 && stat.AnneeElection != null)
 			{
-				stat.AnneeElection = year;
-				stat.Commune = comm;
+				stat.AnneeElection = null;
+				stat.Commune = null;
+				stat.annee = year.annee;
+				stat.insee= comm.insee;
 			}
 
 			return stat;
@@ -617,15 +748,18 @@ namespace testJSON
 		/// <param name="year">Année de l'election</param>
 		/// <param name="liste">Tableau de listes electorales</param>
 		/// <returns></returns>
-		public static calcul_sieges [] insertionCleEtrangereCalculSieges(calcul_sieges [] csiege, Commune comm, AnneeElection year, Liste[] liste)
+		public static calcul_sieges[] insertionCleEtrangereCalculSieges(calcul_sieges[] csiege, Commune comm, AnneeElection year, Liste[] liste)
 		{
-			for(int i = 0; i < csiege.Length; i++)
+			for (int i = 0; i < csiege.Length; i++)
 			{
-				if(csiege[i] != null && liste[i] != null)
+				if (csiege[i].sieges_cc != null && csiege[i].sieges_elus != null && csiege[i].sieges_secteurs != null && liste[i].nomListe != null)
 				{
-					csiege[i].Commune = comm;
-					csiege[i].AnneeElection = year;
-					csiege[i].Liste = liste[i];
+					csiege[i].Commune = null;
+					csiege[i].AnneeElection = null;
+					csiege[i].Liste = null;
+					csiege[i].insee = comm.insee;
+					csiege[i].annee = year.annee;
+					csiege[i].idListe = liste[i].idListe;
 				}
 			}
 
@@ -638,11 +772,37 @@ namespace testJSON
 		// ******************************************************
 
 		/// <summary>
+		/// Insertion dans la base de données de l'entité AnneeElection
+		/// </summary>
+		/// <param name="year">Entité : AnneeElection</param>
+		public static void insertionAnnee(AnneeElection year)
+		{
+			using(var context = new electionEDM())
+			{
+				try
+				{
+					AnneeElection query = (from annee in context.AnneeElection
+										   where annee.annee == year.annee
+										   select annee).Single();
+				}
+
+				catch
+				{
+					context.AnneeElection.Add(year);
+					context.SaveChanges();
+				}
+
+
+
+			}
+		}
+
+		/// <summary>
 		/// On va insérer les données relatives aux candidats à l'élection municipale dans la base de données
 		/// </summary>
 		public static void insertionDonneesCandidat(Candidat[] candidat)
 		{
-			using (var context = new election_municipaleEntities())
+			using (var context = new electionEDM())
 			{
 
 				for (int i = 0; i < candidat.Length; i++)
@@ -650,14 +810,14 @@ namespace testJSON
 
 					int query;
 
-					if (candidat[i] != null)
+					if (candidat[i].nom != null)
 					{
 						//On fait une requête pour voir si l'id du candidat n'existe pas déjà dans la bdd
 						try
 						{
 							query = (from candid in context.Candidat
-										 where candid.idCandidat == candidat[i].idCandidat
-										 select candid.idCandidat).Single();
+									 where candid.nom == candidat[i].nom && candid.prenom == candidat[i].prenom
+									 select candid.idCandidat).Single();
 						}
 
 						catch
@@ -691,7 +851,7 @@ namespace testJSON
 
 
 
-			using (var context = new election_municipaleEntities())
+			using (var context = new electionEDM())
 			{
 				context.Configuration.LazyLoadingEnabled = false;
 				short query;
@@ -707,7 +867,7 @@ namespace testJSON
 				catch (InvalidOperationException e)
 				{
 					Console.WriteLine("query catch exception");
-					if(dpt.code_du_departement != 0)
+					if (dpt.code_du_departement != 0)
 					{
 						context.Departement.Add(dpt);
 						try
@@ -752,7 +912,7 @@ namespace testJSON
 
 
 
-			using (var context = new election_municipaleEntities())
+			using (var context = new electionEDM())
 			{
 				context.Configuration.LazyLoadingEnabled = false;
 				string query;
@@ -760,32 +920,32 @@ namespace testJSON
 				try
 				{
 					query = (from comm in context.Commune
-								where comm.insee == com.insee
-								select com.insee).Single();
+							 where comm.insee == com.insee
+							 select com.insee).Single();
 				}
-				catch(InvalidOperationException e)
+				catch (InvalidOperationException e)
 				{
 					context.Commune.Add(com);
 
-					//try
-					//{
-					//	context.SaveChanges();
-					//}
+					try
+					{
+						context.SaveChanges();
+					}
 
-					//catch (System.Data.Entity.Validation.DbEntityValidationException a)
-					//{
-					//	foreach (var eve in a.EntityValidationErrors)
-					//	{
-					//		Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-					//			eve.Entry.Entity.GetType().Name, eve.Entry.State);
-					//		foreach (var ve in eve.ValidationErrors)
-					//		{
-					//			Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-					//				ve.PropertyName, ve.ErrorMessage);
-					//		}
-					//	}
-					//	throw;
-					//}
+					catch (System.Data.Entity.Validation.DbEntityValidationException a)
+					{
+						foreach (var eve in a.EntityValidationErrors)
+						{
+							Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+								eve.Entry.Entity.GetType().Name, eve.Entry.State);
+							foreach (var ve in eve.ValidationErrors)
+							{
+								Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+									ve.PropertyName, ve.ErrorMessage);
+							}
+						}
+						throw;
+					}
 
 				}
 
@@ -800,31 +960,41 @@ namespace testJSON
 		/// <param name="stat"></param>
 		public static void insertionDonneesStatElection(stats_election stat)
 		{
-			using (var context = new election_municipaleEntities())
+			using (var context = new electionEDM())
 			{
-				if(stat != null)
+				if (stat != null)
 				{
 					context.stats_election.Add(stat);
 				}
 
+				try
+				{
+					context.SaveChanges();
+				}
+
+				catch
+				{
+
+				}
+
 			}
 		}
-		
+
 		/// <summary>
 		/// insertion des listes éléctorales dans la base de données
 		/// </summary>
 		/// <param name="list">Tableau de listes électorales</param>
-		public static void insertionDonneesListe(Liste [] list)
+		public static void insertionDonneesListe(Liste[] list)
 		{
-			using(var context = new election_municipaleEntities())
+			using (var context = new electionEDM())
 			{
 				//On parcourt le tableau de listes electorales
-				for(int i=0; i< list.Length; i++)
+				for (int i = 0; i < list.Length; i++)
 				{
 					Liste listTemp = list[i];
 					string query;
 
-					if (list[i].nomListe != "")
+					if (list[i].nomListe != null)
 					{
 						try
 						{
@@ -833,7 +1003,7 @@ namespace testJSON
 									 select liste.nomListe).Single();
 						}
 
-						catch(InvalidOperationException e)
+						catch (InvalidOperationException e)
 						{
 							context.Liste.Add(list[i]);
 							try
@@ -843,7 +1013,7 @@ namespace testJSON
 
 							catch (System.Data.Entity.Validation.DbEntityValidationException a)
 							{
-								Console.WriteLine("list "+i+" : a échoué");
+								Console.WriteLine("list " + i + " : a échoué");
 							}
 
 						}
@@ -859,20 +1029,20 @@ namespace testJSON
 		/// Insertion des données dans la BDD des partis politiques
 		/// </summary>
 		/// <param name="parti">Parti politique</param>
-		public static void insertionDonneesParti(Parti [] parti)
+		public static void insertionDonneesParti(Parti[] parti)
 		{
 
-			using(var context = new election_municipaleEntities())
+			using (var context = new electionEDM())
 			{
 
 				string query;
 
 				//On va parcourir le tableau de partis
-				for(int i = 0; i < parti.Length; i++)
+				for (int i = 0; i < parti.Length; i++)
 				{
 					Parti partiTemp = parti[i];
 
-					if(partiTemp.code_nuance != "")
+					if (partiTemp.code_nuance != null)
 					{
 						try
 						{
@@ -881,7 +1051,7 @@ namespace testJSON
 									 select part.code_nuance).Single();
 						}
 
-						catch(InvalidOperationException e)
+						catch (InvalidOperationException e)
 						{
 							context.Parti.Add(parti[i]);
 							try
@@ -891,7 +1061,7 @@ namespace testJSON
 
 							catch (System.Data.Entity.Validation.DbEntityValidationException a)
 							{
-								Console.WriteLine("parti "+i+" : a échoué lors du savechanges");
+								Console.WriteLine("parti " + i + " : a échoué lors du savechanges");
 							}
 
 						}
@@ -908,23 +1078,23 @@ namespace testJSON
 		/// Insertion des données concernant la table association "election"
 		/// </summary>
 		/// <param name="elect">Table association : election</param>
-		public static void insertionDonneesElection(election [] elect)
+		public static void insertionDonneesElection(election[] elect)
 		{
-			using(var context = new election_municipaleEntities())
+			using (var context = new electionEDM())
 			{
-				for(int i =0; i < elect.Length; i++)
+				for (int i = 0; i < elect.Length; i++)
 				{
-					if(elect[i] != null)
+					if (elect[i].voix != 0)
 					{
 						context.election.Add(elect[i]);
 						try
 						{
-
+							context.SaveChanges();
 						}
 
 						catch
 						{
-							context.SaveChanges();
+							
 						}
 
 					}
@@ -936,24 +1106,39 @@ namespace testJSON
 		/// insertion de la table stockant le nombre de sièges affectés à une commune
 		/// </summary>
 		/// <param name="csiege"></param>
-		public static void insertionDonneesCalculSieges(calcul_sieges [] csiege, Commune com, AnneeElection year, Liste [] list)
+		public static void insertionDonneesCalculSieges(calcul_sieges[] csiege, Commune com, AnneeElection year, Liste[] list)
 		{
-			for(int i=0; i < csiege.Length; i++)
+			using(var context = new electionEDM())
 			{
-				if(csiege != null)
+				for (int i = 0; i < csiege.Length; i++)
 				{
-					csiege[i].Commune = com;
-					csiege[i].AnneeElection = year;
-					csiege[i].Liste = list[i];
+					if (csiege[i].sieges_cc != null && csiege[i].sieges_elus != null && csiege[i].sieges_secteurs != null)
+					{
+						csiege[i].Commune = com;
+						csiege[i].AnneeElection = year;
+						csiege[i].Liste = list[i];
+						context.calcul_sieges.Add(csiege[i]);
+
+						try
+						{
+							context.SaveChanges();
+						}
+
+						catch
+						{
+
+						}
+					}
 				}
 			}
+
 		}
 
 		public static bool leDepartementExisteDeja(short code_du_departement)
 		{
 			bool leDepartementExiste = false;
 
-			using(var context = new election_municipaleEntities())
+			using (var context = new electionEDM())
 			{
 				try
 				{
@@ -972,6 +1157,29 @@ namespace testJSON
 
 			return leDepartementExiste;
 		}
+
+		// ******************************************************
+		//				REQUETES SUR LA BASE DE DONNEES
+		// ******************************************************
+
+		/// <summary>
+		/// Affiche la liste des communes classées par ordre alphabétique
+		/// </summary>
+		public static void listeCommunesOrdreAlphabetique()
+		{
+			using(var context = new electionEDM())
+			{
+				var query = from com in context.Commune
+							orderby com.libelle_de_la_commune ascending
+							select com;
+
+				foreach(Commune comm in query)
+				{
+					Console.WriteLine(comm.libelle_de_la_commune);
+				}
+			}
+		}
+
 	}
 }
 
