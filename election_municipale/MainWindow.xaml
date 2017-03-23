@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:election_municipale"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="450" Width="700" WindowStartupLocation="CenterScreen">
     
 
     <DockPanel>
@@ -15,8 +15,9 @@
         </StackPanel>
         
         <!--StackPanel contenant les fonctions d'insertion -->
-        <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="50" Background="Beige">
-            <Button x:Name="buttonInsertionDonneesCsv" Content="Insérer des données depuis un fichier csv" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,15,0,0" Click="buttonInsertionDonneesCsv_Click"/>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="50" Background="Beige">
+            <Button x:Name="buttonInsertionDonneesCsv" Content="Insérer des données depuis un fichier csv" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="25,0,0,0" Click="buttonInsertionDonneesCsv_Click"/>
+            <Label x:Name="lignesInsereesLabel" Content="Ligne(s) lue(s) : " HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="15,0,0,0" FontSize="12"/>
         </StackPanel>
 
         <!-- StackPanel permettant d'afficher les tables qui ont été insérées dans la BDD -->

@@ -164,7 +164,7 @@ namespace election_municipale
 		/// <summary>
 		/// Permet de récupérer toutes les données issues du fichier csv election_municipale_2014
 		/// </summary>
-		public static void recuperationDesDonnees()
+		public static void recuperationDesDonnees(MainWindow pagePrincipale)
 		{
 			Candidat[] candidat = new Candidat[5];
 			Departement dept = new Departement();
@@ -183,8 +183,9 @@ namespace election_municipale
 
 			string[][] allData = lireToutesLesDonnees(); //Lire toutes les données depuis le fichier csv et les stocker dans allData
 
-			for (int i = 0; i < allData.Length; i++)
+			for (int i = 1; i < allData.Length; i++)
 			{
+
 				reinitialisationTableauDeDonnees(candidat, parti, list, csieges, elect);
 				comm.reinitialisationCommune();
 				dept.reinitialisationDepartement();
@@ -198,6 +199,8 @@ namespace election_municipale
 					//La première ligne i = 0 n'est pas insérée car c'est le titre des colonnes
 					if (i > 0)
 					{
+
+
 						switch (colonne)
 						{
 							//code du département
@@ -537,7 +540,7 @@ namespace election_municipale
 
 				}//Fin du for des colonnes
 
-
+				pagePrincipale.modificationLabelInsertionLignes(i);
 			} //Fin du for pour les lignes
 		}
 

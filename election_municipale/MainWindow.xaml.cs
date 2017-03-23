@@ -37,7 +37,16 @@ namespace election_municipale
 		private void buttonInsertionDonneesCsv_Click(object sender, RoutedEventArgs e)
 		{
 			electionEDM.lireToutesLesDonnees();
-			electionEDM.recuperationDesDonnees();
+			electionEDM.recuperationDesDonnees(this);
+		}
+
+		/// <summary>
+		/// Permet de modifier le label indiquant le nombre de lignes qui ont été lues depuis le fichier csv
+		/// </summary>
+		public void modificationLabelInsertionLignes(int lignes)
+		{
+			lignesInsereesLabel.Content = "Ligne(s) lue(s) : ";
+			lignesInsereesLabel.Content += Convert.ToString(lignes);
 		}
 	}
 }

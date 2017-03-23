@@ -102,7 +102,7 @@ namespace election_municipale
 							//Si l'insertion du candicat échoue
 							catch
 							{
-								MessageBox.Show("Echec dans l'insertion du candidat " + i + " dans la base de données");
+
 							}
 
 						}
