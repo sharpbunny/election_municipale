@@ -24,16 +24,16 @@
         <StackPanel DockPanel.Dock="Left" Width="100" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Beige">
             <Label x:Name="listeTablesLabel" Content="Tables" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" FontWeight="Bold"/>
             <ListBox x:Name="entitesListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,5,0,0">
-                <ListBoxItem x:Name="candidatItems" Content="Candidats" HorizontalAlignment="Left" Tag="Table qui liste les candidats à l'election municipale"/>
-                <ListBoxItem x:Name="communeItems" Content="Communes" HorizontalAlignment="Left" Tag="Table qui liste les communes de plus de 10000 habitants"/>
-                <ListBoxItem x:Name="departementItems" Content="Département" HorizontalAlignment="Left" Tag="Table qui liste les départements français"/>
-                <ListBoxItem x:Name="partiItems" Content="Partis" HorizontalAlignment="Left" Tag="Table qui liste les partis politiques présents au second tour de l'election municipale"/>
+                <ListBoxItem x:Name="candidatItems" Content="Candidats" HorizontalAlignment="Left"/>
+                <ListBoxItem x:Name="communeItems" Content="Communes" HorizontalAlignment="Left"/>
+                <ListBoxItem x:Name="departementItems" Content="Département" HorizontalAlignment="Left"/>
+                <ListBoxItem x:Name="partiItems" Content="Partis" HorizontalAlignment="Left"/>
             </ListBox>
         </StackPanel>
         
         <!--StackPanel contenant les requêtes de l'énoncé -->
         <StackPanel DockPanel.Dock="Right" Width="100" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Beige">
-            <Label x:Name="requetesLabel" Content="Requêtes" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" FontWeight="Bold"/>
+            
         </StackPanel>
         
         <!--StackPanel contenant l'affichage des données -->
