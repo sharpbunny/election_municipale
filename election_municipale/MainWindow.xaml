@@ -5,29 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:election_municipale"
         mc:Ignorable="d"
-        Title="Elections Municipales" Height="450" Width="700" WindowStartupLocation="CenterScreen">
+        Title="Elections Municipales" Height="450" Width="700" Background="Beige" WindowStartupLocation="CenterScreen">
     
 
     <DockPanel>
         <!-- barre de titre -->
         <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Beige" Height="50">
-			<Label x:Name="titreLabel" Content="Election Municipale" FontSize="12" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Stretch" Margin="0,12,0,0"/>
+			<Label x:Name="titreLabel" Content="Elections Municipales" FontSize="12" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Stretch" Margin="0,12,0,0"/>
         </StackPanel>
         
         <!--StackPanel contenant les fonctions d'insertion -->
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="50" Background="Beige">
-            <Button x:Name="buttonInsertionDonneesCsv" Content="Insérer des données depuis un fichier csv" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="25,0,0,0" Click="buttonInsertionDonneesCsv_Click"/>
+            <Button x:Name="buttonInsertionDonneesCsv" Content="Insérer des données depuis un fichier csv" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="25,0,0,0" Click="buttonInsertionDonneesCsv_Click" ToolTip="Permet d'insérer les données issues du fichier csv dans bin/Debug"/>
             <Label x:Name="lignesInsereesLabel" Content="Ligne(s) lue(s) : " HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="15,0,0,0" FontSize="12"/>
         </StackPanel>
 
         <!-- StackPanel permettant d'afficher les tables qui ont été insérées dans la BDD -->
         <StackPanel DockPanel.Dock="Left" Width="100" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Beige">
             <Label x:Name="listeTablesLabel" Content="Tables" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" FontWeight="Bold"/>
-            <ListBox x:Name="entitesListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,5,0,0">
-                <ListBoxItem x:Name="candidatItems" Content="Candidats" HorizontalAlignment="Stretch" Selected="candidatItems_Selected"/>
-                <ListBoxItem x:Name="communeItems" Content="Communes" HorizontalAlignment="Stretch" Selected="communeItems_Selected"/>
-                <ListBoxItem x:Name="departementItems" Content="Département" HorizontalAlignment="Stretch" Selected="departementItems_Selected"/>
-                <ListBoxItem x:Name="partiItems" Content="Partis" HorizontalAlignment="Stretch" Selected="partiItems_Selected"/>
+            <ListBox x:Name="entitesListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="0,5,0,0" >
+                <ListBoxItem x:Name="candidatItems" Content="Candidats" HorizontalAlignment="Stretch" Selected="candidatItems_Selected" ToolTip="Candidats arrivés au second tour des élections municipales"/>
+                <ListBoxItem x:Name="communeItems" Content="Communes" HorizontalAlignment="Stretch" Selected="communeItems_Selected" ToolTip="Communes de plus de 10 000 habitants"/>
+                <ListBoxItem x:Name="departementItems" Content="Département" HorizontalAlignment="Stretch" Selected="departementItems_Selected" ToolTip="Liste des départements"/>
+                <ListBoxItem x:Name="partiItems" Content="Partis" HorizontalAlignment="Stretch" Selected="partiItems_Selected" ToolTip="Liste des partis politiques auxquels sont associées les listes"/>
             </ListBox>
         </StackPanel>
         
