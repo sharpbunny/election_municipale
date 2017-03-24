@@ -53,3 +53,9 @@ C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\ele
 C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\election_municipale.csproj.GenerateResource.Cache
 C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\election_municipale.exe
 C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\election_municipale.pdb
+C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\bin\Debug\EntityFramework.dll
+C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\bin\Debug\EntityFramework.xml
+C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\bin\Debug\fr\EntityFramework.resources.dll
+C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\bin\Debug\fr\EntityFramework.SqlServer.resources.dll

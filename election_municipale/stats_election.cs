@@ -89,7 +89,7 @@ namespace election_municipale
 					//Si l'insertion échoue
 					catch
 					{
-						MessageBox.Show("Echec lors de l'insertion de stats_election dans la base de données");
+
 					}
 				}
 

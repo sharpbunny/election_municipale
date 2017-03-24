@@ -24,10 +24,10 @@
         <StackPanel DockPanel.Dock="Left" Width="100" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Beige">
             <Label x:Name="listeTablesLabel" Content="Tables" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" FontWeight="Bold"/>
             <ListBox x:Name="entitesListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,5,0,0">
-                <ListBoxItem x:Name="candidatItems" Content="Candidats" HorizontalAlignment="Left"/>
-                <ListBoxItem x:Name="communeItems" Content="Communes" HorizontalAlignment="Left"/>
-                <ListBoxItem x:Name="departementItems" Content="Département" HorizontalAlignment="Left"/>
-                <ListBoxItem x:Name="partiItems" Content="Partis" HorizontalAlignment="Left"/>
+                <ListBoxItem x:Name="candidatItems" Content="Candidats" HorizontalAlignment="Stretch" Selected="candidatItems_Selected"/>
+                <ListBoxItem x:Name="communeItems" Content="Communes" HorizontalAlignment="Stretch"/>
+                <ListBoxItem x:Name="departementItems" Content="Département" HorizontalAlignment="Stretch"/>
+                <ListBoxItem x:Name="partiItems" Content="Partis" HorizontalAlignment="Stretch"/>
             </ListBox>
         </StackPanel>
         
@@ -37,9 +37,9 @@
         </StackPanel>
         
         <!--StackPanel contenant l'affichage des données -->
-        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
+        <DataGrid x:Name="grilleDeDonnees" DockPanel.Dock="Top" AutoGenerateColumns="True" ItemsSource="{Binding Mode=OneWay}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White">
             
-        </StackPanel>
+        </DataGrid>
         
     </DockPanel>
 </Window>
