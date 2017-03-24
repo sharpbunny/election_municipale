@@ -25,7 +25,7 @@
             <Label x:Name="listeTablesLabel" Content="Tables" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" FontWeight="Bold"/>
             <ListBox x:Name="entitesListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,5,0,0">
                 <ListBoxItem x:Name="candidatItems" Content="Candidats" HorizontalAlignment="Stretch" Selected="candidatItems_Selected"/>
-                <ListBoxItem x:Name="communeItems" Content="Communes" HorizontalAlignment="Stretch"/>
+                <ListBoxItem x:Name="communeItems" Content="Communes" HorizontalAlignment="Stretch" Selected="communeItems_Selected"/>
                 <ListBoxItem x:Name="departementItems" Content="Département" HorizontalAlignment="Stretch"/>
                 <ListBoxItem x:Name="partiItems" Content="Partis" HorizontalAlignment="Stretch"/>
             </ListBox>

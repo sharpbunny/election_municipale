@@ -64,7 +64,8 @@ namespace election_municipale
 		/// <param name="e">Click sur le ListBoxItem : candidatItems</param>
 		private void candidatItems_Selected(object sender, RoutedEventArgs e)
 		{
-			if(grilleDeDonnees.Columns.Count() == 0)
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0)
 			{
 				using (var context = new electionEDM())
 				{
@@ -113,6 +114,65 @@ namespace election_municipale
 
 
 
+		}
+
+		/// <summary>
+		/// Charge les éléments de la table Commune dans le DataGrid principal
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void communeItems_Selected(object sender, RoutedEventArgs e)
+		{
+
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0)
+			{
+
+				using (var context = new electionEDM())
+				{
+
+					context.Configuration.LazyLoadingEnabled = false;
+
+
+					var query = from commune in context.Commune
+								orderby commune.code_de_la_commune, commune.insee
+								select commune;
+
+					DataGridTextColumn col1 = new DataGridTextColumn();
+					DataGridTextColumn col2 = new DataGridTextColumn();
+					DataGridTextColumn col3 = new DataGridTextColumn();
+					DataGridTextColumn col4 = new DataGridTextColumn();
+
+					grilleDeDonnees.Columns.Add(col1);
+					grilleDeDonnees.Columns.Add(col2);
+					grilleDeDonnees.Columns.Add(col3);
+					grilleDeDonnees.Columns.Add(col4);
+
+					col1.Binding = new Binding("code_de_la_commune");
+					col2.Binding = new Binding("insee");
+					col3.Binding = new Binding("libelle_de_la_commune");
+					col4.Binding = new Binding("code_du_departement");
+
+					col1.Header = "code_de_la_commune";
+					col2.Header = "insee";
+					col3.Header = "libelle_de_la_commune";
+					col4.Header = "code_du_departement";
+
+
+					foreach (var commune in query)
+					{
+						grilleDeDonnees.Items.Add(new Commune()
+						{
+							code_de_la_commune = commune.code_de_la_commune,
+							insee = commune.insee,
+							libelle_de_la_commune = commune.libelle_de_la_commune,
+							code_du_departement = commune.code_du_departement
+						});
+					}
+
+				}//Fin du using
+
+			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
 		}
 	}
 }
