@@ -65,8 +65,15 @@ namespace election_municipale
 		private void candidatItems_Selected(object sender, RoutedEventArgs e)
 		{
 			//Si le nombre de colonnes est vide
-			if (grilleDeDonnees.Columns.Count() == 0)
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "idCandidat")
 			{
+				//Si le nombre de colonnes est supérieur à 0, c'est qu'une autre table était affichée avant
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+				}
+
 				using (var context = new electionEDM())
 				{
 
@@ -125,8 +132,14 @@ namespace election_municipale
 		{
 
 			//Si le nombre de colonnes est vide
-			if (grilleDeDonnees.Columns.Count() == 0)
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "insee")
 			{
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+
+				}
 
 				using (var context = new electionEDM())
 				{
@@ -167,6 +180,111 @@ namespace election_municipale
 							insee = commune.insee,
 							libelle_de_la_commune = commune.libelle_de_la_commune,
 							code_du_departement = commune.code_du_departement
+						});
+					}
+
+				}//Fin du using
+
+			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
+		}
+
+		/// <summary>
+		/// Charge les éléments de la table Département dans le DataGrid
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void departementItems_Selected(object sender, RoutedEventArgs e)
+		{
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_du_departement")
+			{
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+
+				}
+				using (var context = new electionEDM())
+				{
+
+					context.Configuration.LazyLoadingEnabled = false;
+
+
+					var query = from dept in context.Departement
+								orderby dept.code_du_departement
+								select dept;
+
+					DataGridTextColumn col1 = new DataGridTextColumn();
+					DataGridTextColumn col2 = new DataGridTextColumn();
+
+
+					grilleDeDonnees.Columns.Add(col1);
+					grilleDeDonnees.Columns.Add(col2);
+
+					col1.Binding = new Binding("code_du_departement");
+					col2.Binding = new Binding("libelle_du_departement");
+
+					col1.Header = "code_du_departement";
+					col2.Header = "libelle_du_departement";
+
+
+					foreach (var dept in query)
+					{
+						grilleDeDonnees.Items.Add(new Departement()
+						{
+							code_du_departement = dept.code_du_departement,
+							libelle_du_departement = dept.libelle_du_departement
+						});
+					}
+
+				}//Fin du using
+
+			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
+		}
+
+		/// <summary>
+		/// Charge les éléments concernant la table Parti dans le DataGrid : grilleDeDonnees
+		/// </summary>
+		/// <param name="sender">ListBoxItems : partiItems</param>
+		/// <param name="e">Click sur le ListBoxItem : partiItems</param>
+		private void partiItems_Selected(object sender, RoutedEventArgs e)
+		{
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_nuance")
+			{
+				//Si le nombre de colonnes est supérieur à 0, c'est que l'on affichait une table avant
+				//On efface donc toutes les données
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+
+				}
+				using (var context = new electionEDM())
+				{
+
+					context.Configuration.LazyLoadingEnabled = false;
+
+
+					var query = from parti in context.Parti
+								orderby parti.code_nuance
+								select parti;
+
+					DataGridTextColumn col1 = new DataGridTextColumn();
+
+
+					grilleDeDonnees.Columns.Add(col1);
+
+					col1.Binding = new Binding("code_nuance");
+
+					col1.Header = "code_nuance";
+
+
+					foreach (var parti in query)
+					{
+						grilleDeDonnees.Items.Add(new Parti()
+						{
+							code_nuance = parti.code_nuance
 						});
 					}
 
