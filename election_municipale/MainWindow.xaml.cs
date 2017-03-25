@@ -319,17 +319,6 @@ namespace election_municipale
 										// DIVERSES METHODES
 
 		/// <summary>
-		/// Ouvre la fenêtre pour sélectionner la façon dont le candidat sera trié
-		/// </summary>
-		/// <param name="sender">Le MenuItem : candidatTriMenuItem</param>
-		/// <param name="e">Click sur le MenuItem : candidatTriMenuItem</param>
-		private void candidatTriMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			TriCandidat triCandidatWindow = new TriCandidat();
-			triCandidatWindow.ShowDialog();
-		}
-
-		/// <summary>
 		/// Affiche les candidats dans la datagrid quand une requête doit être faite sur la base de données
 		/// </summary>
 		private void afficherCandidatDataGrid()
@@ -460,6 +449,50 @@ namespace election_municipale
 				grilleDeDonnees.Visibility = Visibility.Visible;
 
 			}
+		}
+
+		#region tri
+		/// <summary>
+		/// Ouvre la fenêtre pour sélectionner la façon dont le candidat sera trié
+		/// </summary>
+		/// <param name="sender">Le MenuItem : candidatTriMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : candidatTriMenuItem</param>
+		private void candidatTriMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			TriCandidat triCandidatWindow = new TriCandidat();
+			triCandidatWindow.ShowDialog();
+		}
+
+		/// <summary>
+		/// Ouvre la fenêtre pour sélectionner la façon dont les communes seront triées
+		/// </summary>
+		/// <param name="sender">MenuItem : communeTriMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : communeTriMenuItem</param>
+		private void communeTriMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		#endregion
+
+		/// <summary>
+		/// Ouvre la fenêtre pour sélectionner la façon dont les départements seront triés
+		/// </summary>
+		/// <param name="sender">MenuItem : departementTriMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : departementTriMenuItem</param>
+		private void departementTriMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		/// <summary>
+		/// Ouvre la fenêtre pour sélectionner la façon dont les partis politiques seront triés
+		/// </summary>
+		/// <param name="sender">MenuItem : partiTriMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : partiTriMenuItem</param>
+		private void partiTriMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\App.xaml
-31316404865
+61418004202
 
-21-507854846
+241982402926
 19-1844905251
-MainWindow.xaml;RedirectionWeb.xaml;TriCandidat.xaml;
+MainWindow.xaml;RedirectionWeb.xaml;TriCandidat.xaml;TriCommuneWindow.xaml;TriDepartementWindow.xaml;TriPartisWindow.xaml;
 
-True
+False
 

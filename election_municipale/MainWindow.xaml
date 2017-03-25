@@ -35,9 +35,9 @@
                 <MenuItem Header="Requêtes">
                     <MenuItem Header="Tri" x:Name="TriMenuItem">
                         <MenuItem Header="Candidats" x:Name="candidatTriMenuItem" Click="candidatTriMenuItem_Click"/>
-                        <MenuItem Header="Communes" x:Name="communeTriMenuItem"/>
-                        <MenuItem Header="Départements" x:Name="departementTriMenuItem"/>
-                        <MenuItem Header="Partis politiques" x:Name="partiTriMenuItem"/>
+                        <MenuItem Header="Communes" x:Name="communeTriMenuItem" Click="communeTriMenuItem_Click"/>
+                        <MenuItem Header="Départements" x:Name="departementTriMenuItem" Click="departementTriMenuItem_Click"/>
+                        <MenuItem Header="Partis politiques" x:Name="partiTriMenuItem" Click="partiTriMenuItem_Click"/>
                     </MenuItem>
 
                 </MenuItem>

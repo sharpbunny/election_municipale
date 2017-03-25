@@ -325,12 +325,30 @@ namespace election_municipale {
             return;
             case 14:
             this.communeTriMenuItem = ((System.Windows.Controls.MenuItem)(target));
+            
+            #line 38 "..\..\MainWindow.xaml"
+            this.communeTriMenuItem.Click += new System.Windows.RoutedEventHandler(this.communeTriMenuItem_Click);
+            
+            #line default
+            #line hidden
             return;
             case 15:
             this.departementTriMenuItem = ((System.Windows.Controls.MenuItem)(target));
+            
+            #line 39 "..\..\MainWindow.xaml"
+            this.departementTriMenuItem.Click += new System.Windows.RoutedEventHandler(this.departementTriMenuItem_Click);
+            
+            #line default
+            #line hidden
             return;
             case 16:
             this.partiTriMenuItem = ((System.Windows.Controls.MenuItem)(target));
+            
+            #line 40 "..\..\MainWindow.xaml"
+            this.partiTriMenuItem.Click += new System.Windows.RoutedEventHandler(this.partiTriMenuItem_Click);
+            
+            #line default
+            #line hidden
             return;
             case 17:
             this.dataGouvMenuItem = ((System.Windows.Controls.MenuItem)(target));
