@@ -5,35 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:election_municipale"
         mc:Ignorable="d"
-        Title="Tri des candidats" Height="350" Width="300" WindowStartupLocation="CenterScreen">
+        Title="Tri des candidats" Height="230" Width="300" WindowStartupLocation="CenterScreen">
     <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGoldenrodYellow">
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="50" Background="Beige">
             <Label Content="Tri des candidats" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="12" FontWeight="Bold" Margin="0,10,0,0"/>
         </StackPanel>
 
-        <Label Content="1er tri" x:Name="premierTriLabel" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,10,0,0"/>
-        <ComboBox x:Name="premierTriComboBox">
-            <ComboBoxItem Content="Aucun" x:Name="aucunPremierTriComboBox"/>
-            <ComboBoxItem Content="idCandidat" x:Name="idPremierTriComboBox"/>
-            <ComboBoxItem Content="nom" x:Name="nomPremierTriComboBox"/>
-            <ComboBoxItem Content="prenom" x:Name="prenomPremierTriComboBox"/>
+        <Label Content="Choix du tri" x:Name="premierTriLabel" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,10,0,0"/>
+        <ComboBox x:Name="TriComboBox">
+            <ComboBoxItem Content="Aucun" x:Name="aucunTriComboBox"/>
+            <ComboBoxItem Content="idCandidat" x:Name="idTriComboBox"/>
+            <ComboBoxItem Content="nom" x:Name="nomTriComboBox"/>
+            <ComboBoxItem Content="prenom" x:Name="prenomTriComboBox"/>
+            <ComboBoxItem Content="idCandidat et nom" x:Name="idNomTriComboBox"/>
+            <ComboBoxItem Content="idCandidat et prénom" x:Name="idPrenomTriComboBox"/>
+            <ComboBoxItem Content="Nom et prenom" x:Name="nomPrenomTriComboBox"/>
+            <ComboBoxItem Content="Prénom et nom" x:Name="prenomNomTriComboBox"/>
         </ComboBox>
         
-        <Label Content="2ème tri" x:Name="deuxiemeTriLabel" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,10,0,0"/>
-        <ComboBox x:Name="deuxiemeTriComboBox">
-            <ComboBoxItem Content="Aucun" x:Name="aucunDeuxiemeTriComboBox"/>
-            <ComboBoxItem Content="idCandidat" x:Name="idDeuxiemeTriComboBox"/>
-            <ComboBoxItem Content="nom" x:Name="nomDeuxiemeTriComboBox"/>
-            <ComboBoxItem Content="prenom" x:Name="prenomDeuxiemeTriComboBox"/>
-        </ComboBox>
-        
-        <Label Content="3ème tri" x:Name="troisièmeTriLabel" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,10,0,0"/>
-        <ComboBox x:Name="troisiemeTriComboBox">
-            <ComboBoxItem Content="Aucun" x:Name="aucunTroisiemeTriComboBox"/>
-            <ComboBoxItem Content="idCandidat" x:Name="idTroisiemeTriComboBox"/>
-            <ComboBoxItem Content="nom" x:Name="nomTroisiemeTriComboBox"/>
-            <ComboBoxItem Content="prenom" x:Name="prenomTroisiemeTriComboBox"/>
-        </ComboBox>
 
         <Button x:Name="trierButton" Content="Trier" HorizontalAlignment="Center" Width="50" Margin="0,20,0,0" Click="trierButton_Click"/>
         <Button x:Name="quitterButton" Content="Fermer" Margin="0,10,0,0" HorizontalAlignment="Center" Width="50" Click="quitterButton_Click"/>

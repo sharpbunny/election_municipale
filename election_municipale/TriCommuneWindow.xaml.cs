@@ -45,12 +45,9 @@ namespace election_municipale
 		/// <param name="e">Click sur le bouton : trierButton</param>
 		private void trierButton_Click(object sender, RoutedEventArgs e)
 		{
-			List<Commune> communeTrie = null;
 
 			//Si aucun tri n'a été sélectionné
-			if ((premierTriComboBox.SelectedItem == null || premierTriComboBox.SelectedItem == aucunPremierTriComboBox) &&
-			(deuxiemeTriComboBox.SelectedItem == null || deuxiemeTriComboBox.SelectedItem == aucunDeuxiemeTriComboBox) &&
-			(troisiemeTriComboBox.SelectedItem == null || troisiemeTriComboBox.SelectedItem == aucunTroisiemeTriComboBox))
+			if ((TriComboBox.SelectedItem == null || TriComboBox.SelectedItem.ToString() == "Aucun"))
 			{
 				MessageBox.Show("Vous n'avez choisi aucun tri");
 			}
@@ -58,138 +55,70 @@ namespace election_municipale
 			//Si au moins un tri a été sélectionné
 			else
 			{
-				//On teste si un tri a été choisi dans la première comboBox
-				if (comboBoxChoisie(premierTriComboBox))
-				{
-					communeTrie = tri(premierTriComboBox);
-				}
+				List<Commune> communeTrie = null;
 
-				//On teste si un tri a été choisi dans la deuxième comboBox
-				if (comboBoxChoisie(deuxiemeTriComboBox))
-				{
-					if (communeTrie == null) communeTrie = tri(deuxiemeTriComboBox); //Si on n'a pas encore opéré de tri, on interroge la bdd
-					else communeTrie = tri(deuxiemeTriComboBox, communeTrie); //Sinon on trie avec le second paramètre la liste ayant déjà subi un
-																				//premier tri.
-				}
-
-				//On teste si un tri a été choisi dans la troisième comboBox
-				if (comboBoxChoisie(deuxiemeTriComboBox))
-				{
-					if (communeTrie == null) communeTrie = tri(troisiemeTriComboBox); //Si on n'a pas encore opéré de tri, on interroge la bdd
-					else communeTrie = tri(troisiemeTriComboBox, communeTrie); //Sinon on trie avec le second paramètre la liste ayant déjà subi un
-																				 //premier tri.
-				}
+				communeTrie = SelectionTri(communeTrie);
+				
 
 				((MainWindow)this.Owner).afficherCommuneDataGrid(communeTrie);
 				this.Close();
 
 			}
-		}
+		} //Fin de trierButton_Click
 
 		/// <summary>
-		/// Teste si un item a été sélectionné dans la comboBox
+		/// Permet de trier les communes selon le type de tri choisi par l'utilisateur
 		/// </summary>
-		/// <param name="cb">ComboBox sur laquelle on va tester si un item a été sélectionné</param>
+		/// <param name="communeTrie">Liste de communes</param>
 		/// <returns></returns>
-		private bool comboBoxChoisie(ComboBox cb)
+		private List<Commune> SelectionTri(List<Commune> communeTrie)
 		{
-			bool unItemAEteSelectionne;
-			if (cb.SelectedItem == null || cb.SelectedItem == aucunPremierTriComboBox)
-			{
-				unItemAEteSelectionne = false;
-			}
+			IQueryable<Commune> query = null;
 
-			//Si un tri a bien été choisi
-			else
+			using(var context = new electionEDM())
 			{
-				unItemAEteSelectionne = true;
-			}
-
-			return unItemAEteSelectionne;
-		}
-
-		/// <summary>
-		/// Permet de trier les communes selon le choix de l'utilisateur dans la comboBox
-		/// </summary>
-		/// <param name="cb">ComboBox contenant le choix du tri de l'utilisateur</param>
-		/// <returns></returns>
-		private List<Commune> tri(ComboBox cb)
-		{
-			using (var context = new electionEDM())
-			{
-				//Si l'id est choisi, on trie les candidats par leur id
-				if (cb.SelectedItem == inseePremierTriComboBox || cb.SelectedItem == inseeDeuxiemeTriComboBox || cb.SelectedItem == inseeTroisiemeTriComboBox)
+				if (TriComboBox.SelectedItem.Equals(inseeTriComboBox))
 				{
-					var query = from commune in context.Commune
-								orderby commune.insee
-								select commune;
-
-					return query.ToList();
-				}
-
-				//Sinon si le nom est choisi, on trie le nom
-				else if (cb.SelectedItem == codePremierTriComboBox || cb.SelectedItem == codeDeuxiemeTriComboBox || cb.SelectedItem == codeTroisiemeTriComboBox)
-				{
-					var query = from commune in context.Commune
-								orderby commune.code_de_la_commune
-								select commune;
-
-					return query.ToList();
-				}
-
-				//Sinon on tri par le prénom
-				else
-				{
-					var query = from commune in context.Commune
-								orderby commune.libelle_de_la_commune
-								select commune;
-
-					return query.ToList();
-				}
-
-			}
-		}
-
-		/// <summary>
-		/// Permet de trier une collection de Communes déjà triée auparavant
-		/// </summary>
-		/// <param name="cb">ComboBox contenant le choix du tri de l'utilisateur</param>
-		/// <param name="candidat">Liste de communes déjà triée auparavant</param>
-		/// <returns></returns>
-		private List<Commune> tri(ComboBox cb, List<Commune> communeDejaTrie)
-		{
-
-			//Si l'id est choisi, on trie les candidats par leur id
-			if (cb.SelectedItem == inseePremierTriComboBox || cb.SelectedItem == inseeDeuxiemeTriComboBox || cb.SelectedItem == inseeTroisiemeTriComboBox)
-			{
-				var query = from commune in communeDejaTrie
+					query = from commune in context.Commune
 							orderby commune.insee
 							select commune;
+				}
 
-				return query.ToList();
-			}
-
-			//Sinon si le nom est choisi, on trie le nom
-			else if (cb.SelectedItem == codePremierTriComboBox || cb.SelectedItem == codeDeuxiemeTriComboBox || cb.SelectedItem == codeTroisiemeTriComboBox)
-			{
-				var query = from commune in communeDejaTrie
+				else if (TriComboBox.SelectedItem.Equals(codeTriComboBox))
+				{
+					query = from commune in context.Commune
 							orderby commune.code_de_la_commune
 							select commune;
+				}
 
-				return query.ToList();
-			}
-
-			//Sinon on tri par le prénom
-			else
-			{
-				var query = from commune in communeDejaTrie
+				else if (TriComboBox.SelectedItem.Equals(libelleTriComboBox))
+				{
+					query = from commune in context.Commune
 							orderby commune.libelle_de_la_commune
 							select commune;
+				}
 
-				return query.ToList();
+				else if (TriComboBox.SelectedItem.Equals(codeInseeTriComboBox))
+				{
+					query = from commune in context.Commune
+							orderby commune.code_de_la_commune, commune.insee
+							select commune;
+				}
+
+				//Si on trie d'abord par le code de la commune puis le libellé
+				else
+				{
+					query = from commune in context.Commune
+							orderby commune.code_de_la_commune, commune.libelle_de_la_commune
+							select commune;
+				}
+
+				communeTrie = query.ToList();
 			}
 
+				return communeTrie;
 		}
+
 
 	}
 }

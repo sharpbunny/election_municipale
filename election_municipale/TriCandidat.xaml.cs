@@ -45,12 +45,8 @@ namespace election_municipale
 		/// <param name="e">Click sur le bouton : trierButton</param>
 		private void trierButton_Click(object sender, RoutedEventArgs e)
 		{
-			List<Candidat> candidatTrie = null;
-
 			//Si aucun tri n'a été sélectionné
-			if((premierTriComboBox.SelectedItem == null || premierTriComboBox.SelectedItem == aucunPremierTriComboBox) &&
-			(deuxiemeTriComboBox.SelectedItem == null || deuxiemeTriComboBox.SelectedItem == aucunDeuxiemeTriComboBox) &&
-			(troisiemeTriComboBox.SelectedItem == null || troisiemeTriComboBox.SelectedItem == aucunTroisiemeTriComboBox))
+			if((TriComboBox.SelectedItem == null || TriComboBox.SelectedItem.ToString() == "Aucun"))
 			{
 				MessageBox.Show("Vous n'avez choisi aucun tri");
 			}
@@ -58,27 +54,9 @@ namespace election_municipale
 			//Si au moins un tri a été sélectionné
 			else
 			{
-				//On teste si un tri a été choisi dans la première comboBox
-				if (comboBoxChoisie(premierTriComboBox))
-				{
-					candidatTrie = tri(premierTriComboBox);
-				}
+				List<Candidat> candidatTrie = null;
+				candidatTrie = selectionDuTri(candidatTrie);
 
-				//On teste si un tri a été choisi dans la deuxième comboBox
-				if (comboBoxChoisie(deuxiemeTriComboBox))
-				{
-					if (candidatTrie == null) candidatTrie = tri(deuxiemeTriComboBox); //Si on n'a pas encore opéré de tri, on interroge la bdd
-					else candidatTrie = tri(deuxiemeTriComboBox, candidatTrie); //Sinon on trie avec le second paramètre la liste ayant déjà subi un
-																//premier tri.
-				}
-
-				//On teste si un tri a été choisi dans la troisième comboBox
-				if (comboBoxChoisie(deuxiemeTriComboBox))
-				{
-					if (candidatTrie == null) candidatTrie = tri(troisiemeTriComboBox); //Si on n'a pas encore opéré de tri, on interroge la bdd
-					else candidatTrie = tri(troisiemeTriComboBox, candidatTrie); //Sinon on trie avec le second paramètre la liste ayant déjà subi un
-																 //premier tri.
-				}
 
 				((MainWindow)this.Owner).afficherCandidatDataGrid(candidatTrie);
 				this.Close();
@@ -88,109 +66,71 @@ namespace election_municipale
 		}
 
 		/// <summary>
-		/// Teste si un item a été sélectionné dans la comboBox
+		/// Tri la liste des candidats en fonction de ce qu'a choisi l'utilisateur
 		/// </summary>
-		/// <param name="cb">ComboBox sur laquelle on va tester si un item a été sélectionné</param>
+		/// <param name="candidat"></param>
 		/// <returns></returns>
-		private bool comboBoxChoisie(ComboBox cb)
+		private List<Candidat> selectionDuTri (List<Candidat> candidatTrie)
 		{
-			bool unItemAEteSelectionne;
-			if(cb.SelectedItem == null || cb.SelectedItem == aucunPremierTriComboBox)
-			{
-				unItemAEteSelectionne = false;
-			}
+			IQueryable<Candidat> query = null;
 
-			//Si un tri a bien été choisi
-			else
-			{
-				unItemAEteSelectionne = true;
-			}
-
-			return unItemAEteSelectionne;
-		}
-
-		/// <summary>
-		/// Permet de trier la table candidat selon le choix de l'utilisateur dans les comboBox
-		/// </summary>
-		/// <param name="cb">ComboBox contenant le choix du tri de l'utilisateur</param>
-		/// <returns></returns>
-		private List<Candidat> tri(ComboBox cb)
-		{
 			using(var context = new electionEDM())
 			{
-				//Si l'id est choisi, on trie les candidats par leur id
-				if(cb.SelectedItem == idPremierTriComboBox || cb.SelectedItem == idDeuxiemeTriComboBox || cb.SelectedItem == idTroisiemeTriComboBox)
+				if (TriComboBox.SelectedItem.Equals(idTriComboBox))
 				{
-					var query = from candidat in context.Candidat
+					query = from candidat in context.Candidat
 								orderby candidat.idCandidat
 								select candidat;
-
-					return query.ToList();
 				}
 
-				//Sinon si le nom est choisi, on trie le nom
-				else if (cb.SelectedItem == nomPremierTriComboBox || cb.SelectedItem == nomDeuxiemeTriComboBox || cb.SelectedItem == nomTroisiemeTriComboBox)
+				else if (TriComboBox.SelectedItem.Equals(nomTriComboBox))
 				{
-					var query = from candidat in context.Candidat
+					query = from candidat in context.Candidat
 								orderby candidat.nom
 								select candidat;
-
-					return query.ToList();
 				}
 
-				//Sinon on tri par le prénom
-				else
+				else if (TriComboBox.SelectedItem.Equals(prenomTriComboBox))
 				{
-					var query = from candidat in context.Candidat
+					query = from candidat in context.Candidat
 								orderby candidat.prenom
 								select candidat;
-
-					return query.ToList();
 				}
 
-			}
+				else if (TriComboBox.SelectedItem.Equals(idNomTriComboBox))
+				{
+					query = from candidat in context.Candidat
+								orderby candidat.idCandidat, candidat.nom
+								select candidat;
+				}
+
+				else if (TriComboBox.SelectedItem.Equals(idPrenomTriComboBox))
+				{
+					query = from candidat in context.Candidat
+								orderby candidat.idCandidat, candidat.prenom
+								select candidat;
+				}
+
+				else if (TriComboBox.SelectedItem.Equals(nomPrenomTriComboBox))
+				{
+					query = from candidat in context.Candidat
+								orderby candidat.nom, candidat.prenom
+								select candidat;
+				}
+
+				//On tri par le prénom, puis par le nom
+				else
+				{
+					query = from candidat in context.Candidat
+								orderby candidat.prenom, candidat.nom
+								select candidat;
+				}
+
+				candidatTrie = query.ToList();
+
+			} // Fin du using
+
+			return candidatTrie;
 		}
-
-		/// <summary>
-		/// Permet de trier une collection de Candidats déjà triés auparavant
-		/// </summary>
-		/// <param name="cb">ComboBox contenant le choix du tri de l'utilisateur</param>
-		/// <param name="candidat">Liste de candidat déjà trié auparavant</param>
-		/// <returns></returns>
-		private List<Candidat> tri (ComboBox cb, List<Candidat> candidatDejaTrie)
-		{
-
-			//Si l'id est choisi, on trie les candidats par leur id
-			if (cb.SelectedItem == idPremierTriComboBox || cb.SelectedItem == idDeuxiemeTriComboBox || cb.SelectedItem == idTroisiemeTriComboBox)
-			{
-				var query = from candidat in candidatDejaTrie
-							orderby candidat.idCandidat
-							select candidat;
-
-				return query.ToList();
-			}
-
-			//Sinon si le nom est choisi, on trie le nom
-			else if (cb.SelectedItem == nomPremierTriComboBox || cb.SelectedItem == nomDeuxiemeTriComboBox || cb.SelectedItem == nomTroisiemeTriComboBox)
-			{
-				var query = from candidat in candidatDejaTrie
-							orderby candidat.nom
-							select candidat;
-
-				return query.ToList();
-			}
-
-			//Sinon on tri par le prénom
-			else
-			{
-				var query = from candidat in candidatDejaTrie
-							orderby candidat.prenom
-							select candidat;
-
-				return query.ToList();
-			}
-
-		}
-
 	}
 }
