@@ -19,9 +19,13 @@ namespace election_municipale
 	/// </summary>
 	public partial class TriCommuneWindow : Window
 	{
+		/// <summary>
+		/// Constructeur de TriCommuneWindow
+		/// </summary>
 		public TriCommuneWindow()
 		{
 			InitializeComponent();
+			this.Owner = Application.Current.MainWindow;
 		}
 	}
 }

@@ -470,10 +470,9 @@ namespace election_municipale
 		/// <param name="e">Click sur le MenuItem : communeTriMenuItem</param>
 		private void communeTriMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-
+			TriCommuneWindow communeWindow = new TriCommuneWindow();
+			communeWindow.ShowDialog();
 		}
-
-		#endregion
 
 		/// <summary>
 		/// Ouvre la fenêtre pour sélectionner la façon dont les départements seront triés
@@ -482,7 +481,8 @@ namespace election_municipale
 		/// <param name="e">Click sur le MenuItem : departementTriMenuItem</param>
 		private void departementTriMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-
+			TriDepartementWindow departementWindow = new TriDepartementWindow();
+			departementWindow.ShowDialog();
 		}
 
 		/// <summary>
@@ -492,7 +492,10 @@ namespace election_municipale
 		/// <param name="e">Click sur le MenuItem : partiTriMenuItem</param>
 		private void partiTriMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-
+			TriPartisWindow partiWindow = new TriPartisWindow();
+			partiWindow.ShowDialog();
 		}
+
+		#endregion
 	}
 }

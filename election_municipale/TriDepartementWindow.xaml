@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:election_municipale"
         mc:Ignorable="d"
-        Title="TriDepartementWindow" Height="300" Width="300" WindowStartupLocation="CenterScreen">
-    <Grid>
-        
-    </Grid>
+        Title="Tri des départements" Height="290" Width="300" WindowStartupLocation="CenterScreen">
+    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGoldenrodYellow">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Background="Beige">
+            <Label x:Name="departementsTriLabel" Content="Tri des départements" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Margin="0,10,0,0"/>
+        </StackPanel>
+
+        <Label Content="1er tri" x:Name="premierTriLabel" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,10,0,0"/>
+        <ComboBox x:Name="premierTriComboBox">
+            <ComboBoxItem Content="Aucun" x:Name="aucunPremierTriComboBox"/>
+            <ComboBoxItem Content="Code du département" x:Name="codePremierTriComboBox"/>
+            <ComboBoxItem Content="Libellé du département" x:Name="libellePremierTriComboBox"/>
+        </ComboBox>
+
+        <Label Content="2ème tri" x:Name="deuxiemeTriLabel" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,10,0,0"/>
+        <ComboBox x:Name="deuxiemeTriComboBox">
+            <ComboBoxItem Content="Aucun" x:Name="aucunDeuxiemeTriComboBox"/>
+            <ComboBoxItem Content="Code du département" x:Name="codeDeuxiemeTriComboBox"/>
+            <ComboBoxItem Content="Libellé du département" x:Name="libelleDeuxiemeTriComboBox"/>
+        </ComboBox>
+
+        <Button x:Name="trierButton" Content="Trier" HorizontalAlignment="Center" Width="50" Margin="0,20,0,0" Click="trierButton_Click"/>
+        <Button x:Name="quitterButton" Content="Fermer" Margin="0,10,0,0" HorizontalAlignment="Center" Width="50" Click="quitterButton_Click"/>
+
+
+    </StackPanel>
 </Window>

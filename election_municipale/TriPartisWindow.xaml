@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:election_municipale"
         mc:Ignorable="d"
-        Title="TriPartisWindow" Height="300" Width="300" WindowStartupLocation="CenterScreen">
-    <Grid>
-        
-    </Grid>
+        Title="Tri des partis politiques" Height="230" Width="300" WindowStartupLocation="CenterScreen">
+    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGoldenrodYellow">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Background="Beige">
+            <Label x:Name="partisTriLabel" Content="Tri des partis politiques" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Margin="0,10,0,0"/>
+        </StackPanel>
+
+        <Label Content="Tri" x:Name="triLabel" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,10,0,0"/>
+        <ComboBox x:Name="premierTriComboBox">
+            <ComboBoxItem Content="Aucun" x:Name="aucunTriComboBox"/>
+            <ComboBoxItem Content="Code nuance" x:Name="codeTriComboBox"/>
+        </ComboBox>
+
+        <Button x:Name="trierButton" Content="Trier" HorizontalAlignment="Center" Width="50" Margin="0,20,0,0" Click="trierButton_Click"/>
+        <Button x:Name="quitterButton" Content="Fermer" Margin="0,10,0,0" HorizontalAlignment="Center" Width="50" Click="quitterButton_Click"/>
+
+
+    </StackPanel>
 </Window>
