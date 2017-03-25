@@ -316,10 +316,10 @@ namespace election_municipale
 		#region fonctionMenu
 
 		/// <summary>
-		/// Permet d'afficher le MCD dans le StackPanel d'affichage
+		/// Permet d'afficher le MCD ou MLD dans le StackPanel d'affichage
 		/// </summary>
-		/// <param name="sender">buttonAfficherMCD</param>
-		/// <param name="e">Click sur le bouton : buttonAfficherMCD</param>
+		/// <param name="sender">MenuItem : AfficherMCD</param>
+		/// <param name="e">Click sur le menuItem : AfficherMCD</param>
 		private void AfficherMCD_Click(object sender, RoutedEventArgs e)
 		{
 			if (affichageStackPanel.Children.Count != 0)
