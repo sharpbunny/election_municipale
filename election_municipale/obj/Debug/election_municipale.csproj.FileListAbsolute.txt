@@ -69,3 +69,4 @@ C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\Tri
 C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\TriCommuneWindow.baml
 C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\TriDepartementWindow.baml
 C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\TriPartisWindow.baml
+C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\bin\Debug\fr\EntityFramework.SqlServer.resources.dll

@@ -40,9 +40,13 @@
                         <MenuItem Header="Partis politiques" x:Name="partiTriMenuItem" Click="partiTriMenuItem_Click"/>
                     </MenuItem>
 
+                    <MenuItem Header="Table Candidat">
+                        <MenuItem Header="Afficher la liste des femmes" x:Name="femmesCandidatsMenuItem" Click="femmesCandidatsMenuItem_Click"/>
+                    </MenuItem>
+
                 </MenuItem>
 
-                <MenuItem Header="Aide">
+                    <MenuItem Header="Aide">
                     <MenuItem x:Name="fonctionnementElectionMenuItem" Header="Elections municipales : kézako ?">
                         <MenuItem x:Name="wikipediaElectionMenuItem" Header="Page Wikipedia : élection municipale" Click="wikipediaElectionMenuItem_Click"/>
                         <MenuItem x:Name="servicePublicElectionMenuItem" Header="Service public : élection municipale" Click="servicePublicElectionMenuItem_Click"/>

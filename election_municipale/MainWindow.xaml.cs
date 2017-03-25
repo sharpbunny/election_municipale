@@ -711,5 +711,29 @@ namespace election_municipale
 			redirection.menuItemAppelant = servicePublicElectionMenuItem;
 			redirection.ShowDialog();
 		}
+
+		/// <summary>
+		/// Affiche la liste des femmes qui étaient au second tour des élections municipales
+		/// </summary>
+		/// <param name="sender">femmesCandidatsMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : femmesCandidatsMenuItem</param>
+		private void femmesCandidatsMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			List<Candidat> femmes = null;
+
+			using(var context = new electionEDM())
+			{
+				//On ne selectionne que les femmes et on les trie par nom, puis par prénom
+				var queryFemmes = from candidat in context.Candidat
+								  where candidat.sexe == "F"
+								  orderby candidat.nom, candidat.prenom
+								  select candidat;
+
+				femmes = queryFemmes.ToList();
+			}
+
+			afficherCandidatDataGrid(femmes);
+
+		}
 	}
 }
