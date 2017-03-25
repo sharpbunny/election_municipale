@@ -236,9 +236,6 @@ namespace election_municipale
 				affichageStackPanel.Children.Add(grilleDeDonnees);
 			}
 
-			//Si le nombre de colonnes est vide
-			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "idCandidat")
-			{
 				//Si le nombre de colonnes est supérieur à 0, c'est qu'une autre table était affichée avant
 				if (grilleDeDonnees.Columns.Count > 0)
 				{
@@ -283,7 +280,7 @@ namespace election_municipale
 
 				grilleDeDonnees.Visibility = Visibility.Visible;
 
-			}
+			
 		}
 
 		/// <summary>
@@ -713,27 +710,31 @@ namespace election_municipale
 		}
 
 		/// <summary>
-		/// Affiche la liste des femmes qui étaient au second tour des élections municipales
+		/// Affiche la liste des femmes/hommes qui étaient au second tour des élections municipales
 		/// </summary>
-		/// <param name="sender">femmesCandidatsMenuItem</param>
-		/// <param name="e">Click sur le MenuItem : femmesCandidatsMenuItem</param>
-		private void femmesCandidatsMenuItem_Click(object sender, RoutedEventArgs e)
+		/// <param name="sender">femmesCandidatsMenuItem ou hommesCandidatsMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : femmesCandidatsMenuItem ou hommesCandidatsMenuItem</param>
+		private void afficherLesHommesOuLesFemmes(object sender, RoutedEventArgs e)
 		{
-			List<Candidat> femmes = null;
+			List<Candidat> sexeCandidat = null;
+			string sexe;
+			if (sender.Equals(hommesCandidatsMenuItem)) sexe = "M";
+			else sexe = "F";
 
 			using(var context = new electionEDM())
 			{
-				//On ne selectionne que les femmes et on les trie par nom, puis par prénom
-				var queryFemmes = from candidat in context.Candidat
-								  where candidat.sexe == "F"
+				//On ne selectionne que les candidats du genre choisi dans le menuItem et on les trie par nom, puis par prénom
+				var querySexe = from candidat in context.Candidat
+								  where candidat.sexe == sexe
 								  orderby candidat.nom, candidat.prenom
 								  select candidat;
 
-				femmes = queryFemmes.ToList();
+				sexeCandidat = querySexe.ToList();
 			}
 
-			afficherCandidatDataGrid(femmes);
+			afficherCandidatDataGrid(sexeCandidat);
 
 		}
+
 	}
 }

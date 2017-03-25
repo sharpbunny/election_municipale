@@ -41,7 +41,8 @@
                     </MenuItem>
 
                     <MenuItem Header="Table Candidat">
-                        <MenuItem Header="Afficher la liste des femmes" x:Name="femmesCandidatsMenuItem" Click="femmesCandidatsMenuItem_Click"/>
+                        <MenuItem Header="Afficher la liste des femmes" x:Name="femmesCandidatsMenuItem" Click="afficherLesHommesOuLesFemmes"/>
+                        <MenuItem Header="Afficher la liste des hommes" x:Name="hommesCandidatsMenuItem" Click="afficherLesHommesOuLesFemmes"/>
                     </MenuItem>
 
                 </MenuItem>
