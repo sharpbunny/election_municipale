@@ -158,12 +158,8 @@ namespace election_municipale
 		/// </summary>
 		private void afficherCandidatDataGrid()
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
+
+			viderAffichageStackPanel();
 
 			//Si le nombre de colonnes est vide
 			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "idCandidat")
@@ -229,12 +225,7 @@ namespace election_municipale
 		/// <param name="candidatTrie"></param>
 		public void afficherCandidatDataGrid(List<Candidat> candidatTrie)
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
+			viderAffichageStackPanel();
 
 				//Si le nombre de colonnes est supérieur à 0, c'est qu'une autre table était affichée avant
 				if (grilleDeDonnees.Columns.Count > 0)
@@ -288,12 +279,8 @@ namespace election_municipale
 		/// </summary>
 		private void afficherCommuneDataGrid()
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
+
+			viderAffichageStackPanel();
 
 			//Si le nombre de colonnes est vide
 			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "insee")
@@ -360,12 +347,7 @@ namespace election_municipale
 		/// <param name="communeTrie">Liste de communes triées selon des critères choisis précédemment</param>
 		public void afficherCommuneDataGrid(List<Commune> communeTrie)
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
+			viderAffichageStackPanel();
 
 			//Si le nombre de colonnes est vide
 			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "insee")
@@ -419,12 +401,7 @@ namespace election_municipale
 		/// </summary>
 		private void afficherDepartementDataGrid()
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
+			viderAffichageStackPanel();
 
 			//Si le nombre de colonnes est vide
 			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_du_departement")
@@ -481,12 +458,7 @@ namespace election_municipale
 		/// <param name="departementTrie">Liste de départements triés selon des critères choisis précédemment</param>
 		public void afficherDepartementDataGrid(List<Departement> departementTrie)
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
+			viderAffichageStackPanel();
 
 			//Si le nombre de colonnes est vide
 			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_du_departement")
@@ -533,12 +505,7 @@ namespace election_municipale
 		/// </summary>
 		private void afficherPartiDataGrid()
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
+			viderAffichageStackPanel();
 
 			//Si le nombre de colonnes est vide
 			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_nuance")
@@ -592,12 +559,7 @@ namespace election_municipale
 		/// <param name="partiTrie">Liste de partis politiques triés selon des critères choisis précédemment</param>
 		public void afficherPartiDataGrid(List<Parti> partiTrie)
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
+			viderAffichageStackPanel();
 
 			//Si le nombre de colonnes est vide
 			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_nuance")
@@ -736,5 +698,83 @@ namespace election_municipale
 
 		}
 
+		/// <summary>
+		/// Affiche la requête SQL pour la création des tables de la base de données election_municipale
+		/// </summary>
+		/// <param name="sender">MenuItem : creationTablesSQLMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : creationTablesSQLMenuItem</param>
+		private void creationTablesSQLMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			//On créé la textbox qui recevra les requêtes SQL de création de tables
+			TextBox requeteSQL = new TextBox();
+			requeteSQL = proprieteTextBoxAffichageSQL(requeteSQL);
+
+			//On envoie le chemin du fichier à lire dans la fonction lectureFichierSQL
+			string file = "creationTables.sql";
+			requeteSQL.Text = lectureFichierSQL(file);
+
+			affichageStackPanel.Children.Clear();
+			affichageStackPanel.Children.Add(requeteSQL);
+
+
+		}
+
+		/// <summary>
+		/// Permet de définir les propriétés d'une TextBox pour son affichage dans affichageStackPanel
+		/// </summary>
+		/// <param name="tb">La TextBox qui va voir ses propriétés définies</param>
+		/// <returns></returns>
+		private TextBox proprieteTextBoxAffichageSQL(TextBox tb)
+		{
+			tb.HorizontalAlignment = HorizontalAlignment.Stretch;
+			tb.VerticalAlignment = VerticalAlignment.Stretch;
+			tb.TextWrapping = TextWrapping.Wrap;
+			tb.Height = 500;
+			tb.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+			tb.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+			tb.ScrollToEnd();
+
+			return tb;
+		}
+
+		/// <summary>
+		/// Permet de lire un fichier de type .sql
+		/// </summary>
+		/// <param name="fichierALire">Chaîne de caractère indiquant l'emplacement du fichier .sql à lire</param>
+		/// <returns></returns>
+		private string lectureFichierSQL(string fichierALire)
+		{
+			//On essaie de lire la requête depuis le fichier dans laquelle elle est stockée
+			try
+			{
+				using (StreamReader sr = new StreamReader(fichierALire))
+				{
+					String line = sr.ReadToEnd();
+					return line;
+				}
+			}
+
+			//Si la lecture du fichier échoue, on affiche un message d'erreur
+			catch (Exception a)
+			{
+				MessageBox.Show(a.Message);
+				string line = "Erreur dans la lecture du fichier !";
+				return line;
+			}
+		}
+
+		/// <summary>
+		/// Permet de retirer les enfants d'affichageStackPanel
+		/// </summary>
+		private void viderAffichageStackPanel()
+		{
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image ||
+				affichageStackPanel.Children[0] is TextBox)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+		}
 	}
 }

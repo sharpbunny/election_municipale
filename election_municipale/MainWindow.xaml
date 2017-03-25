@@ -12,7 +12,7 @@
 
         <!-- barre de titre -->
         <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Beige" Height="50" Orientation="Horizontal">
-            <Menu x:Name="menu" Height="456" VerticalAlignment="Top" Background="Beige">
+            <Menu x:Name="menu" Height="50" VerticalAlignment="Top" Background="Beige">
                 <MenuItem Header="Fichier">
                     <MenuItem x:Name="quitterMenuItem" Header="Quitter" Click="quitterMenuItem_Click"/>
                 </MenuItem>
@@ -47,7 +47,11 @@
 
                 </MenuItem>
 
-                    <MenuItem Header="Aide">
+                <MenuItem Header="SQL">
+                    <MenuItem Header="Création des tables" x:Name="creationTablesSQLMenuItem" Click="creationTablesSQLMenuItem_Click"/>
+                </MenuItem>
+
+                <MenuItem Header="Aide">
                     <MenuItem x:Name="fonctionnementElectionMenuItem" Header="Elections municipales : kézako ?">
                         <MenuItem x:Name="wikipediaElectionMenuItem" Header="Page Wikipedia : élection municipale" Click="wikipediaElectionMenuItem_Click"/>
                         <MenuItem x:Name="servicePublicElectionMenuItem" Header="Service public : élection municipale" Click="servicePublicElectionMenuItem_Click"/>
