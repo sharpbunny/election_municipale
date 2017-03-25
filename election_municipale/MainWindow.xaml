@@ -18,8 +18,8 @@
                 </MenuItem>
                 
                 <MenuItem Header="Affichage">
-                    <MenuItem Header="Afficher le MCD" x:Name="affichageMCDMenuItem"  Click="AfficherMCD_Click"/>
-                    <MenuItem Header="Afficher le MLD" x:Name="affichageMLDMenuItem"  Click="AfficherMCD_Click"/>
+                    <MenuItem Header="Afficher le MCD" x:Name="affichageMCDMenuItem"  Click="AfficherMCDMLD_Click"/>
+                    <MenuItem Header="Afficher le MLD" x:Name="affichageMLDMenuItem"  Click="AfficherMCDMLD_Click"/>
                 </MenuItem>
 
                 <MenuItem Header="Insertion">

@@ -320,18 +320,24 @@ namespace election_municipale
 		/// <summary>
 		/// Permet d'afficher le MCD ou MLD dans le StackPanel d'affichage
 		/// </summary>
-		/// <param name="sender">MenuItem : AfficherMCD</param>
-		/// <param name="e">Click sur le menuItem : AfficherMCD</param>
-		private void AfficherMCD_Click(object sender, RoutedEventArgs e)
+		/// <param name="sender">MenuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
+		/// <param name="e">Click sur le menuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
+		private void AfficherMCDMLD_Click(object sender, RoutedEventArgs e)
 		{
 			if (affichageStackPanel.Children.Count != 0)
 			{
 				affichageStackPanel.Children.Clear();
 			}
 
-			Image imageMCD = new Image();
-			imageMCD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MCDjpeg.jpg");
-			affichageStackPanel.Children.Add(imageMCD);
+			Image imageMCDMLD = new Image();
+
+			//Si le sender est le MenuItem : AffichageMCDMenuItem
+			if(sender.Equals(affichageMCDMenuItem))imageMCDMLD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MCDjpeg.jpg");
+
+			//Sinon si le sender est le MenuItem : AffichageMLDMenuItem
+			else if (sender.Equals(affichageMLDMenuItem)) imageMCDMLD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MLDjpeg.jpg");
+
+			affichageStackPanel.Children.Add(imageMCDMLD);
 
 		}
 
