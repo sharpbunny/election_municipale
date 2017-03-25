@@ -25,6 +25,10 @@
                 <MenuItem Header="Insertion">
                     <MenuItem Header="Insérer des données depuis un fichier csv" x:Name="insertionDonneesCSVMenuItem" Click="InsertionDonneesCsv_Click"/>
                 </MenuItem>
+
+                <MenuItem Header="Aide">
+                    <MenuItem x:Name="dataGouvMenuItem" Header="Source des données utilisées" Click="dataGouvMenuItem_Click"/>
+                </MenuItem>
             </Menu>
         </StackPanel>
         

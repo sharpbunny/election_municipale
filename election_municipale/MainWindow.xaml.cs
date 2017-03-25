@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Net;
 
 namespace election_municipale
 {
@@ -334,6 +336,18 @@ namespace election_municipale
 		}
 
 		/// <summary>
+		/// Accède au site internet data.gouv.fr pour retrouver la source des données
+		/// </summary>
+		/// <param name="sender">Le menuItem : dataGouvMenuItem</param>
+		/// <param name="e">Click sur le menuItem : dataGouvMenuItem</param>
+		private void dataGouvMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			RedirectionWeb redirectionWindow = new RedirectionWeb();
+			redirectionWindow.ShowDialog();
+
+		}
+
+		/// <summary>
 		/// Fonction permettant d'insérer les données provenant d'un fichier csv dans la base de données
 		/// </summary>
 		/// <param name="sender">Bouton de MainWindow : buttonInsertionDonneesCsv</param>
@@ -344,10 +358,6 @@ namespace election_municipale
 			electionEDM.recuperationDesDonnees(this);
 		}
 
-
-
-		#endregion
-
 		/// <summary>
 		/// Permet de quitter le programme
 		/// </summary>
@@ -357,5 +367,10 @@ namespace election_municipale
 		{
 			Environment.Exit(0);
 		}
+
+
+		#endregion
+
+
 	}
 }

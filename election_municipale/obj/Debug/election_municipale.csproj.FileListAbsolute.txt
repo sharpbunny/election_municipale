@@ -59,3 +59,5 @@ C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\bin\Debu
 C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\bin\Debug\fr\EntityFramework.resources.dll
 C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\bin\Debug\fr\EntityFramework.SqlServer.resources.dll
+C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\RedirectionWeb.g.cs
+C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\RedirectionWeb.baml
