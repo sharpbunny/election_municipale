@@ -388,6 +388,9 @@ namespace election_municipale
 			}
 		}
 
+		/// <summary>
+		/// Affiche les communes dans la datagrid quand une requête doit être faite sur la base de données
+		/// </summary>
 		private void afficherCommuneDataGrid()
 		{
 			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
@@ -456,6 +459,10 @@ namespace election_municipale
 			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
 		}
 
+		/// <summary>
+		/// Affiche les communes dans la datagrid quand une requête de tri a déjà été effectué sur la page TriCommuneWindow
+		/// </summary>
+		/// <param name="communeTrie"></param>
 		public void afficherCommuneDataGrid(List<Commune> communeTrie)
 		{
 			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
