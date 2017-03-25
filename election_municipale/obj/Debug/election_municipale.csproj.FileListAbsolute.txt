@@ -63,3 +63,9 @@ C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\Red
 C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\RedirectionWeb.baml
 C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\TriCandidat.g.cs
 C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\TriCandidat.baml
+C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\TriCommuneWindow.g.cs
+C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\TriDepartementWindow.g.cs
+C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\TriPartisWindow.g.cs
+C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\TriCommuneWindow.baml
+C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\TriDepartementWindow.baml
+C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\TriPartisWindow.baml

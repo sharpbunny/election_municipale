@@ -27,5 +27,25 @@ namespace election_municipale
 			InitializeComponent();
 			this.Owner = Application.Current.MainWindow;
 		}
+
+		/// <summary>
+		/// Ferme la fenêtre de tri des communes
+		/// </summary>
+		/// <param name="sender">Bouton : quitterButton</param>
+		/// <param name="e">Click sur le bouton : quitterButton</param>
+		private void quitterButton_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
+		}
+
+		/// <summary>
+		/// Bouton qui permet de lancer le tri des communes selon les choix de l'utilisateur
+		/// </summary>
+		/// <param name="sender">Bouton : trierButton</param>
+		/// <param name="e">Click sur le bouton : trierButton</param>
+		private void trierButton_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }

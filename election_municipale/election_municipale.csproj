@@ -77,6 +77,15 @@
     <Compile Include="TriCandidat.xaml.cs">
       <DependentUpon>TriCandidat.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TriCommuneWindow.xaml.cs">
+      <DependentUpon>TriCommuneWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TriDepartementWindow.xaml.cs">
+      <DependentUpon>TriDepartementWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TriPartisWindow.xaml.cs">
+      <DependentUpon>TriPartisWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -102,6 +111,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TriCandidat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TriCommuneWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TriDepartementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TriPartisWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
