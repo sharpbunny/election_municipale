@@ -125,60 +125,7 @@ namespace election_municipale
 		/// <param name="e">Click sur le MenuItem : departementMenuItem</param>
 		private void departementMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
-
-			//Si le nombre de colonnes est vide
-			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_du_departement")
-			{
-				if (grilleDeDonnees.Columns.Count > 0)
-				{
-					grilleDeDonnees.Items.Clear();
-					grilleDeDonnees.Columns.Clear();
-
-				}
-				using (var context = new electionEDM())
-				{
-
-					context.Configuration.LazyLoadingEnabled = false;
-
-
-					var query = from dept in context.Departement
-								orderby dept.code_du_departement
-								select dept;
-
-					DataGridTextColumn col1 = new DataGridTextColumn();
-					DataGridTextColumn col2 = new DataGridTextColumn();
-
-
-					grilleDeDonnees.Columns.Add(col1);
-					grilleDeDonnees.Columns.Add(col2);
-
-					col1.Binding = new Binding("code_du_departement");
-					col2.Binding = new Binding("libelle_du_departement");
-
-					col1.Header = "code_du_departement";
-					col2.Header = "libelle_du_departement";
-
-
-					foreach (var dept in query)
-					{
-						grilleDeDonnees.Items.Add(new Departement()
-						{
-							code_du_departement = dept.code_du_departement,
-							libelle_du_departement = dept.libelle_du_departement
-						});
-					}
-
-					grilleDeDonnees.Visibility = Visibility.Visible;
-
-				}//Fin du using
-
-			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
+			afficherDepartementDataGrid();
 		}
 
 		/// <summary>
@@ -326,7 +273,7 @@ namespace election_municipale
 		}
 
 		/// <summary>
-		/// Affiche les candidats dans la datagrid quand une requête de tri a déjà été effectué sur la page TriCandidat
+		/// Affiche les candidats dans la datagrid quand une requête de tri a déjà été effectuée sur la page TriCandidat
 		/// </summary>
 		/// <param name="candidatTrie"></param>
 		public void afficherCandidatDataGrid(List<Candidat> candidatTrie)
@@ -460,9 +407,9 @@ namespace election_municipale
 		}
 
 		/// <summary>
-		/// Affiche les communes dans la datagrid quand une requête de tri a déjà été effectué sur la page TriCommuneWindow
+		/// Affiche les communes dans la datagrid quand une requête de tri a déjà été effectuée sur la page TriCommuneWindow
 		/// </summary>
-		/// <param name="communeTrie"></param>
+		/// <param name="communeTrie">Liste de communes triées selon des critères choisis précédemment</param>
 		public void afficherCommuneDataGrid(List<Commune> communeTrie)
 		{
 			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
@@ -515,6 +462,120 @@ namespace election_municipale
 					}
 
 					grilleDeDonnees.Visibility = Visibility.Visible;
+
+			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
+		}
+
+		/// <summary>
+		/// Affiche les départements dans la datagrid quand une requête doit être faite sur la base de données
+		/// </summary>
+		private void afficherDepartementDataGrid()
+		{
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_du_departement")
+			{
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+
+				}
+				using (var context = new electionEDM())
+				{
+
+					context.Configuration.LazyLoadingEnabled = false;
+
+
+					var query = from dept in context.Departement
+								orderby dept.code_du_departement
+								select dept;
+
+					DataGridTextColumn col1 = new DataGridTextColumn();
+					DataGridTextColumn col2 = new DataGridTextColumn();
+
+
+					grilleDeDonnees.Columns.Add(col1);
+					grilleDeDonnees.Columns.Add(col2);
+
+					col1.Binding = new Binding("code_du_departement");
+					col2.Binding = new Binding("libelle_du_departement");
+
+					col1.Header = "code_du_departement";
+					col2.Header = "libelle_du_departement";
+
+
+					foreach (var dept in query)
+					{
+						grilleDeDonnees.Items.Add(new Departement()
+						{
+							code_du_departement = dept.code_du_departement,
+							libelle_du_departement = dept.libelle_du_departement
+						});
+					}
+
+					grilleDeDonnees.Visibility = Visibility.Visible;
+
+				}//Fin du using
+
+			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
+		}
+
+		/// <summary>
+		/// Affiche les départements dans la datagrid quand une requête de tri a déjà été effectué sur la page TriDepartementWindow
+		/// </summary>
+		/// <param name="departementTrie">Liste de départements triés selon des critères choisis précédemment</param>
+		public void afficherDepartementDataGrid(List<Departement> departementTrie)
+		{
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_du_departement")
+			{
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+
+				}
+
+
+					DataGridTextColumn col1 = new DataGridTextColumn();
+					DataGridTextColumn col2 = new DataGridTextColumn();
+
+
+					grilleDeDonnees.Columns.Add(col1);
+					grilleDeDonnees.Columns.Add(col2);
+
+					col1.Binding = new Binding("code_du_departement");
+					col2.Binding = new Binding("libelle_du_departement");
+
+					col1.Header = "code_du_departement";
+					col2.Header = "libelle_du_departement";
+
+
+					foreach (var dept in departementTrie)
+					{
+						grilleDeDonnees.Items.Add(new Departement()
+						{
+							code_du_departement = dept.code_du_departement,
+							libelle_du_departement = dept.libelle_du_departement
+						});
+					}
+
+					grilleDeDonnees.Visibility = Visibility.Visible;
+
 
 			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
 		}
