@@ -47,12 +47,22 @@
 
                 </MenuItem>
 
-                <MenuItem Header="SQL">
+                <MenuItem Header="Scripts SQL">
                     <MenuItem Header="Création des tables" x:Name="creationTablesSQLMenuItem" >
                         <MenuItem Header="MySQL" x:Name="creationTablesMySQLMenuItem" Click="creationTablesSQLMenuItem_Click"/>
                         <MenuItem Header="Oracle" x:Name="creationTablesOracleMenuItem" Click="creationTablesSQLMenuItem_Click"/>
                         <MenuItem Header="SQLite" x:Name="creationTablesSQLiteMenuItem" Click="creationTablesSQLMenuItem_Click"/>
                         <MenuItem Header="SQL Server" x:Name="creationTablesSQLServerMenuItem" Click="creationTablesSQLMenuItem_Click"/>
+                    </MenuItem>
+
+                    <MenuItem Header="Jointure" x:Name="jointureMenuItem">
+                        <MenuItem Header="Candidat/Liste" x:Name="candidatListeJointureMenuItem" Click="creationTablesSQLMenuItem_Click"/>
+                        <MenuItem Header="Candidat/Liste/Parti" x:Name="candListPartiJointureMenuItem" Click="creationTablesSQLMenuItem_Click"/>
+                        <MenuItem Header="Commune/Candidat/Liste/Parti" x:Name="comCandListPartiJointureMenuItem" Click="creationTablesSQLMenuItem_Click"/>
+                    </MenuItem>
+                    
+                    <MenuItem Header="Supprimer les enregistrements de la table" x:Name="SupprEnregistrMenuItem">
+                        <MenuItem Header="SQL Server" x:Name="supprEnregSQLServerMenuItem" Click="creationTablesSQLMenuItem_Click"/>
                     </MenuItem>
                 </MenuItem>
 

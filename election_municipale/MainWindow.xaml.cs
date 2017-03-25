@@ -710,15 +710,20 @@ namespace election_municipale
 			requeteSQL = proprieteTextBoxAffichageSQL(requeteSQL);
 			string file = "";
 
+			//Suivant le MenuItem qui a appelé cette méthode, on choisit le fichier .sql correspondant
 			if (sender.Equals(creationTablesMySQLMenuItem)) file = "creationTablesMySQL.sql";
 			else if (sender.Equals(creationTablesOracleMenuItem)) file = "creationTablesOracle.sql";
 			else if (sender.Equals(creationTablesSQLiteMenuItem)) file = "creationTablesSQLite.sql";
 			else if (sender.Equals(creationTablesSQLServerMenuItem)) file = "creationTablesSQLServer.sql";
+			else if (sender.Equals(supprEnregSQLServerMenuItem)) file = "SuppressionEnregistrements.sql";
+			else if (sender.Equals(candidatListeJointureMenuItem)) file = "jointureCandidatListe.sql";
+			else if (sender.Equals(candListPartiJointureMenuItem)) file = "jointureCandidatListeParti.sql";
+			else if (sender.Equals(comCandListPartiJointureMenuItem)) file = "jointureCommuneCandidatListeParti.sql";
 
 			//On envoie le chemin du fichier à lire dans la fonction lectureFichierSQL
 			requeteSQL.Text = lectureFichierSQL(file);
 
-
+			//On vide le stackPanel d'affichage de données et on y insère la TextBox
 			affichageStackPanel.Children.Clear();
 			affichageStackPanel.Children.Add(requeteSQL);
 
