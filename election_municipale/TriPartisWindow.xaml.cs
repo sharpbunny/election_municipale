@@ -45,7 +45,28 @@ namespace election_municipale
 		/// <param name="e">Click sur le bouton : trierButton</param>
 		private void trierButton_Click(object sender, RoutedEventArgs e)
 		{
+			if(TriComboBox.SelectedItem == null || TriComboBox.SelectedItem.Equals(aucunTriComboBox))
+			{
+				MessageBox.Show("Vous n'avez choisi aucun type de tri.");
+			}
 
+			else
+			{
+				List<Parti> partiTrie = null;
+				IQueryable<Parti> query = null;
+
+				using(var context = new electionEDM())
+				{
+					query = from partis in context.Parti
+							orderby partis.code_nuance
+							select partis;
+
+					partiTrie = query.ToList();
+				}
+
+				((MainWindow)this.Owner).afficherPartiDataGrid(partiTrie);
+				this.Close();
+			}
 		}
 	}
 }

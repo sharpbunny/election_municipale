@@ -135,57 +135,7 @@ namespace election_municipale
 		/// <param name="e">Click sur le MenuItem : partiItems</param>
 		private void partiMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
-
-			//Si le nombre de colonnes est vide
-			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_nuance")
-			{
-				//Si le nombre de colonnes est supérieur à 0, c'est que l'on affichait une table avant
-				//On efface donc toutes les données
-				if (grilleDeDonnees.Columns.Count > 0)
-				{
-					grilleDeDonnees.Items.Clear();
-					grilleDeDonnees.Columns.Clear();
-
-				}
-				using (var context = new electionEDM())
-				{
-
-					context.Configuration.LazyLoadingEnabled = false;
-
-
-					var query = from parti in context.Parti
-								orderby parti.code_nuance
-								select parti;
-
-					DataGridTextColumn col1 = new DataGridTextColumn();
-
-
-					grilleDeDonnees.Columns.Add(col1);
-
-					col1.Binding = new Binding("code_nuance");
-
-					col1.Header = "code_nuance";
-
-
-					foreach (var parti in query)
-					{
-						grilleDeDonnees.Items.Add(new Parti()
-						{
-							code_nuance = parti.code_nuance
-						});
-					}
-
-					grilleDeDonnees.Visibility = Visibility.Visible;
-
-				}//Fin du using
-
-			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
+			afficherPartiDataGrid();
 		}
 
 		/// <summary>
@@ -571,6 +521,114 @@ namespace election_municipale
 						{
 							code_du_departement = dept.code_du_departement,
 							libelle_du_departement = dept.libelle_du_departement
+						});
+					}
+
+					grilleDeDonnees.Visibility = Visibility.Visible;
+
+
+			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
+		}
+
+		/// <summary>
+		/// Permet d'afficher la liste des partis politiques quand une requête doit être faite sur la base de données
+		/// </summary>
+		private void afficherPartiDataGrid()
+		{
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_nuance")
+			{
+				//Si le nombre de colonnes est supérieur à 0, c'est que l'on affichait une table avant
+				//On efface donc toutes les données
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+
+				}
+				using (var context = new electionEDM())
+				{
+
+					context.Configuration.LazyLoadingEnabled = false;
+
+
+					var query = from parti in context.Parti
+								orderby parti.code_nuance
+								select parti;
+
+					DataGridTextColumn col1 = new DataGridTextColumn();
+
+
+					grilleDeDonnees.Columns.Add(col1);
+
+					col1.Binding = new Binding("code_nuance");
+
+					col1.Header = "code_nuance";
+
+
+					foreach (var parti in query)
+					{
+						grilleDeDonnees.Items.Add(new Parti()
+						{
+							code_nuance = parti.code_nuance
+						});
+					}
+
+					grilleDeDonnees.Visibility = Visibility.Visible;
+
+				}//Fin du using
+
+			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
+		}
+
+		/// <summary>
+		/// Permet d'afficher la liste des partis politiques quand une requête doit être faite sur la base de données
+		/// </summary>
+		/// <param name="partiTrie">Liste de partis politiques triés selon des critères choisis précédemment</param>
+		public void afficherPartiDataGrid(List<Parti> partiTrie)
+		{
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_nuance")
+			{
+				//Si le nombre de colonnes est supérieur à 0, c'est que l'on affichait une table avant
+				//On efface donc toutes les données
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+
+				}
+
+
+					DataGridTextColumn col1 = new DataGridTextColumn();
+
+
+					grilleDeDonnees.Columns.Add(col1);
+
+					col1.Binding = new Binding("code_nuance");
+
+					col1.Header = "code_nuance";
+
+
+					foreach (var parti in partiTrie)
+					{
+						grilleDeDonnees.Items.Add(new Parti()
+						{
+							code_nuance = parti.code_nuance
 						});
 					}
 
