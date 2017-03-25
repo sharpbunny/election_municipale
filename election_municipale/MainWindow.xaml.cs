@@ -708,10 +708,16 @@ namespace election_municipale
 			//On créé la textbox qui recevra les requêtes SQL de création de tables
 			TextBox requeteSQL = new TextBox();
 			requeteSQL = proprieteTextBoxAffichageSQL(requeteSQL);
+			string file = "";
+
+			if (sender.Equals(creationTablesMySQLMenuItem)) file = "creationTablesMySQL.sql";
+			else if (sender.Equals(creationTablesOracleMenuItem)) file = "creationTablesOracle.sql";
+			else if (sender.Equals(creationTablesSQLiteMenuItem)) file = "creationTablesSQLite.sql";
+			else if (sender.Equals(creationTablesSQLServerMenuItem)) file = "creationTablesSQLServer.sql";
 
 			//On envoie le chemin du fichier à lire dans la fonction lectureFichierSQL
-			string file = "creationTables.sql";
 			requeteSQL.Text = lectureFichierSQL(file);
+
 
 			affichageStackPanel.Children.Clear();
 			affichageStackPanel.Children.Add(requeteSQL);
