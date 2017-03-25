@@ -82,8 +82,9 @@ namespace election_municipale
 		/// <param name="e">Click sur le menuItem : dataGouvMenuItem</param>
 		private void dataGouvMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			RedirectionWeb redirectionWindow = new RedirectionWeb();
-			redirectionWindow.ShowDialog();
+			RedirectionWeb redirection = new RedirectionWeb();
+			redirection.menuItemAppelant = dataGouvMenuItem;
+			redirection.ShowDialog();
 
 		}
 
@@ -684,5 +685,31 @@ namespace election_municipale
 		}
 
 		#endregion
+
+		/// <summary>
+		/// Affiche la page du fonctionnement des élections municipales(page web wikipedia)
+		/// </summary>
+		/// <param name="sender">MenuItem : wikipediaElectionMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : wikipediaElectionMenuItem</param>
+		private void wikipediaElectionMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			//On indique à la page redirectionWeb qui l'a appelée pour adapter le site web à afficher
+			RedirectionWeb redirection = new RedirectionWeb();
+			redirection.menuItemAppelant = wikipediaElectionMenuItem;
+			redirection.ShowDialog();
+
+		}
+
+		/// <summary>
+		/// Affiche la page du fonctionnement des élections municipales(page web du service public)
+		/// </summary>
+		/// <param name="sender">MenuItem : servicePublicElectionMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : servicePublicElectionMenuItem</param>
+		private void servicePublicElectionMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			RedirectionWeb redirection = new RedirectionWeb();
+			redirection.menuItemAppelant = servicePublicElectionMenuItem;
+			redirection.ShowDialog();
+		}
 	}
 }

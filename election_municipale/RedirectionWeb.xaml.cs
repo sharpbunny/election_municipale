@@ -20,29 +20,73 @@ namespace election_municipale
 	/// </summary>
 	public partial class RedirectionWeb : Window
 	{
+		public MenuItem menuItemAppelant;
+
+		/// <summary>
+		/// Constructeur de la page RedirectionWeb
+		/// </summary>
 		public RedirectionWeb()
 		{
 			InitializeComponent();
 		}
 
 		/// <summary>
-		/// Affichage la page web data.gouv contenant la source des données utilisées
+		/// Affichage d'une page web en fonction du choix de l'utilisateur dans la MainWindow
 		/// </summary>
 		/// <param name="sender">Le bouton : continuerButton</param>
 		/// <param name="e">Click sur le bouton : continuerButton</param>
 		private void continuerButton_Click(object sender, RoutedEventArgs e)
 		{
-			//On fait un try sur l'ouverture de la page web
-			try
+			if(menuItemAppelant.Header.ToString() == "Page Wikipedia : élection municipale")
 			{
-				Process.Start("https://www.data.gouv.fr/fr/datasets/elections-municipales-2014-les-candidats-du-2e-tour-communes-de-1000-hab-et-plus-idf/");
+				//On fait un try sur l'ouverture de la page web
+				try
+				{
+					Process.Start("https://fr.wikipedia.org/wiki/%C3%89lection_municipale_en_France");
+				}
+
+				//Si l'ouverture de la page web échoue
+				catch
+				{
+					MessageBox.Show("L'ouverture de la page web a échoué.");
+				}
 			}
 
-			//Si l'ouverture de la page web échoue
-			catch
+			else if(menuItemAppelant.Header.ToString() == "Service public : élection municipale")
 			{
-				MessageBox.Show("L'ouverture de la page web a échoué.");
+				//On fait un try sur l'ouverture de la page web
+				try
+				{
+					Process.Start("https://www.service-public.fr/particuliers/vosdroits/F1952");
+				}
+
+				//Si l'ouverture de la page web échoue
+				catch
+				{
+					MessageBox.Show("L'ouverture de la page web a échoué.");
+				}
 			}
+
+			else if(menuItemAppelant.Header.ToString() == "Source des données utilisées")
+			{
+				//On fait un try sur l'ouverture de la page web
+				try
+				{
+					Process.Start("https://www.data.gouv.fr/fr/datasets/elections-municipales-2014-les-candidats-du-2e-tour-communes-de-1000-hab-et-plus-idf/");
+				}
+
+				//Si l'ouverture de la page web échoue
+				catch
+				{
+					MessageBox.Show("L'ouverture de la page web a échoué.");
+				}
+			}
+
+			else
+			{
+				MessageBox.Show("L'ouverture de la page web a échoué");
+			}
+
 
 			this.Close();
 		}

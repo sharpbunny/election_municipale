@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:election_municipale"
         mc:Ignorable="d"
-        Title="Redirection vers data.gouv.fr" Height="125" Width="600" WindowStartupLocation="CenterScreen">
+        Title="Redirection vers une page web" Height="125" Width="500" WindowStartupLocation="CenterScreen">
     
     <StackPanel>
-        <Label x:Name="redirectionMessageLabel" Content="Vous allez être redirigé(e) vers la page web contenant la source des données utilisées dans ce programme." Margin="0,0,0,0"/>
+        <Label x:Name="redirectionMessageLabel" Content="Vous allez être redirigé(e) vers une page web externe à ce programme." Margin="0,0,0,0"/>
         <Label x:Name="continuerLabel" Content="Souhaitez-vous continuer ?" Margin="0,0,0,0"/>
         <StackPanel Orientation="Horizontal">
-            <Button x:Name="continuerButton" Content="Continuer" Width="75" Margin="150,5,0,0" Click="continuerButton_Click"/>
+            <Button x:Name="continuerButton" Content="Continuer" Width="75" Margin="100,5,0,0" Click="continuerButton_Click"/>
             <Button x:Name="exitButton" Content="Fermer" Width="75" Margin="150,5,0,0" Click="exitButton_Click"/>
 
         </StackPanel>

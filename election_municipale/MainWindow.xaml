@@ -43,6 +43,10 @@
                 </MenuItem>
 
                 <MenuItem Header="Aide">
+                    <MenuItem x:Name="fonctionnementElectionMenuItem" Header="Elections municipales : kézako ?">
+                        <MenuItem x:Name="wikipediaElectionMenuItem" Header="Page Wikipedia : élection municipale" Click="wikipediaElectionMenuItem_Click"/>
+                        <MenuItem x:Name="servicePublicElectionMenuItem" Header="Service public : élection municipale" Click="servicePublicElectionMenuItem_Click"/>
+                    </MenuItem>
                     <MenuItem x:Name="dataGouvMenuItem" Header="Source des données utilisées" Click="dataGouvMenuItem_Click"/>
                 </MenuItem>
             </Menu>
