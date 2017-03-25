@@ -13,7 +13,7 @@
 
         <Label Content="Choix du Tri" x:Name="premierTriLabel" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,10,0,0"/>
         <ComboBox x:Name="TriComboBox">
-            <ComboBoxItem Content="Aucun" x:Name="aucunrTriComboBox"/>
+            <ComboBoxItem Content="Aucun" x:Name="aucunTriComboBox"/>
             <ComboBoxItem Content="Insee" x:Name="inseeTriComboBox"/>
             <ComboBoxItem Content="Code de la commune" x:Name="codeTriComboBox"/>
             <ComboBoxItem Content="Libellé de la commune" x:Name="libelleTriComboBox"/>

@@ -47,7 +47,7 @@ namespace election_municipale
 		{
 
 			//Si aucun tri n'a été sélectionné
-			if ((TriComboBox.SelectedItem == null || TriComboBox.SelectedItem.ToString() == "Aucun"))
+			if ((TriComboBox.SelectedItem == null || TriComboBox.SelectedItem.Equals(aucunTriComboBox)))
 			{
 				MessageBox.Show("Vous n'avez choisi aucun tri");
 			}
