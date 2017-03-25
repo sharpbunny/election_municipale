@@ -292,5 +292,17 @@ namespace election_municipale
 
 			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
 		}
+
+		/// <summary>
+		/// Permet d'afficher le MCD dans le StackPanel d'affichage
+		/// </summary>
+		/// <param name="sender">buttonAfficherMCD</param>
+		/// <param name="e">Click sur le bouton : buttonAfficherMCD</param>
+		private void buttonAfficherMCD_Click(object sender, RoutedEventArgs e)
+		{
+			Image imageMCD = new Image();
+			imageMCD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MCDjpeg.jpg");
+			affichageStackPanel.Children.Add(imageMCD);
+		}
 	}
 }
