@@ -20,6 +20,12 @@
                 <MenuItem Header="Affichage">
                     <MenuItem Header="Afficher le MCD" x:Name="affichageMCDMenuItem"  Click="AfficherMCDMLD_Click"/>
                     <MenuItem Header="Afficher le MLD" x:Name="affichageMLDMenuItem"  Click="AfficherMCDMLD_Click"/>
+                    <MenuItem Header="Tables" x:Name="affichageTables">
+                        <MenuItem Header="Candidats" x:Name="candidatMenuItem" Click="candidatMenuItem_Click"/>
+                        <MenuItem Header="Communes" x:Name="communeMenuItem" Click="communeMenuItem_Click"/>
+                        <MenuItem Header="Départements" x:Name="departementMenuItem" Click="departementMenuItem_Click"/>
+                        <MenuItem Header="Partis politiques" x:Name="partiMenuItem" Click="partiMenuItem_Click"/>
+                    </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="Insertion">
@@ -39,13 +45,7 @@
 
         <!-- StackPanel permettant d'afficher les tables qui ont été insérées dans la BDD -->
         <StackPanel DockPanel.Dock="Left" Width="100" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Beige">
-            <Label x:Name="listeTablesLabel" Content="Tables" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" FontWeight="Bold"/>
-            <ListBox x:Name="entitesListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="0,5,0,0" >
-                <ListBoxItem x:Name="candidatItems" Content="Candidats" HorizontalAlignment="Stretch" Selected="candidatItems_Selected" ToolTip="Candidats arrivés au second tour des élections municipales"/>
-                <ListBoxItem x:Name="communeItems" Content="Communes" HorizontalAlignment="Stretch" Selected="communeItems_Selected" ToolTip="Communes de plus de 10 000 habitants"/>
-                <ListBoxItem x:Name="departementItems" Content="Département" HorizontalAlignment="Stretch" Selected="departementItems_Selected" ToolTip="Liste des départements"/>
-                <ListBoxItem x:Name="partiItems" Content="Partis" HorizontalAlignment="Stretch" Selected="partiItems_Selected" ToolTip="Liste des partis politiques auxquels sont associées les listes"/>
-            </ListBox>
+
         </StackPanel>
         
         <!--StackPanel contenant les requêtes de l'énoncé -->

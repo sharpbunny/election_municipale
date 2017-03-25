@@ -42,15 +42,63 @@ namespace election_municipale
 			lignesInsereesLabel.Content += Convert.ToString(lignes);
 		}
 
-										// FONCTIONS DE LA LISTBOX CONTENANT LES TABLES DE LA BDD
-		#region fonctions ListBoxTables
+
+										// FONCTIONS DES ELEMENTS DU MENU
+		#region fonctionMenu
+
+		/// <summary>
+		/// Permet d'afficher le MCD ou MLD dans le StackPanel d'affichage
+		/// </summary>
+		/// <param name="sender">MenuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
+		/// <param name="e">Click sur le menuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
+		private void AfficherMCDMLD_Click(object sender, RoutedEventArgs e)
+		{
+			if (affichageStackPanel.Children.Count != 0)
+			{
+				affichageStackPanel.Children.Clear();
+			}
+
+			Image imageMCDMLD = new Image();
+
+			//Si le sender est le MenuItem : AffichageMCDMenuItem
+			if(sender.Equals(affichageMCDMenuItem))imageMCDMLD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MCDjpeg.jpg");
+
+			//Sinon si le sender est le MenuItem : AffichageMLDMenuItem
+			else if (sender.Equals(affichageMLDMenuItem)) imageMCDMLD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MLDjpeg.jpg");
+
+			affichageStackPanel.Children.Add(imageMCDMLD);
+
+		}
+
+		/// <summary>
+		/// Accède au site internet data.gouv.fr pour retrouver la source des données
+		/// </summary>
+		/// <param name="sender">Le menuItem : dataGouvMenuItem</param>
+		/// <param name="e">Click sur le menuItem : dataGouvMenuItem</param>
+		private void dataGouvMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			RedirectionWeb redirectionWindow = new RedirectionWeb();
+			redirectionWindow.ShowDialog();
+
+		}
+
+		/// <summary>
+		/// Fonction permettant d'insérer les données provenant d'un fichier csv dans la base de données
+		/// </summary>
+		/// <param name="sender">Bouton de MainWindow : buttonInsertionDonneesCsv</param>
+		/// <param name="e">Evenement survenant après un click sur le bouton d'insertion de données issues d'un fichier csv</param>
+		private void InsertionDonneesCsv_Click(object sender, RoutedEventArgs e)
+		{
+			electionEDM.lireToutesLesDonnees();
+			electionEDM.recuperationDesDonnees(this);
+		}
 
 		/// <summary>
 		/// Charge les éléments de la table Candidat dans la DataGrid
 		/// </summary>
-		/// <param name="sender">ListBoxItem : candidatItems</param>
-		/// <param name="e">Click sur le ListBoxItem : candidatItems</param>
-		private void candidatItems_Selected(object sender, RoutedEventArgs e)
+		/// <param name="sender">Le MenuItem : candidatItems</param>
+		/// <param name="e">Click sur le MenuItem : candidatItems</param>
+		private void candidatMenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
 			if (affichageStackPanel.Children[0] is Image)
@@ -113,19 +161,15 @@ namespace election_municipale
 					}
 				}
 			}
-
-
-
 		}
 
 		/// <summary>
 		/// Charge les éléments de la table Commune dans le DataGrid principal
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void communeItems_Selected(object sender, RoutedEventArgs e)
+		/// <param name="sender">Le MenuItem : communeMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : communeMenuItem</param>
+		private void communeMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-
 			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
 			if (affichageStackPanel.Children[0] is Image)
 			{
@@ -193,11 +237,10 @@ namespace election_municipale
 		/// <summary>
 		/// Charge les éléments de la table Département dans le DataGrid
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void departementItems_Selected(object sender, RoutedEventArgs e)
+		/// <param name="sender">MenuItem : departementMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : departementMenuItem</param>
+		private void departementMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-
 			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
 			if (affichageStackPanel.Children[0] is Image)
 			{
@@ -255,11 +298,10 @@ namespace election_municipale
 		/// <summary>
 		/// Charge les éléments concernant la table Parti dans le DataGrid : grilleDeDonnees
 		/// </summary>
-		/// <param name="sender">ListBoxItems : partiItems</param>
-		/// <param name="e">Click sur le ListBoxItem : partiItems</param>
-		private void partiItems_Selected(object sender, RoutedEventArgs e)
+		/// <param name="sender">MenuItems : partiItems</param>
+		/// <param name="e">Click sur le MenuItem : partiItems</param>
+		private void partiMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-
 			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
 			if (affichageStackPanel.Children[0] is Image)
 			{
@@ -311,59 +353,6 @@ namespace election_municipale
 			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
 		}
 
-		#endregion
-
-
-										// FONCTIONS DES ELEMENTS DU MENU
-		#region fonctionMenu
-
-		/// <summary>
-		/// Permet d'afficher le MCD ou MLD dans le StackPanel d'affichage
-		/// </summary>
-		/// <param name="sender">MenuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
-		/// <param name="e">Click sur le menuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
-		private void AfficherMCDMLD_Click(object sender, RoutedEventArgs e)
-		{
-			if (affichageStackPanel.Children.Count != 0)
-			{
-				affichageStackPanel.Children.Clear();
-			}
-
-			Image imageMCDMLD = new Image();
-
-			//Si le sender est le MenuItem : AffichageMCDMenuItem
-			if(sender.Equals(affichageMCDMenuItem))imageMCDMLD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MCDjpeg.jpg");
-
-			//Sinon si le sender est le MenuItem : AffichageMLDMenuItem
-			else if (sender.Equals(affichageMLDMenuItem)) imageMCDMLD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MLDjpeg.jpg");
-
-			affichageStackPanel.Children.Add(imageMCDMLD);
-
-		}
-
-		/// <summary>
-		/// Accède au site internet data.gouv.fr pour retrouver la source des données
-		/// </summary>
-		/// <param name="sender">Le menuItem : dataGouvMenuItem</param>
-		/// <param name="e">Click sur le menuItem : dataGouvMenuItem</param>
-		private void dataGouvMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			RedirectionWeb redirectionWindow = new RedirectionWeb();
-			redirectionWindow.ShowDialog();
-
-		}
-
-		/// <summary>
-		/// Fonction permettant d'insérer les données provenant d'un fichier csv dans la base de données
-		/// </summary>
-		/// <param name="sender">Bouton de MainWindow : buttonInsertionDonneesCsv</param>
-		/// <param name="e">Evenement survenant après un click sur le bouton d'insertion de données issues d'un fichier csv</param>
-		private void InsertionDonneesCsv_Click(object sender, RoutedEventArgs e)
-		{
-			electionEDM.lireToutesLesDonnees();
-			electionEDM.recuperationDesDonnees(this);
-		}
-
 		/// <summary>
 		/// Permet de quitter le programme
 		/// </summary>
@@ -375,8 +364,8 @@ namespace election_municipale
 		}
 
 
-		#endregion
 
+		#endregion
 
 	}
 }
