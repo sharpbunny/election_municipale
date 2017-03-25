@@ -115,70 +115,7 @@ namespace election_municipale
 		/// <param name="e">Click sur le MenuItem : communeMenuItem</param>
 		private void communeMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
-
-			//Si le nombre de colonnes est vide
-			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "insee")
-			{
-				if (grilleDeDonnees.Columns.Count > 0)
-				{
-					grilleDeDonnees.Items.Clear();
-					grilleDeDonnees.Columns.Clear();
-
-				}
-
-				using (var context = new electionEDM())
-				{
-
-					context.Configuration.LazyLoadingEnabled = false;
-
-
-					var query = from commune in context.Commune
-								orderby commune.code_de_la_commune, commune.insee
-								select commune;
-
-					DataGridTextColumn col1 = new DataGridTextColumn();
-					DataGridTextColumn col2 = new DataGridTextColumn();
-					DataGridTextColumn col3 = new DataGridTextColumn();
-					DataGridTextColumn col4 = new DataGridTextColumn();
-
-					grilleDeDonnees.Columns.Add(col1);
-					grilleDeDonnees.Columns.Add(col2);
-					grilleDeDonnees.Columns.Add(col3);
-					grilleDeDonnees.Columns.Add(col4);
-
-					col1.Binding = new Binding("code_de_la_commune");
-					col2.Binding = new Binding("insee");
-					col3.Binding = new Binding("libelle_de_la_commune");
-					col4.Binding = new Binding("code_du_departement");
-
-					col1.Header = "code_de_la_commune";
-					col2.Header = "insee";
-					col3.Header = "libelle_de_la_commune";
-					col4.Header = "code_du_departement";
-
-
-					foreach (var commune in query)
-					{
-						grilleDeDonnees.Items.Add(new Commune()
-						{
-							code_de_la_commune = commune.code_de_la_commune,
-							insee = commune.insee,
-							libelle_de_la_commune = commune.libelle_de_la_commune,
-							code_du_departement = commune.code_du_departement
-						});
-					}
-
-					grilleDeDonnees.Visibility = Visibility.Visible;
-
-				}//Fin du using
-
-			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
+			afficherCommuneDataGrid();
 		}
 
 		/// <summary>
@@ -449,6 +386,130 @@ namespace election_municipale
 				grilleDeDonnees.Visibility = Visibility.Visible;
 
 			}
+		}
+
+		private void afficherCommuneDataGrid()
+		{
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "insee")
+			{
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+
+				}
+
+				using (var context = new electionEDM())
+				{
+
+					context.Configuration.LazyLoadingEnabled = false;
+
+
+					var query = from commune in context.Commune
+								orderby commune.code_de_la_commune, commune.insee
+								select commune;
+
+					DataGridTextColumn col1 = new DataGridTextColumn();
+					DataGridTextColumn col2 = new DataGridTextColumn();
+					DataGridTextColumn col3 = new DataGridTextColumn();
+					DataGridTextColumn col4 = new DataGridTextColumn();
+
+					grilleDeDonnees.Columns.Add(col1);
+					grilleDeDonnees.Columns.Add(col2);
+					grilleDeDonnees.Columns.Add(col3);
+					grilleDeDonnees.Columns.Add(col4);
+
+					col1.Binding = new Binding("code_de_la_commune");
+					col2.Binding = new Binding("insee");
+					col3.Binding = new Binding("libelle_de_la_commune");
+					col4.Binding = new Binding("code_du_departement");
+
+					col1.Header = "code_de_la_commune";
+					col2.Header = "insee";
+					col3.Header = "libelle_de_la_commune";
+					col4.Header = "code_du_departement";
+
+
+					foreach (var commune in query)
+					{
+						grilleDeDonnees.Items.Add(new Commune()
+						{
+							code_de_la_commune = commune.code_de_la_commune,
+							insee = commune.insee,
+							libelle_de_la_commune = commune.libelle_de_la_commune,
+							code_du_departement = commune.code_du_departement
+						});
+					}
+
+					grilleDeDonnees.Visibility = Visibility.Visible;
+
+				}//Fin du using
+
+			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
+		}
+
+		public void afficherCommuneDataGrid(List<Commune> communeTrie)
+		{
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "insee")
+			{
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+
+				}
+
+					DataGridTextColumn col1 = new DataGridTextColumn();
+					DataGridTextColumn col2 = new DataGridTextColumn();
+					DataGridTextColumn col3 = new DataGridTextColumn();
+					DataGridTextColumn col4 = new DataGridTextColumn();
+
+					grilleDeDonnees.Columns.Add(col1);
+					grilleDeDonnees.Columns.Add(col2);
+					grilleDeDonnees.Columns.Add(col3);
+					grilleDeDonnees.Columns.Add(col4);
+
+					col1.Binding = new Binding("code_de_la_commune");
+					col2.Binding = new Binding("insee");
+					col3.Binding = new Binding("libelle_de_la_commune");
+					col4.Binding = new Binding("code_du_departement");
+
+					col1.Header = "code_de_la_commune";
+					col2.Header = "insee";
+					col3.Header = "libelle_de_la_commune";
+					col4.Header = "code_du_departement";
+
+
+					foreach (var commune in communeTrie)
+					{
+						grilleDeDonnees.Items.Add(new Commune()
+						{
+							code_de_la_commune = commune.code_de_la_commune,
+							insee = commune.insee,
+							libelle_de_la_commune = commune.libelle_de_la_commune,
+							code_du_departement = commune.code_du_departement
+						});
+					}
+
+					grilleDeDonnees.Visibility = Visibility.Visible;
+
+			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
 		}
 
 		#region tri
