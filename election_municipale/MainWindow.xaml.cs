@@ -159,6 +159,8 @@ namespace election_municipale
 							idListe = candid.idListe
 						});
 					}
+
+					grilleDeDonnees.Visibility = Visibility.Visible;
 				}
 			}
 		}
@@ -229,6 +231,8 @@ namespace election_municipale
 						});
 					}
 
+					grilleDeDonnees.Visibility = Visibility.Visible;
+
 				}//Fin du using
 
 			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
@@ -290,6 +294,8 @@ namespace election_municipale
 						});
 					}
 
+					grilleDeDonnees.Visibility = Visibility.Visible;
+
 				}//Fin du using
 
 			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
@@ -348,6 +354,8 @@ namespace election_municipale
 						});
 					}
 
+					grilleDeDonnees.Visibility = Visibility.Visible;
+
 				}//Fin du using
 
 			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
@@ -363,9 +371,17 @@ namespace election_municipale
 			Environment.Exit(0);
 		}
 
-
-
 		#endregion
 
+		/// <summary>
+		/// Ouvre la fenêtre pour sélectionner la façon dont le candidat sera trié
+		/// </summary>
+		/// <param name="sender">Le MenuItem : candidatTriMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : candidatTriMenuItem</param>
+		private void candidatTriMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			TriCandidat candidatTriWindow = new TriCandidat();
+			candidatTriWindow.ShowDialog();
+		}
 	}
 }

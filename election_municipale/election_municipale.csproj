@@ -74,6 +74,9 @@
       <DependentUpon>RedirectionWeb.xaml</DependentUpon>
     </Compile>
     <Compile Include="stats_election.cs" />
+    <Compile Include="TriCandidat.xaml.cs">
+      <DependentUpon>TriCandidat.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -95,6 +98,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="RedirectionWeb.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TriCandidat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -32,6 +32,16 @@
                     <MenuItem Header="Insérer des données depuis un fichier csv" x:Name="insertionDonneesCSVMenuItem" Click="InsertionDonneesCsv_Click"/>
                 </MenuItem>
 
+                <MenuItem Header="Requêtes">
+                    <MenuItem Header="Tri" x:Name="TriMenuItem">
+                        <MenuItem Header="Candidats" x:Name="candidatTriMenuItem" Click="candidatTriMenuItem_Click"/>
+                        <MenuItem Header="Communes" x:Name="communeTriMenuItem"/>
+                        <MenuItem Header="Départements" x:Name="departementTriMenuItem"/>
+                        <MenuItem Header="Partis politiques" x:Name="partiTriMenuItem"/>
+                    </MenuItem>
+
+                </MenuItem>
+
                 <MenuItem Header="Aide">
                     <MenuItem x:Name="dataGouvMenuItem" Header="Source des données utilisées" Click="dataGouvMenuItem_Click"/>
                 </MenuItem>
@@ -50,12 +60,12 @@
         
         <!--StackPanel contenant les requêtes de l'énoncé -->
         <StackPanel DockPanel.Dock="Right" Width="100" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Beige">
-            <Label x:Name="requetesLabel" Content="Requêtes" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0" FontWeight="Bold"/>
+            
         </StackPanel>
         
         <!--StackPanel contenant l'affichage des données -->
         <StackPanel x:Name="affichageStackPanel"  DockPanel.Dock="Top" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White">
-            <DataGrid x:Name="grilleDeDonnees" AutoGenerateColumns="True" ItemsSource="{Binding Mode=OneWay}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray">
+            <DataGrid x:Name="grilleDeDonnees" AutoGenerateColumns="True" ItemsSource="{Binding Mode=OneWay}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray" Visibility="Hidden">
 
             </DataGrid>
         </StackPanel>
