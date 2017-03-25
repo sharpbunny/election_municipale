@@ -9,15 +9,26 @@
     
 
     <DockPanel>
+
         <!-- barre de titre -->
-        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Beige" Height="50">
-			<Label x:Name="titreLabel" Content="Elections Municipales" FontSize="18" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Stretch" Margin="0,12,0,0"/>
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Beige" Height="50" Orientation="Horizontal">
+            <Menu x:Name="menu" Height="456" VerticalAlignment="Top" Background="Beige">
+                <MenuItem Header="Fichier">
+                    <MenuItem Header="Quitter"/>
+                </MenuItem>
+                
+                <MenuItem Header="Affichage">
+                    <MenuItem Header="Afficher le MCD" x:Name="affichageMCDMenuItem"  Click="AfficherMCD_Click"/>
+                </MenuItem>
+
+                <MenuItem Header="Insertion">
+                    <MenuItem Header="Insérer des données depuis un fichier csv" x:Name="insertionDonneesCSVMenuItem" Click="InsertionDonneesCsv_Click"/>
+                </MenuItem>
+            </Menu>
         </StackPanel>
         
         <!--StackPanel contenant les fonctions d'insertion -->
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="50" Background="Beige">
-            <Button x:Name="buttonAfficherMCD" Content="Afficher le MCD" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Click="buttonAfficherMCD_Click"/>
-            <Button x:Name="buttonInsertionDonneesCsv" Content="Insérer des données depuis un fichier csv" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" Margin="20,0,0,0" Click="buttonInsertionDonneesCsv_Click" ToolTip="Permet d'insérer les données issues du fichier csv dans bin/Debug"/>
             <Label x:Name="lignesInsereesLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="15,0,0,0" FontSize="12"/>
         </StackPanel>
 
@@ -43,6 +54,7 @@
 
             </DataGrid>
         </StackPanel>
+
 
 
 

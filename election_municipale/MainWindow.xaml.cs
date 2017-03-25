@@ -29,16 +29,7 @@ namespace election_municipale
 			InitializeComponent();
 		}
 
-		/// <summary>
-		/// Fonction permettant d'insérer les données provenant d'un fichier csv dans la base de données
-		/// </summary>
-		/// <param name="sender">Bouton de MainWindow : buttonInsertionDonneesCsv</param>
-		/// <param name="e">Evenement survenant après un click sur le bouton d'insertion de données issues d'un fichier csv</param>
-		private void buttonInsertionDonneesCsv_Click(object sender, RoutedEventArgs e)
-		{
-			electionEDM.lireToutesLesDonnees();
-			electionEDM.recuperationDesDonnees(this);
-		}
+
 
 		/// <summary>
 		/// Permet de modifier le label indiquant le nombre de lignes qui ont été lues depuis le fichier csv
@@ -49,13 +40,8 @@ namespace election_municipale
 			lignesInsereesLabel.Content += Convert.ToString(lignes);
 		}
 
-		/// <summary>
-		/// On insère dans la listBox le nom de toutes les tables
-		/// </summary>
-		private void insertionTablesListBox()
-		{
-			entitesListBox.Items.Add("");
-		}
+										// FONCTIONS DE LA LISTBOX CONTENANT LES TABLES DE LA BDD
+		#region fonctions ListBoxTables
 
 		/// <summary>
 		/// Charge les éléments de la table Candidat dans la DataGrid
@@ -64,6 +50,13 @@ namespace election_municipale
 		/// <param name="e">Click sur le ListBoxItem : candidatItems</param>
 		private void candidatItems_Selected(object sender, RoutedEventArgs e)
 		{
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
 			//Si le nombre de colonnes est vide
 			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "idCandidat")
 			{
@@ -131,6 +124,13 @@ namespace election_municipale
 		private void communeItems_Selected(object sender, RoutedEventArgs e)
 		{
 
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
 			//Si le nombre de colonnes est vide
 			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "insee")
 			{
@@ -195,6 +195,14 @@ namespace election_municipale
 		/// <param name="e"></param>
 		private void departementItems_Selected(object sender, RoutedEventArgs e)
 		{
+
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
 			//Si le nombre de colonnes est vide
 			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_du_departement")
 			{
@@ -249,6 +257,14 @@ namespace election_municipale
 		/// <param name="e">Click sur le ListBoxItem : partiItems</param>
 		private void partiItems_Selected(object sender, RoutedEventArgs e)
 		{
+
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
 			//Si le nombre de colonnes est vide
 			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "code_nuance")
 			{
@@ -293,16 +309,44 @@ namespace election_municipale
 			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
 		}
 
+		#endregion
+
+
+										// FONCTIONS DES ELEMENTS DU MENU
+		#region fonctionMenu
+
 		/// <summary>
 		/// Permet d'afficher le MCD dans le StackPanel d'affichage
 		/// </summary>
 		/// <param name="sender">buttonAfficherMCD</param>
 		/// <param name="e">Click sur le bouton : buttonAfficherMCD</param>
-		private void buttonAfficherMCD_Click(object sender, RoutedEventArgs e)
+		private void AfficherMCD_Click(object sender, RoutedEventArgs e)
 		{
+			if (affichageStackPanel.Children.Count != 0)
+			{
+				affichageStackPanel.Children.Clear();
+			}
+
 			Image imageMCD = new Image();
 			imageMCD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MCDjpeg.jpg");
 			affichageStackPanel.Children.Add(imageMCD);
+
 		}
+
+		/// <summary>
+		/// Fonction permettant d'insérer les données provenant d'un fichier csv dans la base de données
+		/// </summary>
+		/// <param name="sender">Bouton de MainWindow : buttonInsertionDonneesCsv</param>
+		/// <param name="e">Evenement survenant après un click sur le bouton d'insertion de données issues d'un fichier csv</param>
+		private void InsertionDonneesCsv_Click(object sender, RoutedEventArgs e)
+		{
+			electionEDM.lireToutesLesDonnees();
+			electionEDM.recuperationDesDonnees(this);
+		}
+
+		#endregion
+
+
+
 	}
 }
