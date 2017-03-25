@@ -13,6 +13,7 @@
 
         <Label Content="1er tri" x:Name="premierTriLabel" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,10,0,0"/>
         <ComboBox x:Name="premierTriComboBox">
+            <ComboBoxItem Content="Aucun" x:Name="aucunPremierTriComboBox"/>
             <ComboBoxItem Content="idCandidat" x:Name="idPremierTriComboBox"/>
             <ComboBoxItem Content="nom" x:Name="nomPremierTriComboBox"/>
             <ComboBoxItem Content="prenom" x:Name="prenomPremierTriComboBox"/>
@@ -20,6 +21,7 @@
         
         <Label Content="2ème tri" x:Name="deuxiemeTriLabel" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,10,0,0"/>
         <ComboBox x:Name="deuxiemeTriComboBox">
+            <ComboBoxItem Content="Aucun" x:Name="aucunDeuxiemeTriComboBox"/>
             <ComboBoxItem Content="idCandidat" x:Name="idDeuxiemeTriComboBox"/>
             <ComboBoxItem Content="nom" x:Name="nomDeuxiemeTriComboBox"/>
             <ComboBoxItem Content="prenom" x:Name="prenomDeuxiemeTriComboBox"/>
@@ -27,12 +29,13 @@
         
         <Label Content="3ème tri" x:Name="troisièmeTriLabel" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0,10,0,0"/>
         <ComboBox x:Name="troisiemeTriComboBox">
+            <ComboBoxItem Content="Aucun" x:Name="aucunTroisiemeTriComboBox"/>
             <ComboBoxItem Content="idCandidat" x:Name="idTroisiemeTriComboBox"/>
             <ComboBoxItem Content="nom" x:Name="nomTroisiemeTriComboBox"/>
             <ComboBoxItem Content="prenom" x:Name="prenomTroisiemeTriComboBox"/>
         </ComboBox>
 
-        <Button x:Name="trierButton" Content="Trier" HorizontalAlignment="Center" Width="50" Margin="0,20,0,0"/>
+        <Button x:Name="trierButton" Content="Trier" HorizontalAlignment="Center" Width="50" Margin="0,20,0,0" Click="trierButton_Click"/>
         <Button x:Name="quitterButton" Content="Fermer" Margin="0,10,0,0" HorizontalAlignment="Center" Width="50" Click="quitterButton_Click"/>
 
 

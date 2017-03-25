@@ -23,14 +23,19 @@ namespace election_municipale
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+
 		/// <summary>
 		/// Constructeur de MainWindow
 		/// </summary>
 		public MainWindow()
 		{
 			InitializeComponent();
+
 		}
 
+											// **********************************
+											//			METHODES
+											// **********************************
 
 
 		/// <summary>
@@ -100,69 +105,7 @@ namespace election_municipale
 		/// <param name="e">Click sur le MenuItem : candidatItems</param>
 		private void candidatMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
-
-			//Si le nombre de colonnes est vide
-			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "idCandidat")
-			{
-				//Si le nombre de colonnes est supérieur à 0, c'est qu'une autre table était affichée avant
-				if (grilleDeDonnees.Columns.Count > 0)
-				{
-					grilleDeDonnees.Items.Clear();
-					grilleDeDonnees.Columns.Clear();
-				}
-
-				using (var context = new electionEDM())
-				{
-
-					context.Configuration.LazyLoadingEnabled = false;
-
-
-					var query = from candidat in context.Candidat
-								orderby candidat.idCandidat, candidat.nom, candidat.prenom
-								select candidat;
-
-					DataGridTextColumn col1 = new DataGridTextColumn();
-					DataGridTextColumn col2 = new DataGridTextColumn();
-					DataGridTextColumn col3 = new DataGridTextColumn();
-					DataGridTextColumn col4 = new DataGridTextColumn();
-					DataGridTextColumn col5 = new DataGridTextColumn();
-					grilleDeDonnees.Columns.Add(col1);
-					grilleDeDonnees.Columns.Add(col2);
-					grilleDeDonnees.Columns.Add(col3);
-					grilleDeDonnees.Columns.Add(col4);
-					grilleDeDonnees.Columns.Add(col5);
-					col1.Binding = new Binding("idCandidat");
-					col2.Binding = new Binding("nom");
-					col3.Binding = new Binding("prenom");
-					col4.Binding = new Binding("sexe");
-					col5.Binding = new Binding("idListe");
-					col1.Header = "idCandidat";
-					col2.Header = "nom";
-					col3.Header = "prenom";
-					col4.Header = "sexe";
-					col5.Header = "idListe";
-
-					foreach (var candid in query)
-					{
-						grilleDeDonnees.Items.Add(new Candidat()
-						{
-							idCandidat = candid.idCandidat,
-							nom = candid.nom,
-							prenom = candid.prenom,
-							sexe = candid.sexe,
-							idListe = candid.idListe
-						});
-					}
-
-					grilleDeDonnees.Visibility = Visibility.Visible;
-				}
-			}
+			afficherCandidatDataGrid();
 		}
 
 		/// <summary>
@@ -373,6 +316,8 @@ namespace election_municipale
 
 		#endregion
 
+										// DIVERSES METHODES
+
 		/// <summary>
 		/// Ouvre la fenêtre pour sélectionner la façon dont le candidat sera trié
 		/// </summary>
@@ -380,8 +325,141 @@ namespace election_municipale
 		/// <param name="e">Click sur le MenuItem : candidatTriMenuItem</param>
 		private void candidatTriMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			TriCandidat candidatTriWindow = new TriCandidat();
-			candidatTriWindow.ShowDialog();
+			TriCandidat triCandidatWindow = new TriCandidat();
+			triCandidatWindow.ShowDialog();
+		}
+
+		/// <summary>
+		/// Affiche les candidats dans la datagrid quand une requête doit être faite sur la base de données
+		/// </summary>
+		private void afficherCandidatDataGrid()
+		{
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "idCandidat")
+			{
+				//Si le nombre de colonnes est supérieur à 0, c'est qu'une autre table était affichée avant
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+				}
+
+				using (var context = new electionEDM())
+				{
+
+					context.Configuration.LazyLoadingEnabled = false;
+
+
+					var query = from candidat in context.Candidat
+								orderby candidat.idCandidat, candidat.nom, candidat.prenom
+								select candidat;
+
+					DataGridTextColumn col1 = new DataGridTextColumn();
+					DataGridTextColumn col2 = new DataGridTextColumn();
+					DataGridTextColumn col3 = new DataGridTextColumn();
+					DataGridTextColumn col4 = new DataGridTextColumn();
+					DataGridTextColumn col5 = new DataGridTextColumn();
+					grilleDeDonnees.Columns.Add(col1);
+					grilleDeDonnees.Columns.Add(col2);
+					grilleDeDonnees.Columns.Add(col3);
+					grilleDeDonnees.Columns.Add(col4);
+					grilleDeDonnees.Columns.Add(col5);
+					col1.Binding = new Binding("idCandidat");
+					col2.Binding = new Binding("nom");
+					col3.Binding = new Binding("prenom");
+					col4.Binding = new Binding("sexe");
+					col5.Binding = new Binding("idListe");
+					col1.Header = "idCandidat";
+					col2.Header = "nom";
+					col3.Header = "prenom";
+					col4.Header = "sexe";
+					col5.Header = "idListe";
+
+					foreach (var candid in query)
+					{
+						grilleDeDonnees.Items.Add(new Candidat()
+						{
+							idCandidat = candid.idCandidat,
+							nom = candid.nom,
+							prenom = candid.prenom,
+							sexe = candid.sexe,
+							idListe = candid.idListe
+						});
+					}
+
+					grilleDeDonnees.Visibility = Visibility.Visible;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Affiche les candidats dans la datagrid quand une requête de tri a déjà été effectué sur la page TriCandidat
+		/// </summary>
+		/// <param name="candidatTrie"></param>
+		public void afficherCandidatDataGrid(List<Candidat> candidatTrie)
+		{
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+
+			//Si le nombre de colonnes est vide
+			if (grilleDeDonnees.Columns.Count() == 0 || grilleDeDonnees.Columns[0].Header.ToString() != "idCandidat")
+			{
+				//Si le nombre de colonnes est supérieur à 0, c'est qu'une autre table était affichée avant
+				if (grilleDeDonnees.Columns.Count > 0)
+				{
+					grilleDeDonnees.Items.Clear();
+					grilleDeDonnees.Columns.Clear();
+				}
+
+
+
+				DataGridTextColumn col1 = new DataGridTextColumn();
+				DataGridTextColumn col2 = new DataGridTextColumn();
+				DataGridTextColumn col3 = new DataGridTextColumn();
+				DataGridTextColumn col4 = new DataGridTextColumn();
+				DataGridTextColumn col5 = new DataGridTextColumn();
+				grilleDeDonnees.Columns.Add(col1);
+				grilleDeDonnees.Columns.Add(col2);
+				grilleDeDonnees.Columns.Add(col3);
+				grilleDeDonnees.Columns.Add(col4);
+				grilleDeDonnees.Columns.Add(col5);
+				col1.Binding = new Binding("idCandidat");
+				col2.Binding = new Binding("nom");
+				col3.Binding = new Binding("prenom");
+				col4.Binding = new Binding("sexe");
+				col5.Binding = new Binding("idListe");
+				col1.Header = "idCandidat";
+				col2.Header = "nom";
+				col3.Header = "prenom";
+				col4.Header = "sexe";
+				col5.Header = "idListe";
+
+				foreach (var candid in candidatTrie)
+				{
+					grilleDeDonnees.Items.Add(new Candidat()
+					{
+						idCandidat = candid.idCandidat,
+						nom = candid.nom,
+						prenom = candid.prenom,
+						sexe = candid.sexe,
+						idListe = candid.idListe
+					});
+				}
+
+				grilleDeDonnees.Visibility = Visibility.Visible;
+
+			}
 		}
 	}
 }

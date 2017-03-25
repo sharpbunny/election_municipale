@@ -8,7 +8,7 @@
         Title="Elections Municipales" Height="600" Width="1000" Background="Beige" WindowStartupLocation="CenterScreen">
     
 
-    <DockPanel>
+    <DockPanel x:Name="mainWindowDockPanel">
 
         <!-- barre de titre -->
         <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Beige" Height="50" Orientation="Horizontal">
