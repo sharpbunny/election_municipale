@@ -14,7 +14,7 @@
         <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="Beige" Height="50" Orientation="Horizontal">
             <Menu x:Name="menu" Height="456" VerticalAlignment="Top" Background="Beige">
                 <MenuItem Header="Fichier">
-                    <MenuItem Header="Quitter"/>
+                    <MenuItem x:Name="quitterMenuItem" Header="Quitter" Click="quitterMenuItem_Click"/>
                 </MenuItem>
                 
                 <MenuItem Header="Affichage">

@@ -344,9 +344,18 @@ namespace election_municipale
 			electionEDM.recuperationDesDonnees(this);
 		}
 
+
+
 		#endregion
 
-
-
+		/// <summary>
+		/// Permet de quitter le programme
+		/// </summary>
+		/// <param name="sender">Le menuItem : quitterMenuItem</param>
+		/// <param name="e">Click sur le menuItem : quitterMenuItem</param>
+		private void quitterMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			Environment.Exit(0);
+		}
 	}
 }
