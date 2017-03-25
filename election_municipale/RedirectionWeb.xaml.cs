@@ -32,7 +32,18 @@ namespace election_municipale
 		/// <param name="e">Click sur le bouton : continuerButton</param>
 		private void continuerButton_Click(object sender, RoutedEventArgs e)
 		{
-			Process.Start("https://www.data.gouv.fr/fr/datasets/elections-municipales-2014-les-candidats-du-2e-tour-communes-de-1000-hab-et-plus-idf/");
+			//On fait un try sur l'ouverture de la page web
+			try
+			{
+				Process.Start("https://www.data.gouv.fr/fr/datasets/elections-municipales-2014-les-candidats-du-2e-tour-communes-de-1000-hab-et-plus-idf/");
+			}
+
+			//Si l'ouverture de la page web échoue
+			catch
+			{
+				MessageBox.Show("L'ouverture de la page web a échoué.");
+			}
+
 			this.Close();
 		}
 
