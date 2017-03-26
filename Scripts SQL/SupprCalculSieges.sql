@@ -1,0 +1,1 @@
+DELETE FROM calcul_sieges;

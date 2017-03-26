@@ -1,0 +1,2 @@
+DELETE FROM Liste;
+DBCC CHECKIDENT ('Liste', RESEED, 0)

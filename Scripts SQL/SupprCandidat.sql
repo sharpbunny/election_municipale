@@ -1,0 +1,2 @@
+DELETE FROM Candidat;
+DBCC CHECKIDENT ('Candidat', RESEED, 0)

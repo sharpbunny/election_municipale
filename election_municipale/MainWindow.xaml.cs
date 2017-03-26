@@ -720,6 +720,17 @@ namespace election_municipale
 			else if (sender.Equals(candListPartiJointureMenuItem)) file = "jointureCandidatListeParti.sql";
 			else if (sender.Equals(comCandListPartiJointureMenuItem)) file = "jointureCommuneCandidatListeParti.sql";
 
+			//MenuItem de suppression des enregistrements des tables à l'unité
+			else if (sender.Equals(anneeElectionSupprMenuItem)) file = "SupprAnneeElection.sql";
+			else if (sender.Equals(calculSiegesSupprMenuItem)) file = "SupprCalculSieges.sql";
+			else if (sender.Equals(candidSupprMenuItem)) file = "SupprCandidat.sql";
+			else if (sender.Equals(communeSupprMenuItem)) file = "SupprCommune.sql";
+			else if (sender.Equals(departementSupprMenuItem)) file = "SupprDepartement.sql";
+			else if (sender.Equals(electionSupprMenuItem)) file = "SupprElection.sql";
+			else if (sender.Equals(listeSupprMenuItem)) file = "SupprListe.sql";
+			else if (sender.Equals(partiSupprMenuItem)) file = "SupprParti.sql";
+			else if (sender.Equals(statsElectionSupprMenuItem)) file = "SupprStatsElection.sql";
+
 			//On envoie le chemin du fichier à lire dans la fonction lectureFichierSQL
 			requeteSQL.Text = lectureFichierSQL(file);
 
