@@ -730,6 +730,7 @@ namespace election_municipale
 			else if (sender.Equals(listeSupprMenuItem)) file = "SupprListe.sql";
 			else if (sender.Equals(partiSupprMenuItem)) file = "SupprParti.sql";
 			else if (sender.Equals(statsElectionSupprMenuItem)) file = "SupprStatsElection.sql";
+			else if (sender.Equals(elecAnneeComCandJointureMenuItem)) file = "jointureElectionCommuneCandidatAnnee.sql";
 
 			//On envoie le chemin du fichier à lire dans la fonction lectureFichierSQL
 			requeteSQL.Text = lectureFichierSQL(file);

@@ -60,6 +60,7 @@
                             <MenuItem Header="Candidat/Liste" x:Name="candidatListeJointureMenuItem" Click="creationTablesSQLMenuItem_Click"/>
                             <MenuItem Header="Candidat/Liste/Parti" x:Name="candListPartiJointureMenuItem" Click="creationTablesSQLMenuItem_Click"/>
                             <MenuItem Header="Commune/Candidat/Liste/Parti" x:Name="comCandListPartiJointureMenuItem" Click="creationTablesSQLMenuItem_Click"/>
+                            <MenuItem Header="Election/Annee/Commune/Candidat" x:Name="elecAnneeComCandJointureMenuItem" Click="creationTablesSQLMenuItem_Click"/>
                         </MenuItem>
                     </MenuItem>
 
