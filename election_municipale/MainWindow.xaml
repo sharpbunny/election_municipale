@@ -79,7 +79,7 @@
                         </MenuItem>
                     </MenuItem>
 
-                    <MenuItem Header="Supprimer tous les enregistrements de la table" x:Name="SupprEnregistrMenuItem">
+                    <MenuItem Header="Supprimer tous les enregistrements" x:Name="SupprEnregistrMenuItem">
                         <MenuItem Header="SQL Server" x:Name="supprEnregSQLServerMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                     </MenuItem>
                 </MenuItem>
