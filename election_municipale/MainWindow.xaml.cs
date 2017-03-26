@@ -711,14 +711,21 @@ namespace election_municipale
 			string file = "";
 
 			//Suivant le MenuItem qui a appelé cette méthode, on choisit le fichier .sql correspondant
+			//Scripts de création de tables
 			if (sender.Equals(creationTablesMySQLMenuItem)) file = "creationTablesMySQL.sql";
 			else if (sender.Equals(creationTablesOracleMenuItem)) file = "creationTablesOracle.sql";
 			else if (sender.Equals(creationTablesSQLiteMenuItem)) file = "creationTablesSQLite.sql";
 			else if (sender.Equals(creationTablesSQLServerMenuItem)) file = "creationTablesSQLServer.sql";
+
+			//Script de suppression de tous les enregistrements
 			else if (sender.Equals(supprEnregSQLServerMenuItem)) file = "SuppressionEnregistrements.sql";
+
+			//Scripts des jointures
 			else if (sender.Equals(candidatListeJointureMenuItem)) file = "jointureCandidatListe.sql";
 			else if (sender.Equals(candListPartiJointureMenuItem)) file = "jointureCandidatListeParti.sql";
 			else if (sender.Equals(comCandListPartiJointureMenuItem)) file = "jointureCommuneCandidatListeParti.sql";
+			else if (sender.Equals(elecAnneeComCandJointureMenuItem)) file = "jointureElectionCommuneCandidatAnnee.sql";
+			else if (sender.Equals(annCalSieDeptComListJointureMenuItem)) file = "jointureCalcSiegesComDepartListe.sql";
 
 			//MenuItem de suppression des enregistrements des tables à l'unité
 			else if (sender.Equals(anneeElectionSupprMenuItem)) file = "SupprAnneeElection.sql";
@@ -730,7 +737,7 @@ namespace election_municipale
 			else if (sender.Equals(listeSupprMenuItem)) file = "SupprListe.sql";
 			else if (sender.Equals(partiSupprMenuItem)) file = "SupprParti.sql";
 			else if (sender.Equals(statsElectionSupprMenuItem)) file = "SupprStatsElection.sql";
-			else if (sender.Equals(elecAnneeComCandJointureMenuItem)) file = "jointureElectionCommuneCandidatAnnee.sql";
+
 
 			//On envoie le chemin du fichier à lire dans la fonction lectureFichierSQL
 			requeteSQL.Text = lectureFichierSQL(file);
@@ -799,5 +806,7 @@ namespace election_municipale
 				affichageStackPanel.Children.Add(grilleDeDonnees);
 			}
 		}
+
+
 	}
 }

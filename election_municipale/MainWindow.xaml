@@ -47,7 +47,7 @@
 
                 </MenuItem>
 
-                <MenuItem Header="Scripts SQL">
+                <MenuItem Header="Scripts-SQL">
                     <MenuItem Header="Création des tables" x:Name="creationTablesSQLMenuItem" >
                         <MenuItem Header="MySQL" x:Name="creationTablesMySQLMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                         <MenuItem Header="Oracle" x:Name="creationTablesOracleMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
@@ -61,6 +61,7 @@
                             <MenuItem Header="Candidat/Liste/Parti" x:Name="candListPartiJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                             <MenuItem Header="Commune/Candidat/Liste/Parti" x:Name="comCandListPartiJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                             <MenuItem Header="Election/Annee/Commune/Candidat" x:Name="elecAnneeComCandJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Annee/calcul_sieges/Departement/Commune/Liste" x:Name="annCalSieDeptComListJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                         </MenuItem>
                     </MenuItem>
 
