@@ -37,7 +37,6 @@ namespace election_municipale
 											//			METHODES
 											// **********************************
 
-
 		/// <summary>
 		/// Permet de modifier le label indiquant le nombre de lignes qui ont été lues depuis le fichier csv
 		/// </summary>
