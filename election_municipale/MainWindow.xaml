@@ -99,16 +99,8 @@
             <Label x:Name="lignesInsereesLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="15,0,0,0" FontSize="12"/>
         </StackPanel>
 
-        <!-- StackPanel permettant d'afficher les tables qui ont été insérées dans la BDD -->
-        <StackPanel DockPanel.Dock="Left" Width="100" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Beige">
 
-        </StackPanel>
-        
-        <!--StackPanel contenant les requêtes de l'énoncé -->
-        <StackPanel DockPanel.Dock="Right" Width="100" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Beige">
-            
-        </StackPanel>
-        
+
         <!--StackPanel contenant l'affichage des données -->
         <StackPanel x:Name="affichageStackPanel"  DockPanel.Dock="Top" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White">
             <DataGrid x:Name="grilleDeDonnees" AutoGenerateColumns="True" ItemsSource="{Binding Mode=OneWay}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray" Visibility="Hidden">

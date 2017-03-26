@@ -64,6 +64,12 @@ namespace election_municipale
 			}
 
 			Image imageMCDMLD = new Image();
+			imageMCDMLD.HorizontalAlignment = HorizontalAlignment.Stretch;
+			imageMCDMLD.VerticalAlignment = VerticalAlignment.Stretch;
+			imageMCDMLD.Width = 1000;
+			imageMCDMLD.Height = 450;
+			
+			
 
 			//Si le sender est le MenuItem : AffichageMCDMenuItem
 			if(sender.Equals(affichageMCDMenuItem))imageMCDMLD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MCDjpeg.jpg");
