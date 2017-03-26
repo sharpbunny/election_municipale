@@ -703,7 +703,7 @@ namespace election_municipale
 		/// </summary>
 		/// <param name="sender">MenuItem : creationTablesSQLMenuItem</param>
 		/// <param name="e">Click sur le MenuItem : creationTablesSQLMenuItem</param>
-		private void creationTablesSQLMenuItem_Click(object sender, RoutedEventArgs e)
+		private void chargerScriptSQLMenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			//On créé la textbox qui recevra les requêtes SQL de création de tables
 			TextBox requeteSQL = new TextBox();

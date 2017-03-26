@@ -49,37 +49,37 @@
 
                 <MenuItem Header="Scripts SQL">
                     <MenuItem Header="Création des tables" x:Name="creationTablesSQLMenuItem" >
-                        <MenuItem Header="MySQL" x:Name="creationTablesMySQLMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                        <MenuItem Header="Oracle" x:Name="creationTablesOracleMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                        <MenuItem Header="SQLite" x:Name="creationTablesSQLiteMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                        <MenuItem Header="SQL Server" x:Name="creationTablesSQLServerMenuItem" Click="creationTablesSQLMenuItem_Click"/>
+                        <MenuItem Header="MySQL" x:Name="creationTablesMySQLMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                        <MenuItem Header="Oracle" x:Name="creationTablesOracleMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                        <MenuItem Header="SQLite" x:Name="creationTablesSQLiteMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                        <MenuItem Header="SQL Server" x:Name="creationTablesSQLServerMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                     </MenuItem>
 
                     <MenuItem Header="Jointure" x:Name="jointureMenuItem">
                         <MenuItem Header="SQL Server">
-                            <MenuItem Header="Candidat/Liste" x:Name="candidatListeJointureMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                            <MenuItem Header="Candidat/Liste/Parti" x:Name="candListPartiJointureMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                            <MenuItem Header="Commune/Candidat/Liste/Parti" x:Name="comCandListPartiJointureMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                            <MenuItem Header="Election/Annee/Commune/Candidat" x:Name="elecAnneeComCandJointureMenuItem" Click="creationTablesSQLMenuItem_Click"/>
+                            <MenuItem Header="Candidat/Liste" x:Name="candidatListeJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Candidat/Liste/Parti" x:Name="candListPartiJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Commune/Candidat/Liste/Parti" x:Name="comCandListPartiJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Election/Annee/Commune/Candidat" x:Name="elecAnneeComCandJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                         </MenuItem>
                     </MenuItem>
 
                     <MenuItem Header="Supprimer les enregistrements de la table" x:Name="SupprEnregistrTableMenuItem">
                         <MenuItem Header="SQL Server" x:Name="supprEnregTableSQLServerMenuItem">
-                            <MenuItem Header="AnneeElection" x:Name="anneeElectionSupprMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                            <MenuItem Header="Calcul_sieges" x:Name="calculSiegesSupprMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                            <MenuItem Header="Candidat" x:Name="candidSupprMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                            <MenuItem Header="Commune" x:Name="communeSupprMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                            <MenuItem Header="Département" x:Name="departementSupprMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                            <MenuItem Header="Election" x:Name="electionSupprMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                            <MenuItem Header="Liste" x:Name="listeSupprMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                            <MenuItem Header="Parti" x:Name="partiSupprMenuItem" Click="creationTablesSQLMenuItem_Click"/>
-                            <MenuItem Header="Stats_election" x:Name="statsElectionSupprMenuItem" Click="creationTablesSQLMenuItem_Click"/>
+                            <MenuItem Header="AnneeElection" x:Name="anneeElectionSupprMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Calcul_sieges" x:Name="calculSiegesSupprMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Candidat" x:Name="candidSupprMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Commune" x:Name="communeSupprMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Département" x:Name="departementSupprMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Election" x:Name="electionSupprMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Liste" x:Name="listeSupprMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Parti" x:Name="partiSupprMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Stats_election" x:Name="statsElectionSupprMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                         </MenuItem>
                     </MenuItem>
 
                     <MenuItem Header="Supprimer tous les enregistrements de la table" x:Name="SupprEnregistrMenuItem">
-                        <MenuItem Header="SQL Server" x:Name="supprEnregSQLServerMenuItem" Click="creationTablesSQLMenuItem_Click"/>
+                        <MenuItem Header="SQL Server" x:Name="supprEnregSQLServerMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                     </MenuItem>
                 </MenuItem>
 
