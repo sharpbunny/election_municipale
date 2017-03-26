@@ -62,6 +62,7 @@
                             <MenuItem Header="Commune/Candidat/Liste/Parti" x:Name="comCandListPartiJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                             <MenuItem Header="Election/Annee/Commune/Candidat" x:Name="elecAnneeComCandJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                             <MenuItem Header="Annee/calcul_sieges/Departement/Commune/Liste" x:Name="annCalSieDeptComListJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
+                            <MenuItem Header="Annee/Commune/Stats_Election" x:Name="annComStatElecJointureMenuItem" Click="chargerScriptSQLMenuItem_Click"/>
                         </MenuItem>
                     </MenuItem>
 

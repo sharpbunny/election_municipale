@@ -731,6 +731,7 @@ namespace election_municipale
 			else if (sender.Equals(comCandListPartiJointureMenuItem)) file = "jointureCommuneCandidatListeParti.sql";
 			else if (sender.Equals(elecAnneeComCandJointureMenuItem)) file = "jointureElectionCommuneCandidatAnnee.sql";
 			else if (sender.Equals(annCalSieDeptComListJointureMenuItem)) file = "jointureCalcSiegesComDepartListe.sql";
+			else if (sender.Equals(annComStatElecJointureMenuItem)) file = "jointureCommuneAnneeStats_Election.sql";
 
 			//MenuItem de suppression des enregistrements des tables à l'unité
 			else if (sender.Equals(anneeElectionSupprMenuItem)) file = "SupprAnneeElection.sql";
