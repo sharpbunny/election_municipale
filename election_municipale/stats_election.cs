@@ -69,10 +69,9 @@ namespace election_municipale
 				try
 				{
 					var query = (from stats in context.stats_election
-								 where (this.annee == year.annee && comm.insee == this.insee)
+								 where (stats.annee == year.annee && stats.insee == comm.insee)
 								 select stats).Single();
 
-					Console.WriteLine("Cet objet stats_election est déjà dans la BDD");
 				}
 
 				//Si stats_election n'est pas dans la BDD, on l'insère
@@ -103,6 +102,8 @@ namespace election_municipale
 		/// <returns></returns>
 		public void reinitialisationStatsElection()
 		{
+			this.insee = "";
+			this.annee = 0;
 			this.inscrits = 0;
 			this.votants = 0;
 			this.exprimes = 0;

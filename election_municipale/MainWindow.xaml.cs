@@ -33,10 +33,10 @@ namespace election_municipale
 
 		}
 
-											// **********************************
-											//			METHODES
-											// **********************************
-
+		// ****************************************
+		//			METHODES INCLASSABLES
+		// ****************************************
+		#region inclassable
 		/// <summary>
 		/// Permet de modifier le label indiquant le nombre de lignes qui ont été lues depuis le fichier csv
 		/// </summary>
@@ -44,104 +44,6 @@ namespace election_municipale
 		{
 			lignesInsereesLabel.Content = "Ligne(s) lue(s) : ";
 			lignesInsereesLabel.Content += Convert.ToString(lignes);
-		}
-
-
-										// FONCTIONS DES ELEMENTS DU MENU
-		#region fonctionMenu
-
-		/// <summary>
-		/// Permet d'afficher le MCD ou MLD dans le StackPanel d'affichage
-		/// </summary>
-		/// <param name="sender">MenuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
-		/// <param name="e">Click sur le menuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
-		private void AfficherMCDMLD_Click(object sender, RoutedEventArgs e)
-		{
-			if (affichageStackPanel.Children.Count != 0)
-			{
-				affichageStackPanel.Children.Clear();
-			}
-
-			Image imageMCDMLD = new Image();
-			imageMCDMLD.HorizontalAlignment = HorizontalAlignment.Stretch;
-			imageMCDMLD.VerticalAlignment = VerticalAlignment.Stretch;
-			imageMCDMLD.Width = 1000;
-			imageMCDMLD.Height = 450;
-			
-			
-
-			//Si le sender est le MenuItem : AffichageMCDMenuItem
-			if(sender.Equals(affichageMCDMenuItem))imageMCDMLD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MCDjpeg.jpg");
-
-			//Sinon si le sender est le MenuItem : AffichageMLDMenuItem
-			else if (sender.Equals(affichageMLDMenuItem)) imageMCDMLD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MLDjpeg.jpg");
-
-			affichageStackPanel.Children.Add(imageMCDMLD);
-
-		}
-
-		/// <summary>
-		/// Accède au site internet data.gouv.fr pour retrouver la source des données
-		/// </summary>
-		/// <param name="sender">Le menuItem : dataGouvMenuItem</param>
-		/// <param name="e">Click sur le menuItem : dataGouvMenuItem</param>
-		private void dataGouvMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			RedirectionWeb redirection = new RedirectionWeb();
-			redirection.menuItemAppelant = dataGouvMenuItem;
-			redirection.ShowDialog();
-
-		}
-
-		/// <summary>
-		/// Fonction permettant d'insérer les données provenant d'un fichier csv dans la base de données
-		/// </summary>
-		/// <param name="sender">Bouton de MainWindow : buttonInsertionDonneesCsv</param>
-		/// <param name="e">Evenement survenant après un click sur le bouton d'insertion de données issues d'un fichier csv</param>
-		private void InsertionDonneesCsv_Click(object sender, RoutedEventArgs e)
-		{
-			electionEDM.lireToutesLesDonnees();
-			electionEDM.recuperationDesDonnees(this);
-		}
-
-		/// <summary>
-		/// Charge les éléments de la table Candidat dans la DataGrid
-		/// </summary>
-		/// <param name="sender">Le MenuItem : candidatItems</param>
-		/// <param name="e">Click sur le MenuItem : candidatItems</param>
-		private void candidatMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			afficherCandidatDataGrid();
-		}
-
-		/// <summary>
-		/// Charge les éléments de la table Commune dans le DataGrid principal
-		/// </summary>
-		/// <param name="sender">Le MenuItem : communeMenuItem</param>
-		/// <param name="e">Click sur le MenuItem : communeMenuItem</param>
-		private void communeMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			afficherCommuneDataGrid();
-		}
-
-		/// <summary>
-		/// Charge les éléments de la table Département dans le DataGrid
-		/// </summary>
-		/// <param name="sender">MenuItem : departementMenuItem</param>
-		/// <param name="e">Click sur le MenuItem : departementMenuItem</param>
-		private void departementMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			afficherDepartementDataGrid();
-		}
-
-		/// <summary>
-		/// Charge les éléments concernant la table Parti dans le DataGrid : grilleDeDonnees
-		/// </summary>
-		/// <param name="sender">MenuItems : partiItems</param>
-		/// <param name="e">Click sur le MenuItem : partiItems</param>
-		private void partiMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			afficherPartiDataGrid();
 		}
 
 		/// <summary>
@@ -154,9 +56,45 @@ namespace election_municipale
 			Environment.Exit(0);
 		}
 
+		/// <summary>
+		/// Permet de définir les propriétés d'une TextBox pour son affichage dans affichageStackPanel
+		/// </summary>
+		/// <param name="tb">La TextBox qui va voir ses propriétés définies</param>
+		/// <returns></returns>
+		private TextBox proprieteTextBoxAffichageSQL(TextBox tb)
+		{
+			tb.HorizontalAlignment = HorizontalAlignment.Stretch;
+			tb.VerticalAlignment = VerticalAlignment.Stretch;
+			tb.TextWrapping = TextWrapping.Wrap;
+			tb.Height = 500;
+			tb.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+			tb.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+			tb.ScrollToEnd();
+
+			return tb;
+		}
+
+		/// <summary>
+		/// Permet de retirer les enfants d'affichageStackPanel
+		/// </summary>
+		private void viderAffichageStackPanel()
+		{
+			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
+			if (affichageStackPanel.Children[0] is Image ||
+				affichageStackPanel.Children[0] is TextBox)
+			{
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(grilleDeDonnees);
+			}
+		}
+
 		#endregion
 
-										// DIVERSES METHODES
+		// ****************************************
+		//		     AFFICHAGE DATAGRID
+		// ****************************************
+
+		#region affichageDataGrid
 
 		/// <summary>
 		/// Affiche les candidats dans la datagrid quand une requête doit être faite sur la base de données
@@ -602,105 +540,52 @@ namespace election_municipale
 
 			} //Fin du if(grilleDeDonnees.Colums.Count() == 0)
 		}
-
-		#region tri
-		/// <summary>
-		/// Ouvre la fenêtre pour sélectionner la façon dont le candidat sera trié
-		/// </summary>
-		/// <param name="sender">Le MenuItem : candidatTriMenuItem</param>
-		/// <param name="e">Click sur le MenuItem : candidatTriMenuItem</param>
-		private void candidatTriMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			TriCandidat triCandidatWindow = new TriCandidat();
-			triCandidatWindow.ShowDialog();
-		}
-
-		/// <summary>
-		/// Ouvre la fenêtre pour sélectionner la façon dont les communes seront triées
-		/// </summary>
-		/// <param name="sender">MenuItem : communeTriMenuItem</param>
-		/// <param name="e">Click sur le MenuItem : communeTriMenuItem</param>
-		private void communeTriMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			TriCommuneWindow communeWindow = new TriCommuneWindow();
-			communeWindow.ShowDialog();
-		}
-
-		/// <summary>
-		/// Ouvre la fenêtre pour sélectionner la façon dont les départements seront triés
-		/// </summary>
-		/// <param name="sender">MenuItem : departementTriMenuItem</param>
-		/// <param name="e">Click sur le MenuItem : departementTriMenuItem</param>
-		private void departementTriMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			TriDepartementWindow departementWindow = new TriDepartementWindow();
-			departementWindow.ShowDialog();
-		}
-
-		/// <summary>
-		/// Ouvre la fenêtre pour sélectionner la façon dont les partis politiques seront triés
-		/// </summary>
-		/// <param name="sender">MenuItem : partiTriMenuItem</param>
-		/// <param name="e">Click sur le MenuItem : partiTriMenuItem</param>
-		private void partiTriMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			TriPartisWindow partiWindow = new TriPartisWindow();
-			partiWindow.ShowDialog();
-		}
-
 		#endregion
 
-		/// <summary>
-		/// Affiche la page du fonctionnement des élections municipales(page web wikipedia)
-		/// </summary>
-		/// <param name="sender">MenuItem : wikipediaElectionMenuItem</param>
-		/// <param name="e">Click sur le MenuItem : wikipediaElectionMenuItem</param>
-		private void wikipediaElectionMenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			//On indique à la page redirectionWeb qui l'a appelée pour adapter le site web à afficher
-			RedirectionWeb redirection = new RedirectionWeb();
-			redirection.menuItemAppelant = wikipediaElectionMenuItem;
-			redirection.ShowDialog();
+		// ****************************************
+		//		     CHARGEMENT DES DONNEES
+		// ****************************************
 
-		}
+		#region chargementDonnees
 
 		/// <summary>
-		/// Affiche la page du fonctionnement des élections municipales(page web du service public)
+		/// Permet d'afficher le MCD ou MLD dans le StackPanel d'affichage
 		/// </summary>
-		/// <param name="sender">MenuItem : servicePublicElectionMenuItem</param>
-		/// <param name="e">Click sur le MenuItem : servicePublicElectionMenuItem</param>
-		private void servicePublicElectionMenuItem_Click(object sender, RoutedEventArgs e)
+		/// <param name="sender">MenuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
+		/// <param name="e">Click sur le menuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
+		private void AfficherMCDMLD_Click(object sender, RoutedEventArgs e)
 		{
-			RedirectionWeb redirection = new RedirectionWeb();
-			redirection.menuItemAppelant = servicePublicElectionMenuItem;
-			redirection.ShowDialog();
-		}
-
-		/// <summary>
-		/// Affiche la liste des femmes/hommes qui étaient au second tour des élections municipales
-		/// </summary>
-		/// <param name="sender">femmesCandidatsMenuItem ou hommesCandidatsMenuItem</param>
-		/// <param name="e">Click sur le MenuItem : femmesCandidatsMenuItem ou hommesCandidatsMenuItem</param>
-		private void afficherLesHommesOuLesFemmes(object sender, RoutedEventArgs e)
-		{
-			List<Candidat> sexeCandidat = null;
-			string sexe;
-			if (sender.Equals(hommesCandidatsMenuItem)) sexe = "M";
-			else sexe = "F";
-
-			using(var context = new electionEDM())
+			if (affichageStackPanel.Children.Count != 0)
 			{
-				//On ne selectionne que les candidats du genre choisi dans le menuItem et on les trie par nom, puis par prénom
-				var querySexe = from candidat in context.Candidat
-								  where candidat.sexe == sexe
-								  orderby candidat.nom, candidat.prenom
-								  select candidat;
-
-				sexeCandidat = querySexe.ToList();
+				affichageStackPanel.Children.Clear();
 			}
 
-			afficherCandidatDataGrid(sexeCandidat);
+			Image imageMCDMLD = new Image();
+			imageMCDMLD.HorizontalAlignment = HorizontalAlignment.Stretch;
+			imageMCDMLD.VerticalAlignment = VerticalAlignment.Stretch;
+			imageMCDMLD.Width = 1000;
+			imageMCDMLD.Height = 450;
 
+
+
+			//Si le sender est le MenuItem : AffichageMCDMenuItem
+			if (sender.Equals(affichageMCDMenuItem)) imageMCDMLD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MCDjpeg.jpg");
+
+			//Sinon si le sender est le MenuItem : AffichageMLDMenuItem
+			else if (sender.Equals(affichageMLDMenuItem)) imageMCDMLD.Source = (ImageSource)new ImageSourceConverter().ConvertFromString("MLDjpeg.jpg");
+
+			affichageStackPanel.Children.Add(imageMCDMLD);
+
+		}
+
+		/// <summary>
+		/// Charge les éléments de la table Candidat dans la DataGrid
+		/// </summary>
+		/// <param name="sender">Le MenuItem : candidatItems</param>
+		/// <param name="e">Click sur le MenuItem : candidatItems</param>
+		private void candidatMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			afficherCandidatDataGrid();
 		}
 
 		/// <summary>
@@ -756,21 +641,34 @@ namespace election_municipale
 		}
 
 		/// <summary>
-		/// Permet de définir les propriétés d'une TextBox pour son affichage dans affichageStackPanel
+		/// Charge les éléments de la table Commune dans le DataGrid principal
 		/// </summary>
-		/// <param name="tb">La TextBox qui va voir ses propriétés définies</param>
-		/// <returns></returns>
-		private TextBox proprieteTextBoxAffichageSQL(TextBox tb)
+		/// <param name="sender">Le MenuItem : communeMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : communeMenuItem</param>
+		private void communeMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			tb.HorizontalAlignment = HorizontalAlignment.Stretch;
-			tb.VerticalAlignment = VerticalAlignment.Stretch;
-			tb.TextWrapping = TextWrapping.Wrap;
-			tb.Height = 500;
-			tb.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
-			tb.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-			tb.ScrollToEnd();
+			afficherCommuneDataGrid();
+		}
 
-			return tb;
+		/// <summary>
+		/// Charge les éléments de la table Département dans le DataGrid
+		/// </summary>
+		/// <param name="sender">MenuItem : departementMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : departementMenuItem</param>
+		private void departementMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			afficherDepartementDataGrid();
+		}
+
+		/// <summary>
+		/// Fonction permettant d'insérer les données provenant d'un fichier csv dans la base de données
+		/// </summary>
+		/// <param name="sender">Bouton de MainWindow : buttonInsertionDonneesCsv</param>
+		/// <param name="e">Evenement survenant après un click sur le bouton d'insertion de données issues d'un fichier csv</param>
+		private void InsertionDonneesCsv_Click(object sender, RoutedEventArgs e)
+		{
+			electionEDM.lireToutesLesDonnees();
+			electionEDM.recuperationDesDonnees(this);
 		}
 
 		/// <summary>
@@ -800,19 +698,260 @@ namespace election_municipale
 		}
 
 		/// <summary>
-		/// Permet de retirer les enfants d'affichageStackPanel
+		/// Charge les éléments concernant la table Parti dans le DataGrid : grilleDeDonnees
 		/// </summary>
-		private void viderAffichageStackPanel()
+		/// <param name="sender">MenuItems : partiItems</param>
+		/// <param name="e">Click sur le MenuItem : partiItems</param>
+		private void partiMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			//Si le stackPanel d'affichage affiche déjà une image, on l'enlève du stackpanel pour pouvoir y insérer le datagrid
-			if (affichageStackPanel.Children[0] is Image ||
-				affichageStackPanel.Children[0] is TextBox)
-			{
-				affichageStackPanel.Children.Clear();
-				affichageStackPanel.Children.Add(grilleDeDonnees);
-			}
+			afficherPartiDataGrid();
+		}
+		#endregion
+
+
+		// ************************
+		//		  LIEN WEB
+		// ************************
+
+		#region lien web
+
+		/// <summary>
+		/// Accède au site internet data.gouv.fr pour retrouver la source des données
+		/// </summary>
+		/// <param name="sender">Le menuItem : dataGouvMenuItem</param>
+		/// <param name="e">Click sur le menuItem : dataGouvMenuItem</param>
+		private void dataGouvMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			RedirectionWeb redirection = new RedirectionWeb();
+			redirection.menuItemAppelant = dataGouvMenuItem;
+			redirection.ShowDialog();
+
 		}
 
+		/// <summary>
+		/// Affiche la page du fonctionnement des élections municipales(page web du service public)
+		/// </summary>
+		/// <param name="sender">MenuItem : servicePublicElectionMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : servicePublicElectionMenuItem</param>
+		private void servicePublicElectionMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			RedirectionWeb redirection = new RedirectionWeb();
+			redirection.menuItemAppelant = servicePublicElectionMenuItem;
+			redirection.ShowDialog();
+		}
 
+		/// <summary>
+		/// Affiche la page du fonctionnement des élections municipales(page web wikipedia)
+		/// </summary>
+		/// <param name="sender">MenuItem : wikipediaElectionMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : wikipediaElectionMenuItem</param>
+		private void wikipediaElectionMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			//On indique à la page redirectionWeb qui l'a appelée pour adapter le site web à afficher
+			RedirectionWeb redirection = new RedirectionWeb();
+			redirection.menuItemAppelant = wikipediaElectionMenuItem;
+			redirection.ShowDialog();
+
+		}
+
+		#endregion
+
+
+		// ************************
+		//		  REQUETES
+		// ************************
+
+		#region requêtes
+		/// <summary>
+		/// Affiche la liste des femmes/hommes qui étaient au second tour des élections municipales
+		/// </summary>
+		/// <param name="sender">femmesCandidatsMenuItem ou hommesCandidatsMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : femmesCandidatsMenuItem ou hommesCandidatsMenuItem</param>
+		private void afficherLesHommesOuLesFemmes(object sender, RoutedEventArgs e)
+		{
+			List<Candidat> sexeCandidat = null;
+			string sexe;
+			if (sender.Equals(hommesCandidatsMenuItem)) sexe = "M";
+			else sexe = "F";
+
+			using(var context = new electionEDM())
+			{
+				//On ne selectionne que les candidats du genre choisi dans le menuItem et on les trie par nom, puis par prénom
+				var querySexe = from candidat in context.Candidat
+								  where candidat.sexe == sexe
+								  orderby candidat.nom, candidat.prenom
+								  select candidat;
+
+				sexeCandidat = querySexe.ToList();
+			}
+
+			afficherCandidatDataGrid(sexeCandidat);
+
+		}
+
+		/// <summary>
+		/// Appelle la fonction prénom féminin qui a été le plus fréquemment élu lors des élections municipales
+		/// </summary>
+		/// <param name="sender">MenuItem : prenomFPlusFrequentMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : prenomFPlusFrequentMenuItem</param>
+		private void prenomPlusFrequentMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			string sexe = "";
+			if (sender.Equals(prenomFPlusFrequentMenuItem)) sexe = "F";
+			else if (sender.Equals(prenomMPlusFrequentMenuItem)) sexe = "M";
+
+			using (var context = new electionEDM())
+			{
+				//Récupère les candidats féminins
+				var queryPrenom = from listedesprenoms in context.Candidat
+								  where listedesprenoms.sexe == sexe
+							      select listedesprenoms;
+
+				//Groupe les candidats féminins par prénom
+				var prenomTrouve = from prenomtrouve in queryPrenom
+										  orderby prenomtrouve.prenom
+										  group prenomtrouve by prenomtrouve.prenom into nombredeprenomtrouve
+										  select new
+										  {
+											  prenom = nombredeprenomtrouve.Key,
+											  count = nombredeprenomtrouve.Count()
+
+										  };
+
+				int i = 0; //index dans le foreach
+				int BestPrenom = 0; //Nombre d'occurences du prénom le plus utilisé
+				string MeilleurPrenom = "";
+				foreach (var PrenomPlusSouventPresent in prenomTrouve)
+				{
+					if (i == 0 || PrenomPlusSouventPresent.count > BestPrenom)
+					{
+						BestPrenom = PrenomPlusSouventPresent.count;
+						MeilleurPrenom = PrenomPlusSouventPresent.prenom;
+
+					}
+					i++;
+
+				}
+
+				//On affiche les résultats dans une textbox
+				TextBox tb = new TextBox();
+				tb = proprieteTextBoxAffichageSQL(tb);
+				affichageStackPanel.Children.Clear();
+				affichageStackPanel.Children.Add(tb);
+
+				if (sender.Equals(prenomFPlusFrequentMenuItem)) tb.Text = "Le prénom féminin le plus fréquent parmi les élues est " + MeilleurPrenom + " avec " + BestPrenom + " occurences.";
+				else tb.Text = "Le prénom masculin le plus fréquent parmi les élus est " + MeilleurPrenom + " avec " + BestPrenom + " occurences.";
+
+			} //Fin du using
+
+		}//Fin de prenomPlusFrequentMenuItem_Click
+
+		#endregion
+
+
+		// ************************
+		//		     TRI
+		// ************************
+
+		#region tri
+		/// <summary>
+		/// Ouvre la fenêtre pour sélectionner la façon dont le candidat sera trié
+		/// </summary>
+		/// <param name="sender">Le MenuItem : candidatTriMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : candidatTriMenuItem</param>
+		private void candidatTriMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			TriCandidat triCandidatWindow = new TriCandidat();
+			triCandidatWindow.ShowDialog();
+		}
+
+		/// <summary>
+		/// Ouvre la fenêtre pour sélectionner la façon dont les communes seront triées
+		/// </summary>
+		/// <param name="sender">MenuItem : communeTriMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : communeTriMenuItem</param>
+		private void communeTriMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			TriCommuneWindow communeWindow = new TriCommuneWindow();
+			communeWindow.ShowDialog();
+		}
+
+		/// <summary>
+		/// Ouvre la fenêtre pour sélectionner la façon dont les départements seront triés
+		/// </summary>
+		/// <param name="sender">MenuItem : departementTriMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : departementTriMenuItem</param>
+		private void departementTriMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			TriDepartementWindow departementWindow = new TriDepartementWindow();
+			departementWindow.ShowDialog();
+		}
+
+		/// <summary>
+		/// Ouvre la fenêtre pour sélectionner la façon dont les partis politiques seront triés
+		/// </summary>
+		/// <param name="sender">MenuItem : partiTriMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : partiTriMenuItem</param>
+		private void partiTriMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			TriPartisWindow partiWindow = new TriPartisWindow();
+			partiWindow.ShowDialog();
+		}
+
+		#endregion
+
+		/// <summary>
+		/// Affiche la commune qui a le plus fort taux d'abstentions ou le plus fort taux de votants selon l'objet qui déclenche cet évènement
+		/// </summary>
+		/// <param name="sender">MenuItem : comPlusForTauxAbsMenuItem ou comPlusForTauxVotMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : comPlusForTauxAbsMenuItem ou comPlusForTauxVotMenuItem</param>
+		private void comPlusForTauxMenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			using (var context = new electionEDM())
+			{
+				var query = from statistiques in context.stats_election
+							select statistiques;
+
+				float taux = 0F, bestTaux = 0; //Soit les taux d'abstentions, soit les taux de votants.
+				string inseeBestCommune = ""; //code insee de la commune avec le meilleur taux (abstentions ou votants)
+				int i = 0; //index du foreach
+
+				//On parcourt tous les éléments de stats_election pour trouver le plus fort taux (soit d'abstentions, soit de votants)
+				foreach (var statoche in query)
+				{
+					if(sender.Equals(comPlusForTauxAbsMenuItem)) taux = (float)((float)statoche.abstentions / (float)statoche.inscrits) * 100;
+					else if (sender.Equals(comPlusForTauxVotMenuItem)) taux = (float)((float)statoche.votants / (float)statoche.inscrits) * 100;
+
+					if (i == 0 || taux > bestTaux)
+					{
+						bestTaux = taux;
+						inseeBestCommune = statoche.insee;
+					}
+
+					i++;
+				}
+
+				//On récupère le libelle de la commune selon le code insee de la commune avec le plus fort taux issu de stats_election
+				try
+				{
+					var queryCommune = (from communiste in context.Commune
+										where communiste.insee == inseeBestCommune
+										select communiste.libelle_de_la_commune).Single();
+
+					TextBox tb = new TextBox();
+					proprieteTextBoxAffichageSQL(tb);
+					affichageStackPanel.Children.Clear();
+					affichageStackPanel.Children.Add(tb);
+					if (sender.Equals(comPlusForTauxAbsMenuItem)) tb.Text = "La commune avec le plus fort taux d'abstentions est " + queryCommune + " avec " + bestTaux + "% d'abstentions";
+					else if (sender.Equals(comPlusForTauxVotMenuItem)) tb.Text = "La commune avec le plus fort taux de votants est " + queryCommune + " avec " + bestTaux + "% de votants";
+				}
+
+				catch
+				{
+					MessageBox.Show("Il y'a eu un problème dans la récupération de la commune avec \n le plus fort taux de votants.");
+				}
+
+			} //Fin du using
+		} //Fin de comPlusForTauxMenuItem
 	}
 }

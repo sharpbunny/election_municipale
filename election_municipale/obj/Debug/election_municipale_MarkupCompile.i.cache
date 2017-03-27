@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\obj\Debug\
+C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\obj\Debug\
 election_municipale
 none
 false
 DEBUG;TRACE
-C:\Users\Julien\Projet_GIT\election_municipale\election_municipale\App.xaml
+C:\Users\34011-14-08\Projet_GIT\election_municipale\election_municipale\App.xaml
 61418004202
 
-241982402926
-19-1844905251
+24-2040372887
+19-811468939
 MainWindow.xaml;RedirectionWeb.xaml;TriCandidat.xaml;TriCommuneWindow.xaml;TriDepartementWindow.xaml;TriPartisWindow.xaml;
 
-False
+True
 

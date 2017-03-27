@@ -43,6 +43,13 @@
                     <MenuItem Header="Table Candidat">
                         <MenuItem Header="Afficher la liste des femmes" x:Name="femmesCandidatsMenuItem" Click="afficherLesHommesOuLesFemmes"/>
                         <MenuItem Header="Afficher la liste des hommes" x:Name="hommesCandidatsMenuItem" Click="afficherLesHommesOuLesFemmes"/>
+                        <MenuItem Header="Prénom féminin le plus fréquent parmi les élus" x:Name="prenomFPlusFrequentMenuItem" Click="prenomPlusFrequentMenuItem_Click"/>
+                        <MenuItem Header="Prénom masculin le plus fréquent parmi les élus" x:Name="prenomMPlusFrequentMenuItem" Click="prenomPlusFrequentMenuItem_Click"/>
+                    </MenuItem>
+
+                    <MenuItem Header="Table Commune">
+                        <MenuItem Header="Commune avec le plus fort taux d'abstentions" x:Name="comPlusForTauxAbsMenuItem" Click="comPlusForTauxMenuItem_Click"/>
+                        <MenuItem Header="Commune avec le plus fort taux de votants" x:Name="comPlusForTauxVotMenuItem" Click="comPlusForTauxMenuItem_Click"/>
                     </MenuItem>
 
                 </MenuItem>
@@ -103,13 +110,11 @@
 
 
         <!--StackPanel contenant l'affichage des données -->
-        <StackPanel x:Name="affichageStackPanel"  DockPanel.Dock="Top" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White">
-            <DataGrid x:Name="grilleDeDonnees" AutoGenerateColumns="True" ItemsSource="{Binding Mode=OneWay}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray" Visibility="Hidden">
+        <StackPanel x:Name="affichageStackPanel"  DockPanel.Dock="Top" ScrollViewer.CanContentScroll="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White">
+            <DataGrid x:Name="grilleDeDonnees" AutoGenerateColumns="False" ScrollViewer.CanContentScroll="True" ScrollViewer.IsDeferredScrollingEnabled="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding Mode=OneWay}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray" Visibility="Hidden">
 
             </DataGrid>
         </StackPanel>
-
-
 
 
     </DockPanel>
