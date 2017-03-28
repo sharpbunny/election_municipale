@@ -8,7 +8,7 @@
         Title="Redirection vers une page web" Height="125" Width="500" WindowStartupLocation="CenterScreen">
     
     <StackPanel>
-        <Label x:Name="redirectionMessageLabel" Content="Vous allez être redirigé(e) vers une page web externe à ce programme." Margin="0,0,0,0"/>
+        <Label x:Name="redirectionMessageLabel" Content="Vous allez être redirigé(e) vers une page web ou une application externe à ce programme." Margin="0,0,0,0"/>
         <Label x:Name="continuerLabel" Content="Souhaitez-vous continuer ?" Margin="0,0,0,0"/>
         <StackPanel Orientation="Horizontal">
             <Button x:Name="continuerButton" Content="Continuer" Width="75" Margin="100,5,0,0" Click="continuerButton_Click"/>

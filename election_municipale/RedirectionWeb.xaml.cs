@@ -37,6 +37,8 @@ namespace election_municipale
 		/// <param name="e">Click sur le bouton : continuerButton</param>
 		private void continuerButton_Click(object sender, RoutedEventArgs e)
 		{
+
+
 			if(menuItemAppelant.Header.ToString() == "Page Wikipedia : élection municipale")
 			{
 				//On fait un try sur l'ouverture de la page web
@@ -79,6 +81,32 @@ namespace election_municipale
 				catch
 				{
 					MessageBox.Show("L'ouverture de la page web a échoué.");
+				}
+			}
+
+			else if (menuItemAppelant.Header.ToString() == "Ouvrir le fichier csv")
+			{
+				try
+				{
+					Process.Start("election.csv");
+				}
+
+				catch
+				{
+					MessageBox.Show("L'ouverture du fichier csv a échoué.");
+				}
+			}
+
+			else if (menuItemAppelant.Header.ToString() == "Ouvrir le fichier json")
+			{
+				try
+				{
+					Process.Start("election.json");
+				}
+
+				catch
+				{
+					MessageBox.Show("L'ouverture du fichier json a échoué.");
 				}
 			}
 

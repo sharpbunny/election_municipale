@@ -18,8 +18,12 @@
                 </MenuItem>
                 
                 <MenuItem Header="Affichage">
-                    <MenuItem Header="Afficher le MCD" x:Name="affichageMCDMenuItem"  Click="AfficherMCDMLD_Click"/>
-                    <MenuItem Header="Afficher le MLD" x:Name="affichageMLDMenuItem"  Click="AfficherMCDMLD_Click"/>
+                    <MenuItem Header="Afficher le MCD" x:Name="affichageMCDMenuItem"  Click="afficherMCDMLD_Click"/>
+                    <MenuItem Header="Afficher le MLD" x:Name="affichageMLDMenuItem"  Click="afficherMCDMLD_Click"/>
+                    <MenuItem Header="Données">
+                        <MenuItem Header="Ouvrir le fichier csv" x:Name="ouvrirCSVMenuItem" Click="ouvertureCSV_Click"/>
+                        <MenuItem Header="Ouvrir le fichier json" x:Name="ouvrirJSONMenuItem" Click="ouvertureJSON_Click"/>
+                    </MenuItem>
                     <MenuItem Header="Tables" x:Name="affichageTables">
                         <MenuItem Header="Candidats" x:Name="candidatMenuItem" Click="candidatMenuItem_Click"/>
                         <MenuItem Header="Communes" x:Name="communeMenuItem" Click="communeMenuItem_Click"/>
@@ -34,10 +38,10 @@
 
                 <MenuItem Header="Requêtes">
                     <MenuItem Header="Tri" x:Name="TriMenuItem">
-                        <MenuItem Header="Candidats" x:Name="candidatTriMenuItem" Click="candidatTriMenuItem_Click"/>
-                        <MenuItem Header="Communes" x:Name="communeTriMenuItem" Click="communeTriMenuItem_Click"/>
-                        <MenuItem Header="Départements" x:Name="departementTriMenuItem" Click="departementTriMenuItem_Click"/>
-                        <MenuItem Header="Partis politiques" x:Name="partiTriMenuItem" Click="partiTriMenuItem_Click"/>
+                        <MenuItem Header="Candidats" x:Name="candidatTriMenuItem" Click="candidatTriMenuItem_Click" ToolTip="Choix du tri pour la table Candidat"/>
+                        <MenuItem Header="Communes" x:Name="communeTriMenuItem" Click="communeTriMenuItem_Click" ToolTip="Choix du tri pour la table Commune"/>
+                        <MenuItem Header="Départements" x:Name="departementTriMenuItem" Click="departementTriMenuItem_Click" ToolTip="Choix du tri pour la table Département"/>
+                        <MenuItem Header="Partis politiques" x:Name="partiTriMenuItem" Click="partiTriMenuItem_Click" ToolTip="Choix du tri pour la table Parti"/>
                     </MenuItem>
 
                     <MenuItem Header="Table Candidat">
@@ -50,6 +54,8 @@
                     <MenuItem Header="Table Commune">
                         <MenuItem Header="Commune avec le plus fort taux d'abstentions" x:Name="comPlusForTauxAbsMenuItem" Click="comPlusForTauxMenuItem_Click"/>
                         <MenuItem Header="Commune avec le plus fort taux de votants" x:Name="comPlusForTauxVotMenuItem" Click="comPlusForTauxMenuItem_Click"/>
+                        <MenuItem Header="Commune avec le plus fort taux de votes blancs sur le nombre d'inscrits" x:Name="comPlusForTauxBlancInsMenuItem" Click="comPlusForTauxMenuItem_Click"/>
+                        <MenuItem Header="Commune avec le plus fort taux de votes blancs sur le nombre de votants" x:Name="comPlusForTauxBlancVotMenuItem" Click="comPlusForTauxMenuItem_Click"/>
                     </MenuItem>
 
                 </MenuItem>
@@ -94,10 +100,10 @@
 
                 <MenuItem Header="Aide">
                     <MenuItem x:Name="fonctionnementElectionMenuItem" Header="Elections municipales : kézako ?">
-                        <MenuItem x:Name="wikipediaElectionMenuItem" Header="Page Wikipedia : élection municipale" Click="wikipediaElectionMenuItem_Click"/>
-                        <MenuItem x:Name="servicePublicElectionMenuItem" Header="Service public : élection municipale" Click="servicePublicElectionMenuItem_Click"/>
+                        <MenuItem x:Name="wikipediaElectionMenuItem" Header="Page Wikipedia : élection municipale" Click="wikipediaElectionMenuItem_Click" ToolTip="https://fr.wikipedia.org/wiki/%C3%89lection_municipale_en_France"/>
+                        <MenuItem x:Name="servicePublicElectionMenuItem" Header="Service public : élection municipale" Click="servicePublicElectionMenuItem_Click" ToolTip="https://www.service-public.fr/particuliers/vosdroits/F1952"/>
                     </MenuItem>
-                    <MenuItem x:Name="dataGouvMenuItem" Header="Source des données utilisées" Click="dataGouvMenuItem_Click"/>
+                    <MenuItem x:Name="dataGouvMenuItem" Header="Source des données utilisées" Click="dataGouvMenuItem_Click" ToolTip="https://www.data.gouv.fr/fr/datasets/elections-municipales-2014-les-candidats-du-2e-tour-communes-de-1000-hab-et-plus-idf/"/>
                 </MenuItem>
             </Menu>
         </StackPanel>

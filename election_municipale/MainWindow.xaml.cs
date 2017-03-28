@@ -553,7 +553,7 @@ namespace election_municipale
 		/// </summary>
 		/// <param name="sender">MenuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
 		/// <param name="e">Click sur le menuItem : AffichageMCDMenuItem ou AffichageMLDMenuItem</param>
-		private void AfficherMCDMLD_Click(object sender, RoutedEventArgs e)
+		private void afficherMCDMLD_Click(object sender, RoutedEventArgs e)
 		{
 			if (affichageStackPanel.Children.Count != 0)
 			{
@@ -921,6 +921,8 @@ namespace election_municipale
 				{
 					if(sender.Equals(comPlusForTauxAbsMenuItem)) taux = (float)((float)statoche.abstentions / (float)statoche.inscrits) * 100;
 					else if (sender.Equals(comPlusForTauxVotMenuItem)) taux = (float)((float)statoche.votants / (float)statoche.inscrits) * 100;
+					else if (sender.Equals(comPlusForTauxBlancInsMenuItem)) taux = (float)((float)statoche.blancs_et_nuls / (float)statoche.inscrits) * 100;
+					else if (sender.Equals(comPlusForTauxBlancVotMenuItem)) taux = (float)((float)statoche.blancs_et_nuls / (float)statoche.votants) * 100;
 
 					if (i == 0 || taux > bestTaux)
 					{
@@ -944,6 +946,8 @@ namespace election_municipale
 					affichageStackPanel.Children.Add(tb);
 					if (sender.Equals(comPlusForTauxAbsMenuItem)) tb.Text = "La commune avec le plus fort taux d'abstentions est " + queryCommune + " avec " + bestTaux + "% d'abstentions";
 					else if (sender.Equals(comPlusForTauxVotMenuItem)) tb.Text = "La commune avec le plus fort taux de votants est " + queryCommune + " avec " + bestTaux + "% de votants";
+					else if (sender.Equals(comPlusForTauxBlancInsMenuItem)) tb.Text = "La commune avec le plus fort taux de votes blancs sur le nombre d'inscrits est " + queryCommune + " avec " + bestTaux + "% de votes blancs";
+					else if (sender.Equals(comPlusForTauxBlancVotMenuItem)) tb.Text = "La commune avec le plus fort taux de votes blancs sur le nombre de votants est " + queryCommune + " avec " + bestTaux + "% de votes blancs";
 				}
 
 				catch
@@ -953,5 +957,29 @@ namespace election_municipale
 
 			} //Fin du using
 		} //Fin de comPlusForTauxMenuItem
+
+		/// <summary>
+		/// Permet d'ouvrir le fichier csv dans un programme externe
+		/// </summary>
+		/// <param name="sender">MenuItem : ouvrirCSVMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : ouvrirCSVMenuItem</param>
+		private void ouvertureCSV_Click(object sender, RoutedEventArgs e)
+		{
+			RedirectionWeb redirection = new RedirectionWeb();
+			redirection.menuItemAppelant = ouvrirCSVMenuItem;
+			redirection.ShowDialog();
+		}
+
+		/// <summary>
+		/// Permet d'ouvrir le fichier json dans un programme externe
+		/// </summary>
+		/// <param name="sender">MenuItem : ouvrirJSONMenuItem</param>
+		/// <param name="e">Click sur le MenuItem : ouvrirJSONMenuItem</param>
+		private void ouvertureJSON_Click(object sender, RoutedEventArgs e)
+		{
+			RedirectionWeb redirection = new RedirectionWeb();
+			redirection.menuItemAppelant = ouvrirJSONMenuItem;
+			redirection.ShowDialog();
+		}
 	}
 }
