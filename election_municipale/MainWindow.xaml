@@ -33,7 +33,7 @@
                 </MenuItem>
 
                 <MenuItem Header="Insertion">
-                    <MenuItem Header="Insérer des données depuis un fichier csv" x:Name="insertionDonneesCSVMenuItem" Click="InsertionDonneesCsv_Click"/>
+                    <MenuItem Header="Insérer des données depuis un fichier csv" x:Name="insertionDonneesCSVMenuItem" Click="InsertionDonneesCsv_Click" ToolTip="Insère les données dans la base de données depuis le fichier csv"/>
                 </MenuItem>
 
                 <MenuItem Header="Requêtes">

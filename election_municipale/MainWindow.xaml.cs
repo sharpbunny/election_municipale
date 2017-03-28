@@ -981,5 +981,6 @@ namespace election_municipale
 			redirection.menuItemAppelant = ouvrirJSONMenuItem;
 			redirection.ShowDialog();
 		}
+
 	}
 }
